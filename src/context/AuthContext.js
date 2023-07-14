@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
 
     let data = await response.json();
 
-    if (data.detail === "No active account found with the given credentials") {
+    if (data.detail === "Invalid email or password") {
         alert("Incorrect login ID or password.");
       } else {
         localStorage.setItem("authTokens", JSON.stringify(data));
