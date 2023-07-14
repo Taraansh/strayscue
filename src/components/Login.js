@@ -16,7 +16,7 @@ import {
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [smShow, setSmShow] = useState(false);
-  const [validated, setValidated] = useState(false);
+//   const [validated, setValidated] = useState(false);
 
   let { loginUser } = useContext(AuthContext);
 
