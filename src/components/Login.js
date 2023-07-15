@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import logo from "../assets/logo.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Container,
@@ -16,22 +17,19 @@ import {
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [smShow, setSmShow] = useState(false);
-//   const [validated, setValidated] = useState(false);
 
-  let { loginUser } = useContext(AuthContext);
+  let { user, loginUser } = useContext(AuthContext);
 
+  const navigate = useNavigate();
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  //   const handleSubmit = (event) => {
-  //     const form = event.currentTarget;
-  //     if (form.checkValidity() === false) {
-  //       event.preventDefault();
-  //       event.stopPropagation();
-  //     }
-  //     setValidated(true);
-  //   };
+  useEffect(() => {
+    if (user) {
+      navigate("/Dashboard"); // Redirect to the dashboard if user is already logged in
+    }
+  }, [user, navigate]);
 
   return (
     <div>
