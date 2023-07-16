@@ -1,0 +1,58 @@
+.cases {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2rem;
+  justify-content: space-evenly;
+}
+
+.case-card {
+  padding-top: 2rem;
+  margin-left: 2px;
+  cursor: pointer;
+  height: 120px;
+  width: 260px;
+  padding-inline: 25px;
+  background-color: #ffffff;
+  border-radius: 1.25rem;
+  box-shadow: rgba(0, 0, 0, 0.13) 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 1px 3px;
+}
+.case-card:hover {
+  transition: ease-in-out 0.5s;
+  font-size: 1.5rem;
+  color: #ffffff;
+  background: rgb(245, 145, 32);
+}
+.case-card:hover > h3 {
+  font-size: 2rem !important;
+  transition: ease-in-out 0.5s;
+  color: #ffffff;
+}
+
+.case-lists {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+  background-color: #ffffff;
+  border-radius: 0.3rem;
+  width: 95%;
+  padding-top: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.13) 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 1px 3px;
+}
+.menu1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+}
+.menu1 input {
+  width: 300px;
+  padding: 0 0.5rem;
+  border-radius: 5px;
+  border-color: grey;
+}
+
+@media only screen and (max-width: 640px) {
+  .cases {
+    flex-direction: column;
+  }
+}
