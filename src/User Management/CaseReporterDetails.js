@@ -2,20 +2,10 @@ import React, { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 
 export default function CaseReporterDetails() {
-  const {date, time} = useContext(AuthContext)
+  const { date, time } = useContext(AuthContext);
   const [frontImageFile, setFrontImageFile] = useState(null);
   const [backImageFile, setBackImageFile] = useState(null);
   const [consentFormImageFile, setConsentFormImageFile] = useState(null);
-  const [activeButton, setActiveButton] = useState(null);
-  const buttonStyle = {
-    border:"1px solid black",
-    fontSize:"16px",
-    fontWeight:"bold",
-    borderRadius:"2px"
-  };
-  const handleClick = (buttonIndex) => {
-    setActiveButton(buttonIndex);
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -51,54 +41,7 @@ export default function CaseReporterDetails() {
   };
 
   return (
-    <div className="container p-4 case-lists">
-      <div className="btn-group py-4 mb-2" role="group" aria-label="Basic outlined example">
-          <button
-          style={buttonStyle}
-            type="button"
-            className={`btn btn-outline-secondary ${activeButton === 0 ? "active" : ""
-              }`}
-            onClick={() => handleClick(0)}
-          >
-            Reporter Details
-          </button>
-          <button
-          style={buttonStyle}
-            type="button"
-            className={`btn btn-outline-secondary ${activeButton === 1 ? "active" : ""
-              }`}
-            onClick={() => handleClick(1)}
-          >
-            Animal Details
-          </button>
-          <button
-            style={buttonStyle}
-            type="button"
-            className={`btn btn-outline-secondary ${activeButton === 2 ? "active" : ""
-              }`}
-            onClick={() => handleClick(2)}
-          >
-            Medical Details
-          </button>
-          <button
-            style={buttonStyle}
-            type="button"
-            className={`btn btn-outline-secondary ${activeButton === 3 ? "active" : ""
-              }`}
-            onClick={() => handleClick(3)}
-          >
-           Operation Details
-          </button>
-          <button
-            style={buttonStyle}
-            type="button"
-            className={`btn btn-outline-secondary ${activeButton === 4 ? "active" : ""
-              }`}
-            onClick={() => handleClick(4)}
-          >
-           Post Operation Details
-          </button>
-        </div>
+    <div className="my-3">
       <h2>Reporter Details:</h2>
       <form onSubmit={handleSubmit}>
         <div className="row">
@@ -238,7 +181,8 @@ export default function CaseReporterDetails() {
               className="form-control"
               id="reportedTime"
               name="reportedTime"
-value={time}              type="time"
+              value={time}
+              type="time"
             />
           </div>
           <div className="form-group col">
