@@ -1,49 +1,187 @@
 import React, { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function CaseReporterDetails() {
-  const { date, time } = useContext(AuthContext);
+  const { case_id } = useContext(AuthContext);
   const [frontImageFile, setFrontImageFile] = useState(null);
   const [backImageFile, setBackImageFile] = useState(null);
+  const [reporterName, setReporterName] = useState(null);
+  const [reporterContact, setReporterContact] = useState(null);
+  const [reporterAltContact, setReporterAltContact] = useState(null);
+  const [reporterEmail, setReporterEmail] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [pincode, setPincode] = useState(null);
+  const [landmark, setLandmark] = useState(null);
+  const [reportedDate, setReportedDate] = useState(null);
+  const [reportedTime, setReportedTime] = useState(null);
+  const [pickupDate, setPickupDate] = useState(null);
+  const [pickupTime, setPickupTime] = useState(null);
   const [consentFormImageFile, setConsentFormImageFile] = useState(null);
+  const [frontImagePreview, setFrontImagePreview] = useState("");
+  const [backImagePreview, setBackImagePreview] = useState("");
+  const [consentFormImagePreview, setConsentFormImagePreview] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+
+  const handleFrontImageChange = (event) => {
+    const file = event.target.files[0];
+    setFrontImageFile(file);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFrontImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setFrontImagePreview("");
+    }
+  };
+
+  const handleBackImageChange = (event) => {
+    const file = event.target.files[0];
+    setBackImageFile(file);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBackImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setBackImagePreview("");
+    }
+  };
+
+  const handleConsentFormImageChange = (event) => {
+    const file = event.target.files[0];
+    setConsentFormImageFile(file);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setConsentFormImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setConsentFormImagePreview("");
+    }
+  };
+
+  const handleReportingDetails = async (e) => {
+    e.preventDefault();
 
     const formData = new FormData();
     formData.append("frontImage", frontImageFile);
     formData.append("backImage", backImageFile);
     formData.append("consentFormImage", consentFormImageFile);
+    formData.append("reporterName", reporterName);
+    formData.append("reporterContact", reporterContact);
+    formData.append("reporterAltContact", reporterAltContact ? reporterAltContact : "");
+    formData.append("reporterEmail", reporterEmail ? reporterEmail : "");
+    formData.append("location", location);
+    formData.append("pincode", pincode);
+    formData.append("landmark", landmark);
+    formData.append("reportedDate", reportedDate ? reportedDate : '1111-11-11');
+    formData.append("reportedTime", reportedTime ? reportedTime : "11:11:11");
+    formData.append("pickupDate", pickupDate ? pickupDate : "1111-11-11");
+    formData.append("pickupTime", pickupTime ? pickupTime : "11:11:11");
+    formData.append("case_linked", case_id);
 
-    // Get the other form data
-    const formElement = event.target;
-    const inputs = formElement.querySelectorAll("input");
-    inputs.forEach((input) => {
-      if (input.name && input.value !== "") {
-        formData.append(input.name, input.value);
+    // console.log(formData.get("reporterName"))
+    // console.log(formData.get("reporterContact"))
+    // console.log(formData.get("reporterAltContact"))
+    // console.log(formData.get("reporterEmail"))
+    // console.log(formData.get("location"))
+    // console.log(formData.get("pincode"))
+    // console.log(formData.get("landmark"))
+    // console.log(formData.get("reportedDate"))
+    // console.log(formData.get("reportedTime"))
+    // console.log(formData.get("pickupDate"))
+    // console.log(formData.get("pickupTime"))
+    // console.log(formData.get("case_linked"))
+    
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/cases/addreporter/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status === 201) {
+        console.log("Success:", response.data);
+        alert("Reporter Added Successfully");
+        // Handle success or display a success message.
+      } else {
+        console.error("Error:", response.data);
+        // Handle error or display an error message.
       }
-    });
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error or display an error message.
+    }    
+  };
 
-    // Perform your POST request with the formData
-    fetch("/your-post-endpoint", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle response data
-        console.log(data);
-      })
-      .catch((error) => {
-        // Handle error
-        console.error(error);
-      });
+  // const handleReportingDetails = (e) => {
+  //   e.preventDefault();
+
+  //   const data = {
+  //     frontImage: frontImageFile ? frontImageFile : null,
+  //     backImage: backImageFile ? backImageFile : null,
+  //     consentFormImage: consentFormImageFile ? consentFormImageFile : null,
+  //     reporterName: reporterName,
+  //     reporterContact: reporterContact,
+  //     reporterAltContact: reporterAltContact,
+  //     reporterEmail: reporterEmail,
+  //     location: location,
+  //     pincode: pincode,
+  //     landmark: landmark,
+  //     reportedDate: reportedDate ? reportedDate : date,
+  //     reportedTime: reportedTime ? reportedTime : time,
+  //     pickupDate: pickupDate ? pickupDate : date,
+  //     pickupTime: pickupTime ? pickupTime : time,
+  //     case_linked: case_id,
+  //     // caseId: caseID,
+  //   };
+  //   console.log(data)
+
+  //   // Perform your POST request with the data payload
+  //   fetch("http://127.0.0.1:8000/cases/addreporter/", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(data),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((responseData) => {
+  //       // Handle response data
+  //       console.log(responseData);
+  //     })
+  //     .catch((error) => {
+  //       // Handle error
+  //       console.error(error);
+  //     });
+  // };
+
+  const handleSaveExit = (e) => {
+    handleReportingDetails(e);
+    navigate("/Dashboard");
+  };
+
+  const handleSaveNext = (e) => {
+    handleReportingDetails(e);
   };
 
   return (
     <div className="my-3">
       <h2>Reporter Details:</h2>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="row">
           <div className="col">
             <div className="mb-3">
@@ -58,6 +196,8 @@ export default function CaseReporterDetails() {
                 name="reporterName"
                 placeholder="Name"
                 required
+                onChange={(e) => setReporterName(e.target.value)}
+                autoComplete="name"
               />
             </div>
           </div>
@@ -74,6 +214,8 @@ export default function CaseReporterDetails() {
                 name="reporterContact"
                 placeholder="Phone Number"
                 required
+                onChange={(e) => setReporterContact(e.target.value)}
+                autoComplete="number"
               />
             </div>
           </div>
@@ -89,21 +231,25 @@ export default function CaseReporterDetails() {
                 aria-describedby="altCcontactHelp"
                 name="reporterAltContact"
                 placeholder="Alternate Phone Number"
+                onChange={(e) => setReporterAltContact(e.target.value)}
+                autoComplete="altnumber"
               />
             </div>
           </div>
           <div className="col">
             <div className="mb-3">
-              <label htmlFor="exampleInputEmail1" className="form-label">
+              <label htmlFor="reporterEmail" className="form-label">
                 Email ID
               </label>
               <input
                 type="email"
                 className="form-control"
-                id="exampleInputEmail1"
+                id="reporterEmail"
                 aria-describedby="emailHelp"
                 name="reporterEmail"
                 placeholder="Email ID"
+                onChange={(e) => setReporterEmail(e.target.value)}
+                autoComplete="email"
               />
             </div>
           </div>
@@ -123,6 +269,7 @@ export default function CaseReporterDetails() {
                 name="landmark"
                 placeholder="Near to xyz place"
                 required
+                onChange={(e) => setLandmark(e.target.value)}
               />
             </div>
           </div>
@@ -139,6 +286,7 @@ export default function CaseReporterDetails() {
                 name="pincode"
                 placeholder="Pincode"
                 required
+                onChange={(e) => setPincode(e.target.value)}
               />
             </div>
           </div>
@@ -155,6 +303,7 @@ export default function CaseReporterDetails() {
                 name="location"
                 placeholder="Location"
                 required
+                onChange={(e) => setLocation(e.target.value)}
               />
             </div>
           </div>
@@ -169,8 +318,8 @@ export default function CaseReporterDetails() {
               className="form-control"
               id="reporteddate"
               name="reportedDate"
-              value={date}
               type="date"
+              onChange={(e) => setReportedDate(e.target.value)}
             />
           </div>
           <div className="form-group col">
@@ -181,8 +330,8 @@ export default function CaseReporterDetails() {
               className="form-control"
               id="reportedTime"
               name="reportedTime"
-              value={time}
               type="time"
+              onChange={(e) => setReportedTime(e.target.value)}
             />
           </div>
           <div className="form-group col">
@@ -195,7 +344,7 @@ export default function CaseReporterDetails() {
               name="pickupDate"
               placeholder="MM/DD/YYYY"
               type="date"
-              value={date}
+              onChange={(e) => setPickupDate(e.target.value)}
             />
           </div>
           <div className="form-group col">
@@ -206,8 +355,8 @@ export default function CaseReporterDetails() {
               className="form-control"
               id="pickupTime"
               name="pickupTime"
-              value={time}
               type="time"
+              onChange={(e) => setPickupTime(e.target.value)}
             />
           </div>
         </div>
@@ -226,10 +375,20 @@ export default function CaseReporterDetails() {
                   id="frontImage"
                   accept="image/*"
                   name="frontImage"
-                  onChange={(event) => setFrontImageFile(event.target.files[0])}
+                  onChange={handleFrontImageChange}
                 />
               </div>
             </div>
+            {frontImagePreview && (
+              <div>
+                <h6>Preview:</h6>
+                <img
+                  src={frontImagePreview}
+                  alt="Front Preview"
+                  height="100px"
+                />
+              </div>
+            )}
           </div>
           <div className="col">
             <div className="form-group">
@@ -243,10 +402,16 @@ export default function CaseReporterDetails() {
                   id="backImage"
                   name="backImage"
                   accept="image/*"
-                  onChange={(event) => setBackImageFile(event.target.files[0])}
+                  onChange={handleBackImageChange}
                 />
               </div>
             </div>
+            {backImagePreview && (
+              <div>
+                <h6>Preview:</h6>
+                <img src={backImagePreview} alt="Back Preview" height="100px" />
+              </div>
+            )}
           </div>
         </div>
 
@@ -262,12 +427,20 @@ export default function CaseReporterDetails() {
                 id="consentFormImage"
                 name="consentFormImage"
                 accept="image/*"
-                onChange={(event) =>
-                  setConsentFormImageFile(event.target.files[0])
-                }
+                onChange={handleConsentFormImageChange}
               />
             </div>
           </div>
+          {consentFormImagePreview && (
+            <div>
+              <h6>Preview:</h6>
+              <img
+                src={consentFormImagePreview}
+                alt="Consent Form Preview"
+                height="100px"
+              />
+            </div>
+          )}
         </div>
 
         <div className="my-1">
@@ -277,10 +450,18 @@ export default function CaseReporterDetails() {
           <button type="button" className="btn btn-primary mx-2">
             Exit
           </button>
-          <button type="submit" className="btn btn-primary float-end mx-1">
+          <button
+            type="button"
+            className="btn btn-primary float-end mx-1"
+            onClick={handleSaveNext}
+          >
             Save & Next
           </button>
-          <button type="submit" className="btn btn-primary float-end mx-1">
+          <button
+            type="button"
+            className="btn btn-primary float-end mx-1"
+            onClick={handleSaveExit}
+          >
             Save & Exit
           </button>
         </div>
