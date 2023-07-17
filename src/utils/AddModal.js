@@ -5,9 +5,6 @@ import AuthContext from "../context/AuthContext";
 
 export default function AddModal(props) {
   const { addNewCase } = useContext(AuthContext);
-  const [typeOfCase, setTypeOfCase] = useState("");
-  const [statusOfCase, setStatusOfCase] = useState("");
-  const [mortalityOfCase, setMortalityOfCase] = useState("");
 
   const handleNextClick = (e) => {
     e.preventDefault();
@@ -45,9 +42,8 @@ export default function AddModal(props) {
                 aria-label="Type of case"
                 name="type_of_case"
                 required
-                value={typeOfCase} // Set the value based on the selected option
-                onChange={(e) => setTypeOfCase(e.target.value)} // Update the selected value
               >
+                <option value="">Choose</option>
                 <option value="Sterilization">Sterilization</option>
                 <option value="OPD">OPD</option>
                 <option value="IPD">IPD</option>
@@ -63,8 +59,6 @@ export default function AddModal(props) {
                 className="form-select my-1"
                 aria-label="Status of case"
                 name="status_of_case"
-                value={statusOfCase}
-                onChange={(e) => setStatusOfCase(e.target.value)}
               >
                 <option value="Reported">Reported</option>
                 <option value="Admitted">Admitted</option>
@@ -83,8 +77,6 @@ export default function AddModal(props) {
                 className="form-select my-1"
                 aria-label="Mortality of case"
                 name="mortality_of_case"
-                value={mortalityOfCase}
-                onChange={(e) => setMortalityOfCase(e.target.value)}
               >
                 <option value="Healthy">Healthy</option>
                 <option value="Unhealthy">Unhealthy</option>
