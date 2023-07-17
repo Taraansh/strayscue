@@ -3,7 +3,6 @@ import Login from "./components/Login";
 import { AuthProvider } from "./context/AuthContext";
 import Dashboard from "./components/Dashboard";
 import CaseReporterDetails from "./User Management/CaseReporterDetails";
-import CaseDetails from "./User Management/CaseDetails";
 import CaseAnimalDetails from "./User Management/CaseAnimalDetails";
 import CaseMedicalDetails from "./User Management/CaseMedicalDetails";
 import CaseOperationDetails from "./User Management/CaseOperationDetails";
@@ -18,7 +17,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/Dashboard" element={<Dashboard />} />
-            <Route path="/caseDetails" element={<CaseDetails />} />
             <Route path="/caseReporter" element={<CaseReporterDetails />} />
             <Route path="/caseAnimal" element={<CaseAnimalDetails />} />
             <Route path="/caseMedical" element={<CaseMedicalDetails />} />
