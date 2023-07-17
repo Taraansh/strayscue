@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
 import "../styles/Cases.css";
@@ -7,11 +7,27 @@ import CaseAnimalDetails from "./CaseAnimalDetails";
 import CaseMedicalDetails from "./CaseMedicalDetails";
 import CaseOperationDetails from "./CaseOperationDetails";
 import CasePostOperationDetails from "./CasePostOperationDetails";
+import { Link } from "react-router-dom";
+
 const Addcase = () => {
-  const { user, logoutUser } = useContext(AuthContext);
+  const { user, logoutUser, type_of_case, status_of_case, mortality_of_case } =
+    useContext(AuthContext);
+    const [activeButton, setActiveButton] = useState(0);
+
+  const buttonStyle = {
+    border: "1px solid black",
+    fontSize: "16px",
+    fontWeight: "bold",
+    borderRadius: "2px",
+  };
+
+
+  const handleClick = (index) => {
+    setActiveButton(index);
+  };
 
   return user ? (
-    <div
+    <div 
       style={{
         display: "flex",
         flexDirection: "row",
@@ -30,96 +46,120 @@ const Addcase = () => {
         }}
       >
         <hr />
-        <h4 className="mx-4 px-2">Edit Case</h4>
-        <div className="case-lists mx-auto">
-          <div className="px-4">
-            <form>
-              <div className="row">
-                <div className="col">
-                  <label htmlFor="type_of_case" className="form-label">
-                    Type of case
-                  </label>
-                  <select
-                    id="type_of_case"
-                    className="form-select my-1"
-                    aria-label="Type of case"
-                    name="type_of_case"
-                  >
-                    <option selected>Choose</option>
-                    <option value="sterilization">Sterilization</option>
-                    <option value="OPD">OPD</option>
-                    <option value="IPD">IPD</option>
-                    <option value="vaccination">Vaccination</option>
-                  </select>
-                </div>
-                <div className="col">
-                  <label htmlFor="status_of_case" className="form-label">
-                    Status of case
-                  </label>
-                  <select
-                    id="status_of_case"
-                    className="form-select my-1"
-                    aria-label="Status of case"
-                    name="status_of_case"
-                  >
-                    <option defaultValue="">Choose</option>
-                    <option value="reported">Reported</option>
-                    <option value="admitted">Admitted</option>
-                    <option value="blood_test">Blood Test</option>
-                    <option value="operation">Operation</option>
-                    <option value="post_operation">Post Operation</option>
-                    <option value="released">Released</option>
-                  </select>
-                </div>
-                <div className="col">
-                  <label htmlFor="mortality_of_case" className="form-label">
-                    Mortality of case
-                  </label>
-                  <select
-                    id="mortality_of_case"
-                    className="form-select my-1"
-                    aria-label="Mortality of case"
-                    name="mortality_of_case"
-                  >
-                    <option defaultValue="">Choose</option>
-                    <option value="healthy">Healthy</option>
-                    <option value="unhealthy">Unhealthy</option>
-                    <option value="fatal">Fatal</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="cause_of_failure" className="form-label">
-                  Cause of Failure
-                </label>
-                <div className="row">
-                  <div className="col">
-                    <input
-                      className="form-control"
-                      id="cause_of_failure"
-                      placeholder="Cause of Failure"
-                    />
-                  </div>
-                  <div className="col-auto d-flex align-items-center">
-                    <button type="submit" className="btn btn-primary mx-1">
-                      Save
-                    </button>
-                    <button type="submit" className="btn btn-primary mx-1">
-                      Save &amp; Exit
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
+        <h4 className="mx-4 px-4">{type_of_case} Case</h4>
+        <Link className="float-right" to="/Dashboard">Dashboard</Link>
+        <div className="case-lists mx-auto px-4">
+          <div className="row mb-3">
+            <div className="col">
+              <label htmlFor="type_of_case" className="form-label">
+                Type of case
+              </label>
+              <input
+                id="type_of_case"
+                className="form-control my-1"
+                aria-label="Type of case"
+                name="type_of_case"
+                value={type_of_case}
+                readOnly
+              ></input>
+            </div>
+            <div className="col">
+              <label htmlFor="status_of_case" className="form-label">
+                Status of case
+              </label>
+              <input
+                id="status_of_case"
+                className="form-control my-1"
+                aria-label="Status of case"
+                name="status_of_case"
+                value={status_of_case}
+                readOnly
+              ></input>
+            </div>
+            <div className="col">
+              <label htmlFor="mortality_of_case" className="form-label">
+                Mortality of case
+              </label>
+              <input
+                id="mortality_of_case"
+                className="form-control my-1"
+                aria-label="Mortality of case"
+                name="mortality_of_case"
+                value={mortality_of_case}
+                readOnly
+              ></input>
+            </div>
           </div>
         </div>
 
-        <CaseReporterDetails />
-        <CaseAnimalDetails />
-        <CaseMedicalDetails />
-        <CaseOperationDetails />
-        <CasePostOperationDetails />
+        <div className="case-lists mx-auto">
+          <div className="mx-auto px-4 container-fluid">
+            {/* Change bar */}
+            <div
+              className="btn-group mt-2"
+              style={{ width: "100%" }}
+              role="group"
+              aria-label="Basic outlined example"
+            >
+              <button
+                style={buttonStyle}
+                type="button"
+                className={`btn btn-outline-secondary ${
+                  activeButton === 0 ? "active" : ""
+                }`}
+                onClick={() => handleClick(0)}
+              >
+                Reporter Details
+              </button>
+              <button
+                style={buttonStyle}
+                type="button"
+                className={`btn btn-outline-secondary ${
+                  activeButton === 1 ? "active" : ""
+                }`}
+                onClick={() => handleClick(1)}
+              >
+                Animal Details
+              </button>
+              <button
+                style={buttonStyle}
+                type="button"
+                className={`btn btn-outline-secondary ${
+                  activeButton === 2 ? "active" : ""
+                }`}
+                onClick={() => handleClick(2)}
+              >
+                Medical Details
+              </button>
+              <button
+                style={buttonStyle}
+                type="button"
+                className={`btn btn-outline-secondary ${
+                  activeButton === 3 ? "active" : ""
+                }`}
+                onClick={() => handleClick(3)}
+              >
+                Operation Details
+              </button>
+              <button
+                style={buttonStyle}
+                type="button"
+                className={`btn btn-outline-secondary ${
+                  activeButton === 4 ? "active" : ""
+                }`}
+                onClick={() => handleClick(4)}
+              >
+                Post Operation Details
+              </button>
+            </div>
+
+            {activeButton === 0 && <CaseReporterDetails />}
+            {activeButton === 1 && <CaseAnimalDetails />}
+            {activeButton === 2 && <CaseMedicalDetails />}
+            {activeButton === 3 && <CaseOperationDetails />}
+            {activeButton === 4 && <CasePostOperationDetails />}
+          </div>
+        </div>
       </div>
       <i
         className="fa-solid fa-right-from-bracket"
