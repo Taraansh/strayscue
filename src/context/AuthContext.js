@@ -8,7 +8,16 @@ export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
   const [date, setDate] = useState("");
-  const [time, setTime] = useState('');
+  const [time, setTime] = useState("");
+  const [caseId, setCaseID] = useState("");
+  const [reportingdetail_set, setReportingdetail_set] = useState([]);
+  const [animaldetail_set, setAnimaldetail_set] = useState([]);
+  const [medicaldetail_set, setMedicaldetail_set] = useState([]);
+  const [operationdetail_set, setOperationdetail_set] = useState([]);
+  const [postoperationdetail_set, setPostoperationdetail_set] = useState([]);
+  const [type_of_case, setType_of_case] = useState("");
+  const [status_of_case, setStatus_of_case] = useState("");
+  const [mortality_of_case, setMortality_of_case] = useState("");
   let [user, setUser] = useState(() =>
     localStorage.getItem("authTokens")
       ? jwtDecode(localStorage.getItem("authTokens"))
@@ -45,7 +54,9 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens(data);
       setUser(jwtDecode(data.access));
       const userEmail = jwtDecode(data.access).email;
+      const userId = jwtDecode(data.access).user_id;
       localStorage.setItem("email", userEmail);
+      localStorage.setItem("id", userId);
       navigate("/");
     }
   };
@@ -60,12 +71,7 @@ export const AuthProvider = ({ children }) => {
     navigate("/");
   };
 
-  let addNewCase = async (e) => {
-    e.preventDefault();
-    const typeOfCase = e.target.type_of_case.value;
-    const statusOfCase = e.target.status_of_case.value;
-    const mortalityOfCase = e.target.mortality_of_case.value;
-    const causeOfFailure = e.target.cause_of_failure.value;
+  let addNewCase = async (typeOfCase, statusOfCase, mortalityOfCase) => {
     const userAddingThisCase = localStorage.getItem("id");
 
     const response = await fetch("http://127.0.0.1:8000/cases/add/", {
@@ -77,27 +83,34 @@ export const AuthProvider = ({ children }) => {
         type_of_case: typeOfCase,
         status_of_case: statusOfCase,
         mortality_of_case: mortalityOfCase,
-        cause_of_failure: causeOfFailure,
         user_adding_this_case: userAddingThisCase,
       }),
     });
 
     let data = await response.json();
 
-    console.log(data)
+    console.log(data);
 
-    if (data.detail === "Invalid email or password") {
-        alert("Incorrect login ID or password.");
-      } else {
-        localStorage.setItem("authTokens", JSON.stringify(data));
-        setAuthTokens(data);
-        setUser(jwtDecode(data.access));
-        const userEmail = jwtDecode(data.access).email;
-        const userId = jwtDecode(data.access).user_id;
-        localStorage.setItem("email", userEmail);
-        localStorage.setItem("id", userId);
-        navigate("/Dashboard");
+    try {
+      if (data) {
+        if (data.error) {
+          console.error("Enter correct details");
+        } else {
+          setCaseID(data.case_id);
+          setReportingdetail_set(data.reportingdetail_set);
+          setAnimaldetail_set(data.animaldetail_set);
+          setMedicaldetail_set(data.medicaldetail_set);
+          setOperationdetail_set(data.operationdetail_set);
+          setPostoperationdetail_set(data.postoperationdetail_set);
+          setType_of_case(data.type_of_case);
+          setStatus_of_case(data.status_of_case);
+          setMortality_of_case(data.mortality_of_case);
+          navigate("/Addcase");
+        }
       }
+    } catch (error) {
+      console.error("An Error has occurred. Please Try again");
+    }
   };
 
   const updateToken = async () => {
@@ -130,6 +143,15 @@ export const AuthProvider = ({ children }) => {
     user: user,
     date: date,
     time: time,
+    caseId: caseId,
+    reportingdetail_set:reportingdetail_set,
+    animaldetail_set:animaldetail_set,
+    medicaldetail_set:medicaldetail_set,
+    operationdetail_set:operationdetail_set,
+    postoperationdetail_set:postoperationdetail_set,
+    type_of_case:type_of_case,
+    status_of_case:status_of_case,
+    mortality_of_case:mortality_of_case,
     authTokens: authTokens,
     loginUser: loginUser,
     logoutUser: logoutUser,
@@ -141,9 +163,12 @@ export const AuthProvider = ({ children }) => {
     const currentDate = `${current.getFullYear()}-${(current.getMonth() + 1)
       .toString()
       .padStart(2, "0")}-${current.getDate().toString().padStart(2, "0")}`;
-      const currentTime = `${current.getHours().toString().padStart(2, '0')}:${current.getMinutes().toString().padStart(2, '0')}`;
-      setDate(currentDate);
-      setTime(currentTime);
+    const currentTime = `${current
+      .getHours()
+      .toString()
+      .padStart(2, "0")}:${current.getMinutes().toString().padStart(2, "0")}`;
+    setDate(currentDate);
+    setTime(currentTime);
     const REFRESH_INTERVAL = 1000 * 60 * 4; // 4 minutes
     let interval = setInterval(() => {
       if (authTokens) {
