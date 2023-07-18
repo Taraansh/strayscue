@@ -8,13 +8,12 @@ export default function AddModal(props) {
 
   const handleNextClick = (e) => {
     e.preventDefault();
-    
+
     const typeOfCase = e.target.elements.type_of_case.value;
     const statusOfCase = e.target.elements.status_of_case.value;
     const mortalityOfCase = e.target.elements.mortality_of_case.value;
-    
+
     addNewCase(typeOfCase, statusOfCase, mortalityOfCase);
-    
   };
 
   return (
