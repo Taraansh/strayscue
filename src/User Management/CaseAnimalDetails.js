@@ -341,7 +341,7 @@ export default function CaseAnimalDetails() {
                 <h6>
                   <img
                     src={animalPicturesPreview}
-                    alt="Animal Picture Preview"
+                    alt="Animal Preview"
                     height="100px"
                   />
                 </h6>
