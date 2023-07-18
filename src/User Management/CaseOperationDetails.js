@@ -1,13 +1,133 @@
 import React from "react";
 import { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function CaseOperationDetails() {
-  const { date, time } = useContext(AuthContext);
+  const { case_id } = useContext(AuthContext);
+  const [vetName, setVetName] = useState(null);
+  const [operationDate, setOperationDate] = useState(null);
+  const [operationStartTime, setOperationStartTime] = useState(null);
+  const [operationEndTime, setOperationEndTime] = useState(null);
+  const [operationOutcome, setOperationOutcome] = useState(null);
+  const [medicalPrescriptionImage, setMedicalPrescriptionImage] =
+    useState(null);
+  const [medicalPrescriptionImagePreview, setMedicalPrescriptionImagePreview] =
+    useState(null);
+  const [treatmentRecordImage, setTreatmentRecordImage] = useState(null);
+  const [treatmentRecordImagePreview, setTreatmentRecordImagePreview] =
+    useState(null);
+  const [organImage, setOrganImage] = useState(null);
+  const [organImagePreview, setOrganImagePreview] = useState(null);
+  const navigate = useNavigate();
+
+  const handleMedicalPrescriptionImage = (event) => {
+    const file = event.target.files[0];
+    setMedicalPrescriptionImage(file);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setMedicalPrescriptionImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setMedicalPrescriptionImagePreview("");
+    }
+  };
+
+  const handleTreatmentRecordImage = (event) => {
+    const file = event.target.files[0];
+    setTreatmentRecordImage(file);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setTreatmentRecordImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setTreatmentRecordImagePreview("");
+    }
+  };
+
+  const handleOrganImage = (event) => {
+    const file = event.target.files[0];
+    setOrganImage(file);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setOrganImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setOrganImagePreview("");
+    }
+  };
+
+  const handleOperationDetails = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("medicalPrescriptionImage", medicalPrescriptionImage);
+    formData.append("treatmentRecordImage", treatmentRecordImage);
+    formData.append("organImage", organImage);
+    formData.append("vetName", vetName ? vetName : "");
+    formData.append(
+      "operationDate",
+      operationDate ? operationDate : "1111-11-11"
+    );
+    formData.append(
+      "operationStartTime",
+      operationStartTime ? operationStartTime : "11:11:11"
+    );
+    formData.append(
+      "operationEndTime",
+      operationEndTime ? operationEndTime : "11:11:11"
+    );
+    formData.append(
+      "operationOutcome",
+      operationOutcome ? operationOutcome : ""
+    );
+    formData.append("case_linked", case_id);
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/cases/addoperational/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status === 201) {
+        console.log("Success:", response.data);
+        alert("Operation Details Added Successfully");
+        // Handle success or display a success message.
+      } else {
+        console.error("Error:", response.data);
+        // Handle error or display an error message.
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error or display an error message.
+    }
+  };
+
+  const handleSaveExit = (e) => {
+    handleOperationDetails(e);
+    navigate("/Dashboard");
+  };
+
+  const handleSaveNext = (e) => {
+    handleOperationDetails(e);
+  };
 
   return (
     <div className="my-3">
-
       <h2>Operation Details :</h2>
       <div className="row">
         <div className="col">
@@ -22,6 +142,7 @@ export default function CaseOperationDetails() {
               aria-describedby="vetNameHelp"
               name="vetName"
               placeholder="Vet Name"
+              onChange={(e) => setVetName(e.target.value)}
             />
           </div>
         </div>
@@ -34,8 +155,8 @@ export default function CaseOperationDetails() {
               className="form-control"
               id="operationDate"
               name="operationDate"
-              value={date}
               type="date"
+              onChange={(e) => setOperationDate(e.target.value)}
             />
           </div>
         </div>
@@ -52,8 +173,8 @@ export default function CaseOperationDetails() {
                 className="form-control"
                 id="operationStartTime"
                 name="operationStartTime"
-                value={time}
                 type="time"
+                onChange={(e) => setOperationStartTime(e.target.value)}
               />
             </div>
             <div className="form-group col">
@@ -64,8 +185,8 @@ export default function CaseOperationDetails() {
                 className="form-control"
                 id="operationEndTime"
                 name="operationEndTime"
-                value={time}
                 type="time"
+                onChange={(e) => setOperationEndTime(e.target.value)}
               />
             </div>
           </div>
@@ -79,8 +200,9 @@ export default function CaseOperationDetails() {
             className="form-select"
             aria-label="Operation Outcome"
             name="operationOutcome"
+            onChange={(e) => setOperationOutcome(e.target.value)}
           >
-            {/* <option value="ChooseBreed">Choose Breed</option>*/}
+            <option value="">Choose Outcome</option>
             <option value="Success">Success</option>
             <option value="Failure">Failure</option>
             <option value="Complicated">Complicated</option>
@@ -101,10 +223,20 @@ export default function CaseOperationDetails() {
                 id="medicalPrescriptionImage"
                 accept="image/*"
                 name="medicalPrescriptionImage"
-                //   onChange={(event) => setFrontImageFile(event.target.files[0])}
+                onChange={handleMedicalPrescriptionImage}
               />
             </div>
           </div>
+          {medicalPrescriptionImagePreview && (
+            <div>
+              <h6>Preview:</h6>
+              <img
+                src={medicalPrescriptionImagePreview}
+                alt="Feeding Record Preview"
+                height="100px"
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -121,10 +253,20 @@ export default function CaseOperationDetails() {
                 id="treatmentRecordImage"
                 accept="image/*"
                 name="treatmentRecordImage"
-                //   onChange={(event) => setFrontImageFile(event.target.files[0])}
+                onChange={handleTreatmentRecordImage}
               />
             </div>
           </div>
+          {treatmentRecordImagePreview && (
+            <div>
+              <h6>Preview:</h6>
+              <img
+                src={treatmentRecordImagePreview}
+                alt="Treatment Records Preview"
+                height="100px"
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -141,10 +283,20 @@ export default function CaseOperationDetails() {
                 id="organImage"
                 accept="image/*"
                 name="organImage"
-                //   onChange={(event) => setFrontImageFile(event.target.files[0])}
+                onChange={handleOrganImage}
               />
             </div>
           </div>
+          {organImagePreview && (
+            <div>
+              <h6>Preview:</h6>
+              <img
+                src={organImagePreview}
+                alt="Organ Pictures Preview"
+                height="100px"
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -155,10 +307,18 @@ export default function CaseOperationDetails() {
         <button type="button" className="btn btn-primary mx-2">
           Exit
         </button>
-        <button type="submit" className="btn btn-primary float-end mx-1">
+        <button
+          type="submit"
+          className="btn btn-primary float-end mx-1"
+          onClick={handleSaveNext}
+        >
           Save & Next
         </button>
-        <button type="submit" className="btn btn-primary float-end mx-1">
+        <button
+          type="submit"
+          className="btn btn-primary float-end mx-1"
+          onClick={handleSaveExit}
+        >
           Save & Exit
         </button>
       </div>
