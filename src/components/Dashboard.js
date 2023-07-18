@@ -3,7 +3,9 @@ import AuthContext from "../context/AuthContext";
 import NavBar from "./NavBar";
 import { Link } from "react-router-dom";
 import AddModal from "../utils/AddModal";
+import CaseData from "../Case Management/CaseData";
 import "../styles/Cases.css";
+import logo from "../assets/profile.png";
 
 const Dashboard = () => {
   const { user, logoutUser } = useContext(AuthContext);
@@ -25,7 +27,9 @@ const Dashboard = () => {
           style={{
             paddingTop: "3rem",
             width: "100vw",
+            paddingLeft: "50px",
           }}
+          className="container"
         >
           <hr />
           <h4 style={{ marginLeft: "10px" }}>Dashboard</h4>
@@ -73,22 +77,40 @@ const Dashboard = () => {
               </Link>
               <input type="text" placeholder="Search by location, status etc" />
             </div>
+            {/* Displaying Case Data */}
+            <CaseData />
           </div>
         </div>
 
         <AddModal show={modalShow} onHide={() => setModalShow(false)} />
       </>
-      <i
-        className="fa-solid fa-right-from-bracket"
+      <div
         style={{
           position: "absolute",
           top: "15px",
-          right: "20px",
+          right: "2rem",
           fontSize: "20px",
           cursor: "pointer",
         }}
-        onClick={logoutUser}
-      ></i>
+      >
+        <span>
+          <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
+            Chetan
+          </label>
+          <img
+            width="17%"
+            style={{ marginRight: "1.5rem" }}
+            src={logo}
+            alt="Logo"
+          ></img>
+        </span>
+        <span>
+          <i
+            className="fa-solid fa-right-from-bracket"
+            onClick={logoutUser}
+          ></i>
+        </span>
+      </div>
     </div>
   ) : (
     <div>

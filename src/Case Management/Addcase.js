@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import "../styles/Cases.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import logo from "../assets/profile.png";
 
 const Addcase = () => {
   const {
@@ -582,11 +583,13 @@ const Addcase = () => {
           display: "flex",
           flexDirection: "column",
           width: "100vw",
+          paddingLeft: "50px",
         }}
       >
         <hr />
+        <div style={{ display: "flex", justifyContent: "space-between" }}></div>
         <h4 className="mx-4 px-4">{type_of_case} Case</h4>
-        <Link className="float-right" to="/Dashboard">
+        <Link style={{ marginRight: "2rem" }} to="/Dashboard">
           Dashboard
         </Link>
         <div className="case-lists mx-auto px-4">
@@ -709,7 +712,7 @@ const Addcase = () => {
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="reporterName" className="form-label">
-                            Reporter Name<span style={{ color: 'red' }}>*</span>
+                            Reporter Name<span style={{ color: "red" }}>*</span>
                           </label>
                           <input
                             type="text"
@@ -727,7 +730,7 @@ const Addcase = () => {
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="contact" className="form-label">
-                            Phone Number<span style={{ color: 'red' }}>*</span>
+                            Phone Number<span style={{ color: "red" }}>*</span>
                           </label>
                           <input
                             type="text"
@@ -784,7 +787,7 @@ const Addcase = () => {
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="address" className="form-label">
-                            Landmark<span style={{ color: 'red' }}>*</span>
+                            Landmark<span style={{ color: "red" }}>*</span>
                           </label>
                           <input
                             type="text"
@@ -801,7 +804,7 @@ const Addcase = () => {
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="pincode" className="form-label">
-                            Pincode<span style={{ color: 'red' }}>*</span>
+                            Pincode<span style={{ color: "red" }}>*</span>
                           </label>
                           <input
                             type="text"
@@ -818,7 +821,7 @@ const Addcase = () => {
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="location" className="form-label">
-                            Location<span style={{ color: 'red' }}>*</span>
+                            Location<span style={{ color: "red" }}>*</span>
                           </label>
                           <input
                             type="text"
@@ -1965,17 +1968,33 @@ const Addcase = () => {
           </div>
         </div>
       </div>
-      <i
-        className="fa-solid fa-right-from-bracket"
+      <div
         style={{
           position: "absolute",
           top: "15px",
-          right: "20px",
+          right: "2rem",
           fontSize: "20px",
           cursor: "pointer",
         }}
-        onClick={logoutUser}
-      ></i>
+      >
+        <span>
+          <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
+            Chetan
+          </label>
+          <img
+            width="17%"
+            style={{ marginRight: "1.5rem" }}
+            src={logo}
+            alt="Logo"
+          ></img>
+        </span>
+        <span>
+          <i
+            className="fa-solid fa-right-from-bracket"
+            onClick={logoutUser}
+          ></i>
+        </span>
+      </div>
     </div>
   ) : (
     <div>
