@@ -7,14 +7,12 @@ const AuthContext = createContext();
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [caseId, setCaseID] = useState("");
-  const [reportingdetail_set, setReportingdetail_set] = useState([]);
-  const [animaldetail_set, setAnimaldetail_set] = useState([]);
-  const [medicaldetail_set, setMedicaldetail_set] = useState([]);
-  const [operationdetail_set, setOperationdetail_set] = useState([]);
-  const [postoperationdetail_set, setPostoperationdetail_set] = useState([]);
+  const [case_id, setCaseID] = useState("");
+  // const [reportingdetail_set, setReportingdetail_set] = useState([]);
+  // const [animaldetail_set, setAnimaldetail_set] = useState([]);
+  // const [medicaldetail_set, setMedicaldetail_set] = useState([]);
+  // const [operationdetail_set, setOperationdetail_set] = useState([]);
+  // const [postoperationdetail_set, setPostoperationdetail_set] = useState([]);
   const [type_of_case, setType_of_case] = useState("");
   const [status_of_case, setStatus_of_case] = useState("");
   const [mortality_of_case, setMortality_of_case] = useState("");
@@ -97,11 +95,12 @@ export const AuthProvider = ({ children }) => {
           console.error("Enter correct details");
         } else {
           setCaseID(data.case_id);
-          setReportingdetail_set(data.reportingdetail_set);
-          setAnimaldetail_set(data.animaldetail_set);
-          setMedicaldetail_set(data.medicaldetail_set);
-          setOperationdetail_set(data.operationdetail_set);
-          setPostoperationdetail_set(data.postoperationdetail_set);
+          console.log(data.case_id)
+          // setReportingdetail_set(data.reportingdetail_set);
+          // setAnimaldetail_set(data.animaldetail_set);
+          // setMedicaldetail_set(data.medicaldetail_set);
+          // setOperationdetail_set(data.operationdetail_set);
+          // setPostoperationdetail_set(data.postoperationdetail_set);
           setType_of_case(data.type_of_case);
           setStatus_of_case(data.status_of_case);
           setMortality_of_case(data.mortality_of_case);
@@ -141,14 +140,12 @@ export const AuthProvider = ({ children }) => {
 
   let contextData = {
     user: user,
-    date: date,
-    time: time,
-    caseId: caseId,
-    reportingdetail_set:reportingdetail_set,
-    animaldetail_set:animaldetail_set,
-    medicaldetail_set:medicaldetail_set,
-    operationdetail_set:operationdetail_set,
-    postoperationdetail_set:postoperationdetail_set,
+    case_id: case_id,
+    // reportingdetail_set:reportingdetail_set,
+    // animaldetail_set:animaldetail_set,
+    // medicaldetail_set:medicaldetail_set,
+    // operationdetail_set:operationdetail_set,
+    // postoperationdetail_set:postoperationdetail_set,
     type_of_case:type_of_case,
     status_of_case:status_of_case,
     mortality_of_case:mortality_of_case,
@@ -159,16 +156,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const current = new Date();
-    const currentDate = `${current.getFullYear()}-${(current.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}-${current.getDate().toString().padStart(2, "0")}`;
-    const currentTime = `${current
-      .getHours()
-      .toString()
-      .padStart(2, "0")}:${current.getMinutes().toString().padStart(2, "0")}`;
-    setDate(currentDate);
-    setTime(currentTime);
     const REFRESH_INTERVAL = 1000 * 60 * 4; // 4 minutes
     let interval = setInterval(() => {
       if (authTokens) {
