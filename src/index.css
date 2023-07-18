@@ -1,8 +1,10 @@
 .form-floating > label {
   left: 9px;
 }
-ul
-{
+::-webkit-scrollbar {
+  display: none;
+}
+ul {
   list-style-type: none;
 }
 .form-floating {
@@ -10,7 +12,8 @@ ul
 }
 body {
   background: rgb(238, 231, 218);
-  
+
+  /* font-family: ; */
 }
 .bottom-modal {
   position: fixed;
