@@ -587,11 +587,13 @@ const Addcase = () => {
         }}
       >
         <hr />
-        <div style={{ display: "flex", justifyContent: "space-between" }}></div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h4 className="mx-4 px-4">{type_of_case} Case</h4>
         <Link style={{ marginRight: "2rem" }} to="/Dashboard">
           Dashboard
         </Link>
+        </div>
+        
         <div className="case-lists mx-auto px-4">
           <div className="row mb-3">
             <div className="col">
