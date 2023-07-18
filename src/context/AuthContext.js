@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
@@ -59,15 +59,18 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  let logoutUser = (e) => {
-    e.preventDefault();
-    localStorage.removeItem("authTokens");
-    localStorage.removeItem("email");
-    localStorage.removeItem("id");
-    setAuthTokens(null);
-    setUser(null);
-    navigate("/");
-  };
+  const logoutUser = useCallback(
+    (e) => {
+      e.preventDefault();
+      localStorage.removeItem("authTokens");
+      localStorage.removeItem("email");
+      localStorage.removeItem("id");
+      setAuthTokens(null);
+      setUser(null);
+      navigate("/");
+    },
+    [setAuthTokens, setUser, navigate]
+  );
 
   let addNewCase = async (typeOfCase, statusOfCase, mortalityOfCase) => {
     const userAddingThisCase = localStorage.getItem("id");
@@ -95,7 +98,7 @@ export const AuthProvider = ({ children }) => {
           console.error("Enter correct details");
         } else {
           setCaseID(data.case_id);
-          console.log(data.case_id)
+          console.log(data.case_id);
           // setReportingdetail_set(data.reportingdetail_set);
           // setAnimaldetail_set(data.animaldetail_set);
           // setMedicaldetail_set(data.medicaldetail_set);
@@ -112,7 +115,8 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updateToken = async () => {
+
+  const updateToken = useCallback(async () => {
     const response = await fetch(
       "http://127.0.0.1:8000/authorize/token/refresh/",
       {
@@ -136,7 +140,7 @@ export const AuthProvider = ({ children }) => {
     if (loading) {
       setLoading(false);
     }
-  };
+  }, [authTokens, setAuthTokens, setUser, logoutUser, loading]);
 
   let contextData = {
     user: user,
@@ -146,9 +150,9 @@ export const AuthProvider = ({ children }) => {
     // medicaldetail_set:medicaldetail_set,
     // operationdetail_set:operationdetail_set,
     // postoperationdetail_set:postoperationdetail_set,
-    type_of_case:type_of_case,
-    status_of_case:status_of_case,
-    mortality_of_case:mortality_of_case,
+    type_of_case: type_of_case,
+    status_of_case: status_of_case,
+    mortality_of_case: mortality_of_case,
     authTokens: authTokens,
     loginUser: loginUser,
     logoutUser: logoutUser,
