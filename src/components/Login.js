@@ -33,7 +33,16 @@ const Login = () => {
 
   return (
     <div>
-      <Container style={{ minHeight: "100vh", display: "flex" }}>
+      <Container
+        style={{
+          minHeight: "100vh",
+          minWidth: "100%",
+          display: "flex",
+          backgroundImage:
+            "linear-gradient(45deg, rgb(50, 143, 138), rgb(245, 145, 32))",
+        }}
+      >
+        {" "}
         <Card
           style={{
             border: "1px solid",
