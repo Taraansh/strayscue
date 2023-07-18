@@ -24,7 +24,6 @@ export default function CaseReporterDetails() {
   const [consentFormImagePreview, setConsentFormImagePreview] = useState("");
   const navigate = useNavigate();
 
-
   const handleFrontImageChange = (event) => {
     const file = event.target.files[0];
     setFrontImageFile(file);
@@ -79,12 +78,15 @@ export default function CaseReporterDetails() {
     formData.append("consentFormImage", consentFormImageFile);
     formData.append("reporterName", reporterName);
     formData.append("reporterContact", reporterContact);
-    formData.append("reporterAltContact", reporterAltContact ? reporterAltContact : "");
+    formData.append(
+      "reporterAltContact",
+      reporterAltContact ? reporterAltContact : ""
+    );
     formData.append("reporterEmail", reporterEmail ? reporterEmail : "");
     formData.append("location", location);
     formData.append("pincode", pincode);
     formData.append("landmark", landmark);
-    formData.append("reportedDate", reportedDate ? reportedDate : '1111-11-11');
+    formData.append("reportedDate", reportedDate ? reportedDate : "1111-11-11");
     formData.append("reportedTime", reportedTime ? reportedTime : "11:11:11");
     formData.append("pickupDate", pickupDate ? pickupDate : "1111-11-11");
     formData.append("pickupTime", pickupTime ? pickupTime : "11:11:11");
@@ -102,7 +104,7 @@ export default function CaseReporterDetails() {
     // console.log(formData.get("pickupDate"))
     // console.log(formData.get("pickupTime"))
     // console.log(formData.get("case_linked"))
-    
+
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/cases/addreporter/",
@@ -124,7 +126,7 @@ export default function CaseReporterDetails() {
     } catch (error) {
       console.error("Error:", error);
       // Handle error or display an error message.
-    }    
+    }
   };
 
   // const handleReportingDetails = (e) => {

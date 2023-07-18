@@ -42,7 +42,10 @@ export default function CaseAnimalDetails() {
     formData.append("animalSpecies", animalSpecies ? animalSpecies : "");
     formData.append("animalBreed", animalBreed ? animalBreed : "");
     formData.append("animalAge", animalAge ? animalAge : "");
-    formData.append("animalTemperament",animalTemperament ? animalTemperament : "");
+    formData.append(
+      "animalTemperament",
+      animalTemperament ? animalTemperament : ""
+    );
     formData.append("animalGender", animalGender ? animalGender : "");
     formData.append("animalPregnant", animalPregnant ? animalPregnant : "");
     formData.append("animalMarking", animalMarking ? animalMarking : "");

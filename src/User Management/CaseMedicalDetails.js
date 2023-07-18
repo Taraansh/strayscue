@@ -1,10 +1,10 @@
-import React, { useContext, useState }from "react";
+import React, { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function CaseMedicalDetails() {
-  const { case_id } = useContext(AuthContext)
+  const { case_id } = useContext(AuthContext);
   const [medicalHistory, setMedicalHistory] = useState(null);
   const [vaccinationStatus, setVaccinationStatus] = useState(null);
   const [dewormed, setDewormed] = useState(null);
@@ -12,7 +12,8 @@ export default function CaseMedicalDetails() {
   const [otherDetails, setOtherDetails] = useState(null);
   const [admissionDate, setAdmissionDate] = useState(null);
   const [feedingRecordImage, setFeedingRecordImage] = useState(null);
-  const [feedingRecordImagePreview, setFeedingRecordImagePreview] = useState("");
+  const [feedingRecordImagePreview, setFeedingRecordImagePreview] =
+    useState("");
   const [bloodReportImage, setBloodReportImage] = useState(null);
   const [bloodReportImagePreview, setBloodReportImagePreview] = useState("");
   const navigate = useNavigate();
@@ -47,52 +48,57 @@ export default function CaseMedicalDetails() {
     }
   };
 
-const handleMedicalDetails = async (e) => {
-  e.preventDefault();
+  const handleMedicalDetails = async (e) => {
+    e.preventDefault();
 
-  const formData = new FormData();
-  formData.append("bloodReportImage", bloodReportImage);
-  formData.append("feedingRecordImage", feedingRecordImage);
-  formData.append("medicalHistory", medicalHistory ? medicalHistory : "");
-  formData.append("vaccinationStatus", vaccinationStatus ? vaccinationStatus : "");
-  formData.append("dewormed", dewormed ? dewormed : "");
-  formData.append("fitForSurgery", fitForSurgery ? fitForSurgery : "");
-  formData.append("otherDetails", otherDetails ? otherDetails : "");
-  formData.append("admissionDate", admissionDate ? admissionDate : "1111-11-11");
-  formData.append("case_linked", case_id);
-
-  console.log(formData.get("medicalHistory"))
-  console.log(formData.get("vaccinationStatus"))
-  console.log(formData.get("dewormed"))
-  console.log(formData.get("fitForSurgery"))
-  console.log(formData.get("otherDetails"))
-  console.log(formData.get("admissionDate"))
-  console.log(formData.get("case_linked"))
-
-  try {
-    const response = await axios.post(
-      "http://127.0.0.1:8000/cases/addmedical/",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+    const formData = new FormData();
+    formData.append("bloodReportImage", bloodReportImage);
+    formData.append("feedingRecordImage", feedingRecordImage);
+    formData.append("medicalHistory", medicalHistory ? medicalHistory : "");
+    formData.append(
+      "vaccinationStatus",
+      vaccinationStatus ? vaccinationStatus : ""
     );
-    if (response.status === 201) {
-      console.log("Success:", response.data);
-      alert("Medical Details Added Successfully");
-      // Handle success or display a success message.
-    } else {
-      console.error("Error:", response.data);
+    formData.append("dewormed", dewormed ? dewormed : "");
+    formData.append("fitForSurgery", fitForSurgery ? fitForSurgery : "");
+    formData.append("otherDetails", otherDetails ? otherDetails : "");
+    formData.append(
+      "admissionDate",
+      admissionDate ? admissionDate : "1111-11-11"
+    );
+    formData.append("case_linked", case_id);
+
+    console.log(formData.get("medicalHistory"));
+    console.log(formData.get("vaccinationStatus"));
+    console.log(formData.get("dewormed"));
+    console.log(formData.get("fitForSurgery"));
+    console.log(formData.get("otherDetails"));
+    console.log(formData.get("admissionDate"));
+    console.log(formData.get("case_linked"));
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/cases/addmedical/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (response.status === 201) {
+        console.log("Success:", response.data);
+        alert("Medical Details Added Successfully");
+        // Handle success or display a success message.
+      } else {
+        console.error("Error:", response.data);
+        // Handle error or display an error message.
+      }
+    } catch (error) {
+      console.error("Error:", error);
       // Handle error or display an error message.
     }
-  } catch (error) {
-    console.error("Error:", error);
-    // Handle error or display an error message.
-  }    
-
-}
+  };
 
   const handleSaveExit = (e) => {
     handleMedicalDetails(e);
@@ -105,7 +111,6 @@ const handleMedicalDetails = async (e) => {
 
   return (
     <div className="my-3">
-
       <h2>Medical Details:</h2>
       <div className="row">
         <div className="col">
@@ -120,7 +125,7 @@ const handleMedicalDetails = async (e) => {
               aria-describedby="medicalHistoryHelp"
               name="medicalHistory"
               placeholder="Medical History / Other Issues"
-              onChange={(e)=> setMedicalHistory(e.target.value)}
+              onChange={(e) => setMedicalHistory(e.target.value)}
             />
           </div>
         </div>
@@ -134,8 +139,7 @@ const handleMedicalDetails = async (e) => {
               className="form-select"
               aria-label="Animal Vaccinated"
               name="vaccinationStatus"
-              onChange={(e)=> setVaccinationStatus(e.target.value)}
-
+              onChange={(e) => setVaccinationStatus(e.target.value)}
             >
               <option value="">Choose Vaccination Status</option>
               <option value="Already Done">Already Done</option>
@@ -155,8 +159,7 @@ const handleMedicalDetails = async (e) => {
               className="form-select"
               aria-label="Animal Dewormed"
               name="dewormed"
-              onChange={(e)=> setDewormed(e.target.value)}
-
+              onChange={(e) => setDewormed(e.target.value)}
             >
               <option value="">Choose</option>
               <option value="Already Done">Already Done</option>
@@ -179,8 +182,7 @@ const handleMedicalDetails = async (e) => {
               className="form-select"
               aria-label="Animal Fit for Surgery"
               name="fitForSurgery"
-              onChange={(e)=> setFitForSurgery(e.target.value)}
-
+              onChange={(e) => setFitForSurgery(e.target.value)}
             >
               <option value="">Choose</option>
               <option value="Yes">Yes</option>
@@ -202,7 +204,6 @@ const handleMedicalDetails = async (e) => {
               name="otherDetails"
               placeholder="Other Details"
               onChange={(e) => setOtherDetails(e.target.value)}
-
             />
           </div>
         </div>
@@ -217,7 +218,6 @@ const handleMedicalDetails = async (e) => {
               name="admissionDate"
               type="date"
               onChange={(e) => setAdmissionDate(e.target.value)}
-
             />
           </div>
         </div>
@@ -240,14 +240,16 @@ const handleMedicalDetails = async (e) => {
               />
             </div>
           </div>
-          {
-            bloodReportImagePreview && (
-              <div>
-                <h6>Preview:</h6>
-                <img src={bloodReportImagePreview} alt="Blood Report Preview" height="100px"/>
-              </div>
-            )
-          }
+          {bloodReportImagePreview && (
+            <div>
+              <h6>Preview:</h6>
+              <img
+                src={bloodReportImagePreview}
+                alt="Blood Report Preview"
+                height="100px"
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -268,14 +270,16 @@ const handleMedicalDetails = async (e) => {
               />
             </div>
           </div>
-          {
-            feedingRecordImagePreview && (
-              <div>
-                <h6>Preview:</h6>
-                <img src={feedingRecordImagePreview} alt="Feeding Record Preview" height="100px"/>
-              </div>
-            )
-          }
+          {feedingRecordImagePreview && (
+            <div>
+              <h6>Preview:</h6>
+              <img
+                src={feedingRecordImagePreview}
+                alt="Feeding Record Preview"
+                height="100px"
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -286,10 +290,18 @@ const handleMedicalDetails = async (e) => {
         <button type="button" className="btn btn-primary mx-2">
           Exit
         </button>
-        <button type="submit" className="btn btn-primary float-end mx-1" onClick={handleSaveNext}>
+        <button
+          type="submit"
+          className="btn btn-primary float-end mx-1"
+          onClick={handleSaveNext}
+        >
           Save & Next
         </button>
-        <button type="submit" className="btn btn-primary float-end mx-1" onClick={handleSaveExit}>
+        <button
+          type="submit"
+          className="btn btn-primary float-end mx-1"
+          onClick={handleSaveExit}
+        >
           Save & Exit
         </button>
       </div>
