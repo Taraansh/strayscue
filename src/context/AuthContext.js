@@ -8,6 +8,7 @@ export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
   const [case_id, setCaseID] = useState("");
+  const [allCases, setAllCases] = useState([])
   // const [reportingdetail_set, setReportingdetail_set] = useState([]);
   // const [animaldetail_set, setAnimaldetail_set] = useState([]);
   // const [medicaldetail_set, setMedicaldetail_set] = useState([]);
@@ -115,6 +116,18 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const getAllCases = useCallback(async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/cases/allcases/${localStorage.getItem('email')}/`);
+      const data = await response.json();
+      console.log(data);
+      setAllCases(data);
+    } catch (error) {
+      // Handle error, e.g., set an error state or display an error message
+      console.error('Error fetching cases:', error);
+    }
+  }, []);
+
   const updateToken = useCallback(async () => {
     const response = await fetch(
       "http://127.0.0.1:8000/authorize/token/refresh/",
@@ -144,6 +157,7 @@ export const AuthProvider = ({ children }) => {
   let contextData = {
     user: user,
     case_id: case_id,
+    allCases: allCases,
     // reportingdetail_set:reportingdetail_set,
     // animaldetail_set:animaldetail_set,
     // medicaldetail_set:medicaldetail_set,
@@ -156,6 +170,7 @@ export const AuthProvider = ({ children }) => {
     loginUser: loginUser,
     logoutUser: logoutUser,
     addNewCase: addNewCase,
+    getAllCases: getAllCases,
   };
 
   useEffect(() => {
