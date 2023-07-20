@@ -123,6 +123,11 @@ const Addcase = () => {
     }
   };
 
+  const handleDeleteFrontImage = () => {
+    setFrontImageFile(null);
+    setFrontImagePreview('');
+  };
+
   const handleBackImageChange = (event) => {
     const file = event.target.files[0];
     setBackImageFile(file);
@@ -138,6 +143,11 @@ const Addcase = () => {
     }
   };
 
+  const handleDeleteBackImage = () => {
+    setBackImageFile(null);
+    setBackImagePreview('');
+  };
+
   const handleConsentFormImageChange = (event) => {
     const file = event.target.files[0];
     setConsentFormImageFile(file);
@@ -151,6 +161,11 @@ const Addcase = () => {
     } else {
       setConsentFormImagePreview("");
     }
+  };
+
+  const handleDeleteConsentFormImage = () => {
+    setConsentFormImageFile(null);
+    setConsentFormImagePreview('');
   };
 
   // Animal Details Image Management
@@ -169,6 +184,11 @@ const Addcase = () => {
     }
   };
 
+  const handleDeleteAnimalPicture = () => {
+    setAnimalPictures(null);
+    setAnimalPicturesPreview('');
+  };
+
   // Medical Details Image Management
   const handleFeedingRecordImage = (event) => {
     const file = event.target.files[0];
@@ -185,6 +205,11 @@ const Addcase = () => {
     }
   };
 
+  const handleDeleteFeedingRecordImage = () => {
+    setFeedingRecordImage(null);
+    setFeedingRecordImagePreview('');
+  };
+
   const handleBloodReportImage = (event) => {
     const file = event.target.files[0];
     setBloodReportImage(file);
@@ -198,6 +223,11 @@ const Addcase = () => {
     } else {
       setBloodReportImagePreview("");
     }
+  };
+
+  const handleDeleteBloodReportImage = () => {
+    setBloodReportImage(null);
+    setBloodReportImagePreview('');
   };
 
   // Operation Details Image Management
@@ -216,6 +246,11 @@ const Addcase = () => {
     }
   };
 
+  const handleDeleteMedicalPrescriptionImage = () => {
+    setMedicalPrescriptionImage(null);
+    setMedicalPrescriptionImagePreview('');
+  };
+
   const handleTreatmentRecordImage = (event) => {
     const file = event.target.files[0];
     setTreatmentRecordImage(file);
@@ -231,6 +266,11 @@ const Addcase = () => {
     }
   };
 
+  const handleDeleteTreatmentRecordImage = () => {
+    setTreatmentRecordImage(null);
+    setTreatmentRecordImagePreview('');
+  };
+
   const handleOrganImage = (event) => {
     const file = event.target.files[0];
     setOrganImage(file);
@@ -244,6 +284,11 @@ const Addcase = () => {
     } else {
       setOrganImagePreview("");
     }
+  };
+
+  const handleDeleteOrganImage = () => {
+    setOrganImage(null);
+    setOrganImagePreview('');
   };
 
   // Post Operation Details Image Management
@@ -262,6 +307,11 @@ const Addcase = () => {
     }
   };
 
+  const handleDeletePopPictures= () => {
+    setPopPictures(null);
+    setPopPicturesPreview('');
+  };
+
   const handleReleasePictures = (event) => {
     const file = event.target.files[0];
     setReleasePictures(file);
@@ -275,6 +325,11 @@ const Addcase = () => {
     } else {
       setReleasePicturesPreview("");
     }
+  };
+
+  const handleDeleteReleasePictures = () => {
+    setReleasePictures(null);
+    setReleasePicturesPreview('');
   };
 
   // Handling Reporting Details
@@ -314,6 +369,7 @@ const Addcase = () => {
       if (response.status === 201) {
         console.log("Success:", response.data);
         alert("Reporter Added Successfully");
+        setActiveButton(1);
         // Handle success or display a success message.
       } else {
         console.error("Error:", response.data);
@@ -324,6 +380,7 @@ const Addcase = () => {
       // Handle error or display an error message.
     }
   };
+
   // Handling Animal Details
   const handleAnimalDetails = async (e) => {
     e.preventDefault();
@@ -360,6 +417,7 @@ const Addcase = () => {
       if (response.status === 201) {
         console.log("Success:", response.data);
         alert("Animal Details Added Successfully");
+        setActiveButton(2);
         // Handle success or display a success message.
       } else {
         console.error("Error:", response.data);
@@ -413,6 +471,7 @@ const Addcase = () => {
       if (response.status === 201) {
         console.log("Success:", response.data);
         alert("Medical Details Added Successfully");
+        setActiveButton(3);
         // Handle success or display a success message.
       } else {
         console.error("Error:", response.data);
@@ -464,6 +523,7 @@ const Addcase = () => {
       if (response.status === 201) {
         console.log("Success:", response.data);
         alert("Operation Details Added Successfully");
+        setActiveButton(4);
         // Handle success or display a success message.
       } else {
         console.error("Error:", response.data);
@@ -505,6 +565,7 @@ const Addcase = () => {
       if (response.status === 201) {
         console.log("Success:", response.data);
         alert("Post Operation Details Added Successfully");
+        navigate("/Dashboard");
         // Handle success or display a success message.
       } else {
         console.error("Error:", response.data);
@@ -514,56 +575,6 @@ const Addcase = () => {
       console.error("Error:", error);
       // Handle error or display an error message.
     }
-  };
-
-  // Handling Reporting Details buttons
-  const handleReportingDetailSaveExit = (e) => {
-    handleReportingDetails(e);
-    navigate("/Dashboard");
-  };
-
-  const handleReportingDetailSaveNext = (e) => {
-    setActiveButton(1);
-    handleReportingDetails(e);
-  };
-
-  // Handling Animal Details buttons
-  const handleAnimalDetailSaveExit = (e) => {
-    handleAnimalDetails(e);
-    navigate("/Dashboard");
-  };
-
-  const handleAnimalDetailSaveNext = (e) => {
-    setActiveButton(2);
-    handleAnimalDetails(e);
-  };
-
-  // Handling Medical Details buttons
-  const handleMedicalDetailSaveExit = (e) => {
-    handleMedicalDetails(e);
-    navigate("/Dashboard");
-  };
-
-  const handleMedicalDetailSaveNext = (e) => {
-    setActiveButton(3);
-    handleMedicalDetails(e);
-  };
-
-  // Handling Operation Details buttons
-  const handleOperationDetailSaveExit = (e) => {
-    handleOperationDetails(e);
-    navigate("/Dashboard");
-  };
-
-  const handleOperationDetailSaveNext = (e) => {
-    setActiveButton(4);
-    handleOperationDetails(e);
-  };
-
-  // Handling Post Operation Details buttons
-  const handlePostOperationSaveExit = (e) => {
-    handlePostOperationDetails(e);
-    navigate("/Dashboard");
   };
 
   return user ? (
@@ -587,11 +598,13 @@ const Addcase = () => {
         }}
       >
         <hr />
-        <div style={{ display: "flex", justifyContent: "space-between" }}></div>
-        <h4 className="mx-4 px-4">{type_of_case} Case</h4>
-        <Link style={{ marginRight: "2rem" }} to="/Dashboard">
-          Dashboard
-        </Link>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <h4 className="mx-4 px-4">{type_of_case} Case</h4>
+          <Link style={{ marginRight: "2rem" }} to="/Dashboard">
+            Dashboard
+          </Link>
+        </div>
+
         <div className="case-lists mx-auto px-4">
           <div className="row mb-3">
             <div className="col">
@@ -697,17 +710,11 @@ const Addcase = () => {
               </button>
             </div>
 
-            {/* {activeButton === 0 && <CaseReporterDetails />}
-            {activeButton === 1 && <CaseAnimalDetails />}
-            {activeButton === 2 && <CaseMedicalDetails />}
-            {activeButton === 3 && <CaseOperationDetails />}
-            {activeButton === 4 && <CasePostOperationDetails />} */}
-
             {activeButton === 0 && (
               <>
                 <div className="my-3">
                   <h2>Reporter Details:</h2>
-                  <form>
+                  <form onSubmit={handleReportingDetails}>
                     <div className="row">
                       <div className="col">
                         <div className="mb-3">
@@ -915,6 +922,7 @@ const Addcase = () => {
                               alt="Front Preview"
                               height="100px"
                             />
+                             <button onClick={handleDeleteFrontImage}>Delete</button>
                           </div>
                         )}
                       </div>
@@ -942,6 +950,7 @@ const Addcase = () => {
                               alt="Back Preview"
                               height="100px"
                             />
+                            <button onClick={handleDeleteBackImage}>Delete</button>
                           </div>
                         )}
                       </div>
@@ -974,30 +983,40 @@ const Addcase = () => {
                             alt="Consent Form Preview"
                             height="100px"
                           />
+                          <button onClick={handleDeleteConsentFormImage}>Delete</button>
                         </div>
                       )}
                     </div>
 
                     <div className="my-1">
-                      <button type="button" className="btn btn-primary">
-                        Previous
+                      <button
+                        type="button"
+                        className="btn btn-primary mx-2"
+                        onClick={() => {
+                          setActiveButton(1);
+                        }}
+                      >
+                        Next
                       </button>
-                      <button type="button" className="btn btn-primary mx-2">
+                      <button
+                        type="submit"
+                        className="btn btn-primary float-end mx-1"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-primary float-end mx-1"
+                        onClick={() => {
+                          const confirmDelete = window.confirm(
+                            "Are you sure you want to Exit? All the details on this page will be lost"
+                          );
+                          if (confirmDelete) {
+                            navigate("/Dashboard");
+                          }
+                        }}
+                      >
                         Exit
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-primary float-end mx-1"
-                        onClick={handleReportingDetailSaveNext}
-                      >
-                        Save & Next
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-primary float-end mx-1"
-                        onClick={handleReportingDetailSaveExit}
-                      >
-                        Save & Exit
                       </button>
                     </div>
                   </form>
@@ -1009,7 +1028,7 @@ const Addcase = () => {
                 <div className="my-3">
                   <h2>Further Animal Details :</h2>
                   <h5>Animal ID:</h5>
-                  <form>
+                  <form onSubmit={handleAnimalDetails}>
                     <div className="row">
                       <div className="col">
                         <div className="mb-3">
@@ -1264,37 +1283,55 @@ const Addcase = () => {
                       </div>
                       {animalPicturesPreview && (
                         <div>
-                          <h6>
+                          <h6>Preview:</h6>
                             <img
                               src={animalPicturesPreview}
                               alt="Animal Preview"
                               height="100px"
                             />
-                          </h6>
+                          <button onClick={handleDeleteAnimalPicture}>Delete</button>
                         </div>
                       )}
                     </div>
 
                     <div className="my-2">
-                      <button type="button" className="btn btn-primary">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={() => {
+                          setActiveButton(0);
+                        }}
+                      >
                         Previous
                       </button>
-                      <button type="button" className="btn btn-primary mx-2">
+                      <button
+                        type="button"
+                        className="btn btn-primary mx-2"
+                        onClick={() => {
+                          setActiveButton(2);
+                        }}
+                      >
+                        Next
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn btn-primary float-end mx-1"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-primary float-end mx-1"
+                        onClick={() => {
+                          const confirmDelete = window.confirm(
+                            "Are you sure you want to Exit? All the details on this page will be lost"
+                          );
+                          if (confirmDelete) {
+                            navigate("/Dashboard");
+                          }
+                        }}
+                      >
                         Exit
-                      </button>
-                      <button
-                        type="submit"
-                        className="btn btn-primary float-end mx-1"
-                        onClick={handleAnimalDetailSaveNext}
-                      >
-                        Save & Next
-                      </button>
-                      <button
-                        type="submit"
-                        className="btn btn-primary float-end mx-1"
-                        onClick={handleAnimalDetailSaveExit}
-                      >
-                        Save & Exit
                       </button>
                     </div>
                   </form>
@@ -1305,7 +1342,7 @@ const Addcase = () => {
               <>
                 <div className="my-3">
                   <h2>Medical Details:</h2>
-                  <form>
+                  <form onSubmit={handleMedicalDetails}>
                     <div className="row">
                       <div className="col">
                         <div className="mb-3">
@@ -1457,6 +1494,7 @@ const Addcase = () => {
                               alt="Blood Report Preview"
                               height="100px"
                             />
+                            <button onClick={handleDeleteBloodReportImage}>Delete</button>
                           </div>
                         )}
                       </div>
@@ -1490,31 +1528,50 @@ const Addcase = () => {
                               alt="Feeding Record Preview"
                               height="100px"
                             />
+                            <button onClick={handleDeleteFeedingRecordImage}>Delete</button>
                           </div>
                         )}
                       </div>
                     </div>
 
                     <div className="my-1">
-                      <button type="button" className="btn btn-primary">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={() => {
+                          setActiveButton(1);
+                        }}
+                      >
                         Previous
                       </button>
-                      <button type="button" className="btn btn-primary mx-2">
+                      <button
+                        type="button"
+                        className="btn btn-primary mx-2"
+                        onClick={() => {
+                          setActiveButton(3);
+                        }}
+                      >
+                        Next
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn btn-primary float-end mx-1"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-primary float-end mx-1"
+                        onClick={() => {
+                          const confirmDelete = window.confirm(
+                            "Are you sure you want to Exit? All the details on this page will be lost"
+                          );
+                          if (confirmDelete) {
+                            navigate("/Dashboard");
+                          }
+                        }}
+                      >
                         Exit
-                      </button>
-                      <button
-                        type="submit"
-                        className="btn btn-primary float-end mx-1"
-                        onClick={handleMedicalDetailSaveNext}
-                      >
-                        Save & Next
-                      </button>
-                      <button
-                        type="submit"
-                        className="btn btn-primary float-end mx-1"
-                        onClick={handleMedicalDetailSaveExit}
-                      >
-                        Save & Exit
                       </button>
                     </div>
                   </form>
@@ -1525,7 +1582,7 @@ const Addcase = () => {
               <>
                 <div className="my-3">
                   <h2>Operation Details :</h2>
-                  <form>
+                  <form onSubmit={handleOperationDetails}>
                     <div className="row">
                       <div className="col">
                         <div className="form-group mb-3">
@@ -1647,7 +1704,7 @@ const Addcase = () => {
                               src={medicalPrescriptionImagePreview}
                               alt="Feeding Record Preview"
                               height="100px"
-                            />
+                            /><button onClick={handleDeleteMedicalPrescriptionImage}>Delete</button>
                           </div>
                         )}
                       </div>
@@ -1680,7 +1737,7 @@ const Addcase = () => {
                               src={treatmentRecordImagePreview}
                               alt="Treatment Records Preview"
                               height="100px"
-                            />
+                            /><button onClick={handleDeleteTreatmentRecordImage}>Delete</button>
                           </div>
                         )}
                       </div>
@@ -1710,32 +1767,50 @@ const Addcase = () => {
                               src={organImagePreview}
                               alt="Organ Pictures Preview"
                               height="100px"
-                            />
+                            /><button onClick={handleDeleteOrganImage}>Delete</button>
                           </div>
                         )}
                       </div>
                     </div>
 
                     <div className="my-1">
-                      <button type="button" className="btn btn-primary">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={() => {
+                          setActiveButton(2);
+                        }}
+                      >
                         Previous
                       </button>
-                      <button type="button" className="btn btn-primary mx-2">
+                      <button
+                        type="button"
+                        className="btn btn-primary mx-2"
+                        onClick={() => {
+                          setActiveButton(4);
+                        }}
+                      >
+                        Next
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn btn-primary float-end mx-1"
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-primary float-end mx-1"
+                        onClick={() => {
+                          const confirmDelete = window.confirm(
+                            "Are you sure you want to Exit? All the details on this page will be lost"
+                          );
+                          if (confirmDelete) {
+                            navigate("/Dashboard");
+                          }
+                        }}
+                      >
                         Exit
-                      </button>
-                      <button
-                        type="submit"
-                        className="btn btn-primary float-end mx-1"
-                        onClick={handleOperationDetailSaveNext}
-                      >
-                        Save & Next
-                      </button>
-                      <button
-                        type="submit"
-                        className="btn btn-primary float-end mx-1"
-                        onClick={handleOperationDetailSaveExit}
-                      >
-                        Save & Exit
                       </button>
                     </div>
                   </form>
@@ -1746,7 +1821,7 @@ const Addcase = () => {
               <>
                 <div className="my-3">
                   <h2>Post Operation Details :</h2>
-                  <form>
+                  <form onSubmit={handlePostOperationDetails}>
                     <div className="row">
                       <div className="col">
                         <div className="mb-3">
@@ -1907,7 +1982,7 @@ const Addcase = () => {
                               src={popPicturesPreview}
                               alt="Post Operation Pictures Preview"
                               height="100px"
-                            />
+                            /><button onClick={handleDeletePopPictures}>Delete</button>
                           </div>
                         )}
                       </div>
@@ -1940,25 +2015,41 @@ const Addcase = () => {
                               src={releasePicturesPreview}
                               alt="Release Pictures Preview"
                               height="100px"
-                            />
+                            /><button onClick={handleDeleteReleasePictures}>Delete</button>
                           </div>
                         )}
                       </div>
                     </div>
 
                     <div className="my-1">
-                      <button type="button" className="btn btn-primary">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={() => {
+                          setActiveButton(3);
+                        }}
+                      >
                         Previous
-                      </button>
-                      <button type="button" className="btn btn-primary mx-2">
-                        Exit
                       </button>
                       <button
                         type="submit"
                         className="btn btn-primary float-end mx-1"
-                        onClick={handlePostOperationSaveExit}
                       >
-                        Save & Exit
+                        Save
+                      </button>
+                      <button
+                        type="Button"
+                        className="btn btn-primary float-end mx-1"
+                        onClick={() => {
+                          const confirmDelete = window.confirm(
+                            "Are you sure you want to Exit? All the details on this page will be lost"
+                          );
+                          if (confirmDelete) {
+                            navigate("/Dashboard");
+                          }
+                        }}
+                      >
+                        Exit
                       </button>
                     </div>
                   </form>
