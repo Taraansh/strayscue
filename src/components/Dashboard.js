@@ -33,27 +33,6 @@ const Dashboard = () => {
         >
           <hr />
           <h4 style={{ marginLeft: "10px" }}>Dashboard</h4>
-          <div className="cases">
-            <div className="case-card">
-              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>1</h3>
-              <p>Total Cases</p>
-            </div>
-
-            <div className="case-card">
-              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>1</h3>
-              <p>Reported</p>
-            </div>
-
-            <div className="case-card">
-              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>0</h3>
-              <p>Admitted</p>
-            </div>
-
-            <div className="case-card">
-              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>0</h3>
-              <p>Released</p>
-            </div>
-          </div>
 
           <div className="case-lists mx-auto">
             <h4 style={{ marginLeft: "1rem" }}>Case Lists</h4>
