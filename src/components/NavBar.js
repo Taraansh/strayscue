@@ -56,7 +56,7 @@ function NavBar() {
                 boxSizing: "border-box",
                 textDecoration: "none",
               }}
-              to="/"
+              to="/User Management"
             >
               <i className="fas fa-solid fa-user"></i>
               <span className="nav-items">User Management</span>
@@ -74,7 +74,7 @@ function NavBar() {
                 boxSizing: "border-box",
                 textDecoration: "none",
               }}
-              to="/"
+              to="/NGO"
             >
               <i className="fas fa-solid fa-n"></i>
               <span className="nav-items">NGO Management</span>
@@ -92,7 +92,7 @@ function NavBar() {
                 boxSizing: "border-box",
                 textDecoration: "none",
               }}
-              to="/"
+              to="/Reporter"
             >
               <i className="fas fa-solid fa-r"></i>
               <span className="nav-items">Reporter Management</span>
@@ -110,7 +110,7 @@ function NavBar() {
                 boxSizing: "border-box",
                 textDecoration: "none",
               }}
-              to="/"
+              to="/Vet"
             >
               <i className="fas fa-solid fa-v"></i>
               <span className="nav-items">Vet Management</span>
@@ -128,7 +128,7 @@ function NavBar() {
                 boxSizing: "border-box",
                 textDecoration: "none",
               }}
-              to="/"
+              to="/Sponsor"
             >
               <i className="fas fa-solid fa-s"></i>
               <span className="nav-items">Sponser Management</span>

@@ -15,7 +15,7 @@ nav {
   left: 0;
   background: rgb(245, 145, 32);
   height: 100%;
-  width: 70px;
+  width: 66px;
   overflow: hidden;
   transition: width 0.2s linear;
   z-index: 99999;
@@ -67,7 +67,7 @@ nav {
   position: relative;
   top: 12px;
   font-size: 1.2rem;
-  margin-left: 10px;
+  margin-left: 0;
 }
 .links:hover {
   background: rgb(238, 231, 218);
@@ -79,7 +79,7 @@ nav {
 }
 nav:hover {
   width: 300px;
-  transition: all 0.5s ease;
+  transition: all 0.5s ease-in-out;
 }
 .item {
   padding: 0;

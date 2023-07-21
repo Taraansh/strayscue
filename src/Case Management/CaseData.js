@@ -17,7 +17,7 @@ function CaseData() {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid" style={{overflow:"scroll"}} >
       <div
         className="btn-group my-2 mb-4"
         style={{ width: "100%" }}
