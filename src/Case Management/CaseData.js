@@ -1,9 +1,11 @@
 import { React, useContext, useState, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function CaseData() {
   const { allCases, getAllCases } = useContext(AuthContext);
   const [activeButton, setActiveButton] = useState(0);
+  const navigate = useNavigate();
 
   const buttonStyle = {
     border: "1px solid black",
@@ -21,6 +23,88 @@ function CaseData() {
   useEffect(() => {
     getAllCases();
   }, [getAllCases]);
+
+  const getCaseType = (index) => {
+    switch (index) {
+      case 1:
+        return "Sterilization";
+      case 2:
+        return "OPD";
+      case 3:
+        return "IPD";
+      case 4:
+        return "Vaccination";
+      default:
+        return "";
+    }
+  };
+
+  const filteredCases = allCases.filter((data) => {
+    if (activeButton === 0) {
+      return true; // Show all cases when activeButton is 0 (All button clicked)
+    } else {
+      // Show cases based on the type of case when other buttons are clicked
+      return data.type_of_case === getCaseType(activeButton);
+    }
+  });
+  
+  const handleEditCaseButton = (data) => {
+    navigate('/Editcase',{state:{data: data}});
+  }
+
+  const handleStatusChange = async (case_id, newStatus) => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/cases/update/${case_id}/`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status_of_case: newStatus }),
+        }
+      );
+      if (response.ok) {
+        // Status successfully updated, perform any necessary actions
+        console.log("Status updated successfully!");
+        window.location.reload();
+         // Refresh the cases list after updating status
+      } else {
+        // Handle the case when the PUT request fails
+        console.log("Failed to update status:", case_id);
+      }
+    } catch (error) {
+      // Handle any errors that occur during the PUT request
+      console.error("Error updating status:", error);
+    }
+  };
+
+  const handleCaseDeleteButton = async (case_id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this order?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific order by making an API call
+        const response = await fetch(
+          `http://127.0.0.1:8000/cases/delete/${case_id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.ok) {
+          // Order successfully deleted, perform any necessary actions (e.g., refresh the order list)
+          getAllCases(); // Refresh the order list after deletion
+        } else {
+          // Handle the case when the delete request fails
+          console.log("Failed to delete order:", case_id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting order:", error);
+      }
+    }
+  };
 
   return (
     <div className="container-fluid">
@@ -94,41 +178,13 @@ function CaseData() {
           </tr>
         </thead>
         <tbody>
-          {allCases.map((data, index) => {
-            // Preprocess the user_profile data to fix the JSON format
-
-            const handleCaseDeleteButton = async (case_id) => {
-              const confirmDelete = window.confirm(
-                "Are you sure you want to delete this order?"
-              );
-              if (confirmDelete) {
-                try {
-                  // Delete the specific order by making an API call
-                  const response = await fetch(
-                    `http://127.0.0.1:8000/cases/delete/${case_id}/`,
-                    {
-                      method: "DELETE",
-                    }
-                  );
-                  if (response.ok) {
-                    // Order successfully deleted, perform any necessary actions (e.g., refresh the order list)
-                    getAllCases(); // Refresh the order list after deletion
-                  } else {
-                    // Handle the case when the delete request fails
-                    console.log("Failed to delete order:", case_id);
-                  }
-                } catch (error) {
-                  // Handle any errors that occur during the delete operation
-                  console.error("Error deleting order:", error);
-                }
-              }
-            };
+          {filteredCases.map((data, index) => {
 
             return (
               <tr key={index}>
                 <th scope="row">
                   {/* {index + 1} */}
-                  <button className="btn btn-primary">Edit Case</button>
+                  <button className="btn btn-primary" onClick={()=>{handleEditCaseButton(data)}}>Edit Case</button>
                   <div
                     className="btn btn-primary mx-1"
                     onClick={() => {
@@ -147,11 +203,29 @@ function CaseData() {
                     </svg>
                   </div>
                 </th>
-                <td>{data.status_of_case}</td>
-                <td>{data.reportingdetail_set[0]?.reporterName}</td>
-                <td>{data.reportingdetail_set[0]?.location}</td>
-                <td>{data.reportingdetail_set[0]?.landmark}</td>
-                <td>{data.reportingdetail_set[0]?.pincode}</td>
+                <td><select
+                id="status_of_case"
+                className="form-select my-1"
+                aria-label="Status of case"
+                name="status_of_case"
+                defaultValue={data.status_of_case}
+                onChange={(e) => {
+                  const newStatus = e.target.value;
+                  handleStatusChange(data.case_id, newStatus);
+                }}
+              >
+                <option value="Reported">Reported</option>
+                <option value="Admitted">Admitted</option>
+                <option value="Blood Test">Blood Test</option>
+                <option value="Operation">Operation</option>
+                <option value="Post Operation">Post Operation</option>
+                <option value="Released">Released</option>
+              </select>
+                      </td>
+                <td>{data.reportingdetail?.reporterName}</td>
+                <td>{data.reportingdetail?.location}</td>
+                <td>{data.reportingdetail?.landmark}</td>
+                <td>{data.reportingdetail?.pincode}</td>
                 <td>{data.user_name}</td>
               </tr>
             );
