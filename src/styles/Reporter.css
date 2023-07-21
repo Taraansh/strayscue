@@ -52,10 +52,10 @@
   padding: 1rem;
 }
 .menu1 input {
-  width: 18vw;
+  width: 24vw;
   padding: 0 0.5rem;
-  border-radius: 5px;
-  border-color: grey;
+  /* border-radius: 5px;
+  border-color: grey; */
 }
 .case-set1
 {

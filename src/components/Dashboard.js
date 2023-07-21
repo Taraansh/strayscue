@@ -11,7 +11,7 @@ const Dashboard = () => {
   const [modalShow, setModalShow] = React.useState(false);
   const [activeButton, setActiveButton] = useState(0);
   const navigate = useNavigate();
-  
+
   const buttonStyle = {
     border: "1px solid black",
     fontSize: "16px",
@@ -113,6 +113,7 @@ const Dashboard = () => {
 
 
   return user ? (
+    <>
     <div
       style={{
         display: "flex",
@@ -121,21 +122,51 @@ const Dashboard = () => {
         margin: "0",
         height: "100vh",
       }}
-    >
+      >
       <NavBar />
       <>
         <div
           style={{
-            paddingTop: "3rem",
+            paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
+           
           }}
           className="container"
         >
           <hr />
           <h4 style={{ marginLeft: "10px" }}>Dashboard</h4>
 
-          <div className="case-lists mx-auto">
+          {/* <h4 className="heading1">Dashboard</h4>
+          <div className="cases mx-auto">
+            <div className="case-set1">
+            <div className="case-card">
+              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>1</h3>
+              <p>Total Cases</p>
+            </div>
+
+            <div className="case-card">
+              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>1</h3>
+              <p>Reported</p>
+            </div>
+
+            </div>
+           
+            <div className="case-set1">
+            <div className="case-card">
+              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>0</h3>
+              <p>Admitted</p>
+            </div>
+
+            <div className="case-card">
+              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>0</h3>
+              <p>Released</p>
+            </div>
+            
+          </div>
+          </div> */}
+
+          <div className="case-lists mx-auto" >
             <h4 style={{ marginLeft: "1rem" }}>Case Lists</h4>
             <hr />
 
@@ -148,11 +179,11 @@ const Dashboard = () => {
                   cursor: "pointer",
                 }}
                 className="btn "
-              >
+                >
                 <i
                   style={{ fontSize: "1.3rem" }}
                   className="fa-light fa-plus"
-                ></i>
+                  ></i>
                 Add Case
               </Link>
               <input type="text" placeholder="Search by location, status etc" />
@@ -287,17 +318,28 @@ const Dashboard = () => {
     </div>
             </div>
           </div>
+          
         </div>
 
         <AddModal show={modalShow} onHide={() => setModalShow(false)} />
+        
       </>
+      
       <div
         style={{
-          position: "absolute",
-          top: "15px",
-          right: "2rem",
-          fontSize: "20px",
-          cursor: "pointer",
+              position: "fixed",
+   
+    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+    right: "0.1rem",
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"flex-end",
+    width:"100vw",
+    fontSize: "20px",
+   
+    zIndex: "9",
+    padding: "0.5rem 0.5rem",
+    backgroundColor:"#ffffff"
         }}
       >
         <span>
@@ -305,20 +347,28 @@ const Dashboard = () => {
             {username}
           </label>
           <img
+         
             width="17%"
-            style={{ marginRight: "1.5rem" }}
+            style={{ marginRight: "1.5rem",  cursor: "pointer" }}
             src={logo}
             alt="Logo"
           ></img>
-        </span>
-        <span>
-          <i
+            <i 
+             style={{  cursor: "pointer" }}
             className="fa-solid fa-right-from-bracket"
             onClick={logoutUser}
           ></i>
         </span>
+        
+        
+        
       </div>
-    </div>
+     
+   
+   </div>
+  
+      
+            </>
   ) : (
     <div>
       <p>You are not logged in, redirecting...</p>
