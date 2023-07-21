@@ -14,6 +14,7 @@ const Addcase = () => {
     status_of_case,
     mortality_of_case,
     case_id,
+    username
   } = useContext(AuthContext);
   const navigate = useNavigate();
   // Active Button State
@@ -449,14 +450,6 @@ const Addcase = () => {
       admissionDate ? admissionDate : "1111-11-11"
     );
     formData.append("case_linked", case_id);
-
-    console.log(formData.get("medicalHistory"));
-    console.log(formData.get("vaccinationStatus"));
-    console.log(formData.get("dewormed"));
-    console.log(formData.get("fitForSurgery"));
-    console.log(formData.get("otherDetails"));
-    console.log(formData.get("admissionDate"));
-    console.log(formData.get("case_linked"));
 
     try {
       const response = await axios.post(
@@ -989,7 +982,7 @@ const Addcase = () => {
                     </div>
 
                     <div className="my-1">
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-primary mx-2"
                         onClick={() => {
@@ -997,19 +990,19 @@ const Addcase = () => {
                         }}
                       >
                         Next
-                      </button>
+                      </button> */}
                       <button
                         type="submit"
                         className="btn btn-primary float-end mx-1"
                       >
-                        Save
+                        Next
                       </button>
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-primary float-end mx-1"
                         onClick={() => {
                           const confirmDelete = window.confirm(
-                            "Are you sure you want to Exit? All the details on this page will be lost"
+                            "Are you sure you want to Exit?"
                           );
                           if (confirmDelete) {
                             navigate("/Dashboard");
@@ -1017,7 +1010,7 @@ const Addcase = () => {
                         }}
                       >
                         Exit
-                      </button>
+                      </button> */}
                     </div>
                   </form>
                 </div>
@@ -1295,7 +1288,7 @@ const Addcase = () => {
                     </div>
 
                     <div className="my-2">
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-primary"
                         onClick={() => {
@@ -1312,19 +1305,19 @@ const Addcase = () => {
                         }}
                       >
                         Next
-                      </button>
+                      </button> */}
                       <button
                         type="submit"
                         className="btn btn-primary float-end mx-1"
                       >
-                        Save
+                        Next
                       </button>
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-primary float-end mx-1"
                         onClick={() => {
                           const confirmDelete = window.confirm(
-                            "Are you sure you want to Exit? All the details on this page will be lost"
+                            "Are you sure you want to Exit?"
                           );
                           if (confirmDelete) {
                             navigate("/Dashboard");
@@ -1332,7 +1325,7 @@ const Addcase = () => {
                         }}
                       >
                         Exit
-                      </button>
+                      </button> */}
                     </div>
                   </form>
                 </div>
@@ -1535,7 +1528,7 @@ const Addcase = () => {
                     </div>
 
                     <div className="my-1">
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-primary"
                         onClick={() => {
@@ -1552,19 +1545,19 @@ const Addcase = () => {
                         }}
                       >
                         Next
-                      </button>
+                      </button> */}
                       <button
                         type="submit"
                         className="btn btn-primary float-end mx-1"
                       >
-                        Save
+                        Next
                       </button>
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-primary float-end mx-1"
                         onClick={() => {
                           const confirmDelete = window.confirm(
-                            "Are you sure you want to Exit? All the details on this page will be lost"
+                            "Are you sure you want to Exit?"
                           );
                           if (confirmDelete) {
                             navigate("/Dashboard");
@@ -1572,7 +1565,7 @@ const Addcase = () => {
                         }}
                       >
                         Exit
-                      </button>
+                      </button> */}
                     </div>
                   </form>
                 </div>
@@ -1774,7 +1767,7 @@ const Addcase = () => {
                     </div>
 
                     <div className="my-1">
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-primary"
                         onClick={() => {
@@ -1791,19 +1784,19 @@ const Addcase = () => {
                         }}
                       >
                         Next
-                      </button>
+                      </button> */}
                       <button
                         type="submit"
                         className="btn btn-primary float-end mx-1"
                       >
-                        Save
+                        Next
                       </button>
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-primary float-end mx-1"
                         onClick={() => {
                           const confirmDelete = window.confirm(
-                            "Are you sure you want to Exit? All the details on this page will be lost"
+                            "Are you sure you want to Exit?"
                           );
                           if (confirmDelete) {
                             navigate("/Dashboard");
@@ -1811,7 +1804,7 @@ const Addcase = () => {
                         }}
                       >
                         Exit
-                      </button>
+                      </button> */}
                     </div>
                   </form>
                 </div>
@@ -2022,7 +2015,7 @@ const Addcase = () => {
                     </div>
 
                     <div className="my-1">
-                      <button
+                      {/* <button
                         type="button"
                         className="btn btn-primary"
                         onClick={() => {
@@ -2030,19 +2023,19 @@ const Addcase = () => {
                         }}
                       >
                         Previous
-                      </button>
+                      </button> */}
                       <button
                         type="submit"
                         className="btn btn-primary float-end mx-1"
                       >
                         Save
                       </button>
-                      <button
+                      {/* <button
                         type="Button"
                         className="btn btn-primary float-end mx-1"
                         onClick={() => {
                           const confirmDelete = window.confirm(
-                            "Are you sure you want to Exit? All the details on this page will be lost"
+                            "Are you sure you want to Exit?"
                           );
                           if (confirmDelete) {
                             navigate("/Dashboard");
@@ -2050,7 +2043,7 @@ const Addcase = () => {
                         }}
                       >
                         Exit
-                      </button>
+                      </button> */}
                     </div>
                   </form>
                 </div>
@@ -2070,7 +2063,7 @@ const Addcase = () => {
       >
         <span>
           <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
-            Chetan
+            {username}
           </label>
           <img
             width="17%"
