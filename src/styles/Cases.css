@@ -1,21 +1,16 @@
-.heading1
-{
-  margin-left: 10px;
-  text-align: left;
-}
 .cases {
   display: flex;
   flex-direction: row;
   margin-top: 2rem;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .case-card {
   padding-top: 2rem;
-  margin: 0.2rem;
+  margin-left: 2px;
   cursor: pointer;
   height: 120px;
-  width: 250px;
+  width: 260px;
   padding-inline: 25px;
   background-color: #ffffff;
   border-radius: 1.25rem;
@@ -37,8 +32,6 @@
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
-  margin-left: 0;
-  margin-right: 0;
   background-color: #ffffff;
   border-radius: 0.3rem;
   width: 95%;
@@ -52,188 +45,14 @@
   padding: 1rem;
 }
 .menu1 input {
-  width: 18vw;
+  width: 300px;
   padding: 0 0.5rem;
   border-radius: 5px;
   border-color: grey;
 }
-.case-set1
-{
-  display: flex;
 
-}
-.form-buttons
-{
-  display: flex;
-  justify-content: space-between;
- 
-}
-@media only screen and (max-width: 740px) {
+@media only screen and (max-width: 640px) {
   .cases {
     flex-direction: column;
-    
-  }
-  .heading1
-{
-  margin-left: 10px;
-  text-align: center;
-}
-  .case-card {
-   
-    padding-top: 1.5rem;
-    cursor: pointer;
-    height: 114px;
-    width: 110px;
-    padding-inline: 19px;
-  }
-  .case-set1
-{
-   justify-content: center;
- 
-}
-.case-lists {
-
-  margin-left: 1.3rem !important;
-
-  width: 92%;
-
-}
-.menu1 input {
-  width: 137px;
-  
-}
-.form-1
-{
-  flex-direction: column;
-}
-.form-buttons
-{
- flex-direction: column;
- margin-bottom: 0.5rem;
-}
-
-}
-@media (min-width: 768px) and (max-width: 1024px) {
-  .case-set1
-{
- 
-  justify-content: center;
-  
-}
-
-.heading1
-{
-  margin-left: 10px;
-  text-align: left;
-}
-.cases {
-  flex-direction: column;
-  
-}
-.case-card {
- 
-  padding-top: 1.5rem;
-  cursor: pointer;
-  height: 130px;
-  width: 300px;
-  padding-inline: 19px;
- 
-}
-.case-lists {
-
-  
-
-  width: 100%;
-
-}
-}
-@media only screen and (width: 540px) {
-  .case-set1
-{
-   margin-bottom: 0;
-  justify-content: center;
-  
-}
-.heading1
-{
-  margin-left: 10px;
- 
-}
-.cases {
-  flex-direction: column;
-  
-}
-.case-card {
- 
-  padding-top: 1.5rem;
-  cursor: pointer;
-  height: 130px;
-  width: 210px;
-  padding-inline: 19px;
- 
-}
-}
-@media only screen and (width: 280px) {
-  .case-set1
-{
-   margin-bottom: 0;
-  justify-content: flex-end;
-  
-}
-.cases {
-  flex-direction: column;
-  
-}
-.heading1
-{
-  margin-left: 10px;
-  text-align: center;
-}
-.case-card {
- 
-  padding-top: 1.5rem;
-  cursor: pointer;
-  height: 110px;
-  font-size: 12px;
-    width: 88px;
-  padding-inline: 19px;
- 
-}
-.menu1 {
- 
-  flex-direction: column;
-  
-}
-.menu1 a {
- 
-  margin-bottom: 1rem;
-  
-}
-
-}
-@media only screen and (width: 1024px) {
-  .case-set1
-  {
-   
-    justify-content: center;
-    
-  }
-  .cases {
-    flex-direction: row;
-    
-  }
-  .heading1
-  {
-    margin-left: 10px;
-    text-align: left;
-  }
-  .case-card {
-   
-    padding-top: 1.5rem;
-    cursor: pointer;
-    height: 130px;
-    width: 205px;
-    padding-inline: 19px;
-  
   }
 }

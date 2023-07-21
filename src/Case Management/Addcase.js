@@ -5,7 +5,7 @@ import "../styles/Cases.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../assets/profile.png";
-import '../styles/Addcase.css';
+
 const Addcase = () => {
   const {
     user,
@@ -579,15 +579,14 @@ const Addcase = () => {
       <NavBar />
       <div
         style={{
-          paddingTop: "5rem",
+          paddingTop: "3rem",
           display: "flex",
           flexDirection: "column",
           width: "100vw",
           paddingLeft: "50px",
         }}
-        className="container"
       >
-      
+        <hr />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h4 className="mx-4 px-4">{type_of_case} Case</h4>
         <Link style={{ marginRight: "2rem" }} to="/Dashboard">
@@ -596,7 +595,7 @@ const Addcase = () => {
         </div>
         
         <div className="case-lists mx-auto px-4">
-          <div className="row mb-3 top-menu ">
+          <div className="row mb-3">
             <div className="col">
               <label htmlFor="type_of_case" className="form-label">
                 Type of case
@@ -639,11 +638,11 @@ const Addcase = () => {
           </div>
         </div>
 
-        <div className="case-lists mx-auto" >
+        <div className="case-lists mx-auto">
           <div className="mx-auto px-4 container-fluid">
             {/* Change bar */}
             <div
-              className="btn-group form-1 mt-2"
+              className="btn-group mt-2"
               style={{ width: "100%" }}
               role="group"
               aria-label="Basic outlined example"
@@ -711,7 +710,7 @@ const Addcase = () => {
                 <div className="my-3">
                   <h2>Reporter Details:</h2>
                   <form>
-                    <div className="row form-1">
+                    <div className="row">
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="reporterName" className="form-label">
@@ -786,7 +785,7 @@ const Addcase = () => {
                       </div>
                     </div>
 
-                    <div className="row form-1">
+                    <div className="row">
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="address" className="form-label">
@@ -982,34 +981,26 @@ const Addcase = () => {
                     </div>
 
                     <div className="my-1">
-                      <div className="form-buttons">
-                        <div className="mb-1">
-                        <button type="button" className="btn btn-primary">
+                      <button type="button" className="btn btn-primary">
                         Previous
                       </button>
                       <button type="button" className="btn btn-primary mx-2">
                         Exit
                       </button>
-                        </div>
-                      <div>
-
                       <button
                         type="button"
-                        className="btn btn-primary "
+                        className="btn btn-primary float-end mx-1"
                         onClick={handleReportingDetailSaveNext}
                       >
                         Save & Next
                       </button>
                       <button
                         type="button"
-                        className="btn btn-primary  mx-1"
+                        className="btn btn-primary float-end mx-1"
                         onClick={handleReportingDetailSaveExit}
-                        >
+                      >
                         Save & Exit
                       </button>
-                      </div>
-                     
-                        </div>
                     </div>
                   </form>
                 </div>
@@ -1021,7 +1012,7 @@ const Addcase = () => {
                   <h2>Further Animal Details :</h2>
                   <h5>Animal ID:</h5>
                   <form>
-                    <div className="row form-1">
+                    <div className="row">
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="animalSpecies" className="form-label">
@@ -1089,7 +1080,7 @@ const Addcase = () => {
                       </div>
                     </div>
 
-                    <div className="row form-1">
+                    <div className="row">
                       <div className="col">
                         <div className="mb-3">
                           <label
@@ -1162,7 +1153,7 @@ const Addcase = () => {
                       </div>
                     </div>
 
-                    <div className="row form-1">
+                    <div className="row">
                       <div className="form-group col mb-3">
                         <label htmlFor="animalMarking" className="form-label">
                           Animal Marking
@@ -1217,7 +1208,7 @@ const Addcase = () => {
                       </div>
                     </div>
 
-                    <div className="row form-1">
+                    <div className="row">
                       <div className="form-group col mb-3">
                         <label htmlFor="animalWeight" className="form-label">
                           Animal Weight (kgs)
@@ -1287,33 +1278,26 @@ const Addcase = () => {
                     </div>
 
                     <div className="my-2">
-                      <div className="form-buttons"> 
-                      <div className="mb-1">
                       <button type="button" className="btn btn-primary">
                         Previous
                       </button>
                       <button type="button" className="btn btn-primary mx-2">
                         Exit
                       </button>
-                      </div>
-                      
-                      <div>
                       <button
                         type="submit"
-                        className="btn btn-primary "
+                        className="btn btn-primary float-end mx-1"
                         onClick={handleAnimalDetailSaveNext}
                       >
                         Save & Next
                       </button>
                       <button
                         type="submit"
-                        className="btn btn-primary  mx-1"
+                        className="btn btn-primary float-end mx-1"
                         onClick={handleAnimalDetailSaveExit}
                       >
                         Save & Exit
                       </button>
-                      </div>
-                      </div>
                     </div>
                   </form>
                 </div>
@@ -1324,7 +1308,7 @@ const Addcase = () => {
                 <div className="my-3">
                   <h2>Medical Details:</h2>
                   <form>
-                    <div className="row form-1">
+                    <div className="row">
                       <div className="col">
                         <div className="mb-3">
                           <label
@@ -1395,7 +1379,7 @@ const Addcase = () => {
                       </div>
                     </div>
 
-                    <div className="row form-1">
+                    <div className="row">
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="fitForSurgery" className="form-label">
@@ -1514,34 +1498,26 @@ const Addcase = () => {
                     </div>
 
                     <div className="my-1">
-                      <div className="form-buttons">
-                     <div className="mb-1">
-                     <button type="button" className="btn btn-primary">
+                      <button type="button" className="btn btn-primary">
                         Previous
                       </button>
                       <button type="button" className="btn btn-primary mx-2">
                         Exit
                       </button>
-
-                     </div>
-                      <div>
                       <button
                         type="submit"
-                        className="btn  btn-primary "
+                        className="btn btn-primary float-end mx-1"
                         onClick={handleMedicalDetailSaveNext}
                       >
                         Save & Next
                       </button>
                       <button
                         type="submit"
-                        className="btn mx-1 btn-primary"
+                        className="btn btn-primary float-end mx-1"
                         onClick={handleMedicalDetailSaveExit}
                       >
                         Save & Exit
                       </button>
-                      </div>
-                      
-                      </div>
                     </div>
                   </form>
                 </div>
@@ -1552,7 +1528,7 @@ const Addcase = () => {
                 <div className="my-3">
                   <h2>Operation Details :</h2>
                   <form>
-                    <div className="row form-1">
+                    <div className="row">
                       <div className="col">
                         <div className="form-group mb-3">
                           <label htmlFor="vetName" className="form-label">
@@ -1585,9 +1561,9 @@ const Addcase = () => {
                       </div>
                     </div>
 
-                    <div className="row form-1">
+                    <div className="row">
                       <div className="col mb-3">
-                        <div className="row form-1">
+                        <div className="row">
                           <div className="form-group col">
                             <label
                               className="form-label"
@@ -1743,33 +1719,26 @@ const Addcase = () => {
                     </div>
 
                     <div className="my-1">
-                      <div className="form-buttons">
-                        <div className="mb-1" >
-                        <button type="button" className="btn mx-1 btn-primary">
+                      <button type="button" className="btn btn-primary">
                         Previous
                       </button>
-                      <button type="button" className="btn btn-primary ">
+                      <button type="button" className="btn btn-primary mx-2">
                         Exit
                       </button>
-                        </div>
-                      <div >
                       <button
                         type="submit"
-                        className="btn btn-primary mx-1"
+                        className="btn btn-primary float-end mx-1"
                         onClick={handleOperationDetailSaveNext}
                       >
                         Save & Next
                       </button>
                       <button
                         type="submit"
-                        className="btn btn-primary "
+                        className="btn btn-primary float-end mx-1"
                         onClick={handleOperationDetailSaveExit}
-                        >
+                      >
                         Save & Exit
                       </button>
-                      </div>
-                      
-                        </div>
                     </div>
                   </form>
                 </div>
@@ -1780,8 +1749,7 @@ const Addcase = () => {
                 <div className="my-3">
                   <h2>Post Operation Details :</h2>
                   <form>
-                
-                    <div className="row form-1">
+                    <div className="row">
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="popComment" className="form-label">
@@ -1880,7 +1848,7 @@ const Addcase = () => {
                       </div>
                     </div>
 
-                    <div className="row form-1">
+                    <div className="row">
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="euthanized" className="form-label">
@@ -1981,28 +1949,19 @@ const Addcase = () => {
                     </div>
 
                     <div className="my-1">
-                      <div className="form-buttons">
-
-                      <div className="mb-1">
                       <button type="button" className="btn btn-primary">
                         Previous
                       </button>
                       <button type="button" className="btn btn-primary mx-2">
                         Exit
                       </button>
-                      </div>
-                     <div >
-                     <button
+                      <button
                         type="submit"
-                        className="btn btn-primary mx-1"
+                        className="btn btn-primary float-end mx-1"
                         onClick={handlePostOperationSaveExit}
-                        >
+                      >
                         Save & Exit
                       </button>
-                        </div>
-                      </div>
-                     
-                     
                     </div>
                   </form>
                 </div>
@@ -2013,19 +1972,11 @@ const Addcase = () => {
       </div>
       <div
         style={{
-              position: "fixed",
-   
-    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-    right: "0.1rem",
-    display:"flex",
-    flexDirection:"row",
-    justifyContent:"flex-end",
-    width:"100vw",
-    fontSize: "20px",
-   
-    zIndex: "9",
-    padding: "0.5rem 0.5rem",
-    backgroundColor:"#ffffff"
+          position: "absolute",
+          top: "15px",
+          right: "2rem",
+          fontSize: "20px",
+          cursor: "pointer",
         }}
       >
         <span>
@@ -2033,21 +1984,18 @@ const Addcase = () => {
             Chetan
           </label>
           <img
-         
             width="17%"
-            style={{ marginRight: "1.5rem",  cursor: "pointer" }}
+            style={{ marginRight: "1.5rem" }}
             src={logo}
             alt="Logo"
           ></img>
-            <i 
-             style={{  cursor: "pointer" }}
+        </span>
+        <span>
+          <i
             className="fa-solid fa-right-from-bracket"
             onClick={logoutUser}
           ></i>
         </span>
-        
-        
-        
       </div>
     </div>
   ) : (
