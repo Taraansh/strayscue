@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   // const [operationdetail_set, setOperationdetail_set] = useState([]);
   // const [postoperationdetail_set, setPostoperationdetail_set] = useState([]);
   const [type_of_case, setType_of_case] = useState("");
+  const [username, setUsername] = useState("");
   const [status_of_case, setStatus_of_case] = useState("");
   const [mortality_of_case, setMortality_of_case] = useState("");
   let [user, setUser] = useState(() =>
@@ -52,6 +53,8 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("authTokens", JSON.stringify(data));
       setAuthTokens(data);
       setUser(jwtDecode(data.access));
+      const username = jwtDecode(data.access).username
+      setUsername(username)
       const userEmail = jwtDecode(data.access).email;
       const userId = jwtDecode(data.access).user_id;
       localStorage.setItem("email", userEmail);
@@ -158,6 +161,7 @@ export const AuthProvider = ({ children }) => {
     user: user,
     case_id: case_id,
     allCases: allCases,
+    username: username,
     // reportingdetail_set:reportingdetail_set,
     // animaldetail_set:animaldetail_set,
     // medicaldetail_set:medicaldetail_set,
