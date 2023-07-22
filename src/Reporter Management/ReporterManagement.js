@@ -2,8 +2,6 @@ import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
 import { Link } from "react-router-dom";
-
-import CaseData from "../Case Management/CaseData";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 
