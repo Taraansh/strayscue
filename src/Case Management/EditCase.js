@@ -396,21 +396,29 @@ export default function EditCase() {
     e.preventDefault();
 
     const formData = new FormData();
-    if (isFrontImageDeleted) {
+    if (frontImageFile) {
       formData.append('frontImage', frontImageFile ? frontImageFile : null);
-    } else {
-      formData.append(
-        'frontImage',
-        path.state.data.reportingdetail?.frontImage ? path.state.data.reportingdetail?.frontImage : null);
-    }    
-    
-    if (isBackImageDeleted) {
-        formData.append("backImage", backImageFile ? backImageFile : null);
-    } else {
-        formData.append("backImage", path.state.data.reportingdetail?.backImage ? path.state.data.reportingdetail?.backImage : null );
+    } else if (isFrontImageDeleted){
+      formData.append('frontImage', "null");
+    } else{
+      formData.append('frontImage', path.state.data.reportingdetail?.frontImage);
     }
     
-    if (isConsentFormImageDeleted) {formData.append("consentFormImage", consentFormImageFile ? consentFormImageFile : null);} else {formData.append("consentFormImage", path.state.data.reportingdetail?.consentFormImage ? path.state.data.reportingdetail?.consentFormImage : null );}
+    if (backImageFile) {
+      formData.append('backImage', backImageFile ? backImageFile : null);
+    } else if (isBackImageDeleted){
+      formData.append('backImage', "null");
+    } else{
+      formData.append('backImage', path.state.data.reportingdetail?.backImage);
+    }
+
+    if (consentFormImageFile) {
+      formData.append('consentFormImage', consentFormImageFile ? consentFormImageFile : null);
+    } else if (isFrontImageDeleted){
+      formData.append('consentFormImage', "null");
+    } else{
+      formData.append('consentFormImage', path.state.data.reportingdetail?.consentFormImage);
+    }
     
     formData.append("reporterName", reporterName ? reporterName : path.state.data.reportingdetail?.reporterName);
     formData.append("reporterContact", reporterContact ? reporterContact : path.state.data.reportingdetail?.reporterContact);
@@ -463,10 +471,12 @@ export default function EditCase() {
     formData.append("animalWeight", animalWeight ? animalWeight : path.state.data.animaldetail?.animalWeight);
     formData.append("admissionReason", admissionReason ? admissionReason : path.state.data.animaldetail?.admissionReason);
 
-    if (isAnimalPictureDeleted) {
-        formData.append("animalPictures", animalPictures ? animalPictures : null);
-    } else {
-        formData.append("animalPictures", path.state.data.animaldetail?.animalPictures ? path.state.data.animaldetail?.animalPictures : null );
+    if (animalPictures) {
+      formData.append('animalPictures', animalPictures ? animalPictures : null);
+    } else if (isAnimalPictureDeleted){
+      formData.append('animalPictures', "null");
+    } else{
+      formData.append('animalPictures', path.state.data.animaldetail?.animalPictures);
     }
 
     try {
@@ -497,16 +507,20 @@ export default function EditCase() {
 
     const formData = new FormData();
 
-    if (isBloodReportImageDeleted){
-        formData.append("bloodReportImage", bloodReportImage ? bloodReportImage : null);
-    } else {        
-        formData.append("bloodReportImage", path.state.data.medicaldetail?.bloodReportImage ? path.state.data.medicaldetail?.bloodReportImage : null);
+    if (bloodReportImage) {
+      formData.append('bloodReportImage', bloodReportImage ? bloodReportImage : null);
+    } else if (isBloodReportImageDeleted){
+      formData.append('bloodReportImage', "null");
+    } else{
+      formData.append('bloodReportImage', path.state.data.medicaldetail?.bloodReportImage);
     }
 
-    if (isFeedingRecordImageDeleted){
-        formData.append("feedingRecordImage", feedingRecordImage ? feedingRecordImage : null);
-    }else {
-        formData.append("feedingRecordImage", path.state.data.medicaldetail?.feedingRecordImage ? path.state.data.medicaldetail?.feedingRecordImage : null);
+    if (feedingRecordImage) {
+      formData.append('feedingRecordImage', feedingRecordImage ? feedingRecordImage : null);
+    } else if (isFeedingRecordImageDeleted){
+      formData.append('feedingRecordImage', "null");
+    } else{
+      formData.append('feedingRecordImage', path.state.data.medicaldetail?.feedingRecordImage);
     }
 
     formData.append("medicalHistory", medicalHistory ? medicalHistory : path.state.data.medicaldetail?.medicalHistory);
@@ -544,19 +558,30 @@ export default function EditCase() {
 
     const formData = new FormData();
 
-    if (isMedicalPrescriptionImageDeleted){
-        formData.append("medicalPrescriptionImage", medicalPrescriptionImage ? medicalPrescriptionImage : null);
-    } else {
-        formData.append("medicalPrescriptionImage", path.state.data.operationdetail?.medicalPrescriptionImage ? path.state.data.operationdetail?.medicalPrescriptionImage : null);
+    if (medicalPrescriptionImage) {
+      formData.append('medicalPrescriptionImage', medicalPrescriptionImage ? medicalPrescriptionImage : null);
+    } else if (isMedicalPrescriptionImageDeleted){
+      formData.append('medicalPrescriptionImage', "null");
+    } else{
+      formData.append('medicalPrescriptionImage', path.state.data.operationdetail?.medicalPrescriptionImage);
     }
 
-    if (isTreatmentRecordImageDeleted){
-        formData.append("treatmentRecordImage", treatmentRecordImage ? treatmentRecordImage : null);
-    } else {
-        formData.append("treatmentRecordImage", path.state.data.operationdetail?.treatmentRecordImage ? path.state.data.operationdetail?.treatmentRecordImage : null);
+    if (treatmentRecordImage) {
+      formData.append('treatmentRecordImage', treatmentRecordImage ? treatmentRecordImage : null);
+    } else if (isTreatmentRecordImageDeleted){
+      formData.append('treatmentRecordImage', "null");
+    } else{
+      formData.append('treatmentRecordImage', path.state.data.operationdetail?.treatmentRecordImage);
     }
 
-    formData.append("organImage", organImage);
+    if (organImage) {
+      formData.append('organImage', organImage ? organImage : null);
+    } else if (isOrganImageDeleted){
+      formData.append('organImage', "null");
+    } else{
+      formData.append('organImage', path.state.data.operationdetail?.organImage);
+    }
+
     formData.append("vetName", vetName ? vetName : "");
     formData.append("operationDate",operationDate ? operationDate : "1111-11-11");
     formData.append("operationStartTime",operationStartTime ? operationStartTime : "11:11:11");
@@ -589,18 +614,21 @@ export default function EditCase() {
   // Handling Post Operation Details
   const handleUpdatePostOperationDetails = async (e) => {
     e.preventDefault();
-
     const formData = new FormData();
-    if (isPopPicturesDeleted) {
-        formData.append("popPictures", popPictures ? popPictures : null);
-    } else {
-        formData.append("popPictures", path.state.data.postoperationdetail?.popPictures ? path.state.data.postoperationdetail?.popPictures : null); 
+    if (popPictures) {
+      formData.append('popPictures', popPictures ? popPictures : null);
+    } else if (isPopPicturesDeleted){
+      formData.append('popPictures', "null");
+    } else{
+      formData.append('popPictures', path.state.data.postoperationdetail?.popPictures);
     }
 
-    if (isReleasePicturesDeleted) {
-        formData.append("releasePictures", releasePictures ? releasePictures : null);
-    } else {
-        formData.append("releasePictures", path.state.data.postoperationdetail?.releasePictures ? path.state.data.postoperationdetail?.releasePictures : null);
+    if (releasePictures) {
+      formData.append('releasePictures', releasePictures ? releasePictures : null);
+    } else if (isReleasePicturesDeleted){
+      formData.append('releasePictures', "null");
+    } else{
+      formData.append('releasePictures', path.state.data.postoperationdetail?.releasePictures);
     }
 
     formData.append("popComment", popComment ? popComment : path.state.data.postoperationdetail?.popComment);
@@ -979,16 +1007,24 @@ export default function EditCase() {
                           </div>
                         </div>
                         { (!isFrontImageDeleted)
-                         ? (path.state.data.reportingdetail?.frontImage &&
-                        <div>
+                         ? ((path.state.data.reportingdetail?.frontImage) ? (<div>
+                          <h6>Preview:</h6>
+                          <img
+                          src={`http://localhost:8000${path.state.data.reportingdetail?.frontImage}`}
+                          alt="Consent Form Preview"
+                          height="100px"
+                          />
+                          <button onClick={handleDeleteSavedFrontImage}>Delete</button>
+                      </div>) : (frontImagePreview && (
+                            <div>
                             <h6>Preview:</h6>
                             <img
-                            src={`http://localhost:8000${path.state.data.reportingdetail?.frontImage}`}
-                            alt="Consent Form Preview"
-                            height="100px"
+                                src={frontImagePreview}
+                                alt="Consent Form Preview"
+                                height="100px"
                             />
-                            <button onClick={handleDeleteSavedFrontImage}>Delete</button>
-                        </div>
+                            <button onClick={handleDeleteFrontImage}>Delete</button>
+                            </div>))
                         ) : (
                         frontImagePreview && (
                             <div>
@@ -1020,8 +1056,7 @@ export default function EditCase() {
                             />
                           </div>
                         </div>
-                        { (!isBackImageDeleted) ? (path.state.data.reportingdetail?.backImage &&
-                        <div>
+                        { (!isBackImageDeleted) ? ((path.state.data.reportingdetail?.backImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.reportingdetail?.backImage}`}
@@ -1029,7 +1064,16 @@ export default function EditCase() {
                             height="100px"
                             />
                             <button onClick={handleDeleteSavedBackImage}>Delete</button>
-                        </div>
+                        </div>) : (backImagePreview && (
+                            <div>
+                            <h6>Preview:</h6>
+                            <img
+                                src={backImagePreview}
+                                alt="Consent Form Preview"
+                                height="100px"
+                            />
+                            <button onClick={handleDeleteBackImage}>Delete</button>
+                            </div>))
                         ) : (
                         backImagePreview && (
                             <div>
@@ -1065,8 +1109,7 @@ export default function EditCase() {
                           />
                         </div>
                       </div>
-                      { (!isConsentFormImageDeleted) ? (path.state.data.reportingdetail?.consentFormImage &&
-                        <div>
+                      { (!isConsentFormImageDeleted) ? ((path.state.data.reportingdetail?.consentFormImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.reportingdetail?.consentFormImage}`}
@@ -1074,7 +1117,16 @@ export default function EditCase() {
                             height="100px"
                             />
                             <button onClick={handleDeleteSavedConsentFormImage}>Delete</button>
-                        </div>
+                        </div>) : (consentFormImagePreview && (
+                            <div>
+                            <h6>Preview:</h6>
+                            <img
+                                src={consentFormImagePreview}
+                                alt="Consent Form Preview"
+                                height="100px"
+                            />
+                            <button onClick={handleDeleteConsentFormImage}>Delete</button>
+                            </div>))
                         ) : (
                         consentFormImagePreview && (
                             <div>
@@ -1088,7 +1140,6 @@ export default function EditCase() {
                             </div>
                         )
                         )}
-
                     </div>
 
                     <div className="my-3">
@@ -1391,8 +1442,7 @@ export default function EditCase() {
                           />
                         </div>
                       </div>
-                      {(!isAnimalPictureDeleted)?(path.state.data.animaldetail?.animalPictures &&
-                        <div>
+                      {(!isAnimalPictureDeleted)?((path.state.data.animaldetail?.animalPictures) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.animaldetail?.animalPictures}`}
@@ -1400,8 +1450,16 @@ export default function EditCase() {
                             height="100px"
                             />
                             <button onClick={handleDeleteSavedAnimalPicture}>Delete</button>
-                        </div>
-                      ):(animalPicturesPreview && (
+                        </div>) : (animalPicturesPreview && (
+                        <div>
+                          <h6>Preview:</h6>
+                            <img
+                              src={animalPicturesPreview}
+                              alt="Animal Pictures Preview"
+                              height="100px"
+                            />
+                          <button onClick={handleDeleteAnimalPicture}>Delete</button>
+                        </div>))):(animalPicturesPreview && (
                         <div>
                           <h6>Preview:</h6>
                             <img
@@ -1608,7 +1666,7 @@ export default function EditCase() {
                             />
                           </div>
                         </div>
-                        {(!isBloodReportImageDeleted) ? (path.state.data.medicaldetail?.bloodReportImage && <div>
+                        {(!isBloodReportImageDeleted) ? ((path.state.data.medicaldetail?.bloodReportImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.medicaldetail?.bloodReportImage}`}
@@ -1617,6 +1675,15 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteSavedBloodReportImage}>Delete</button>
                         </div>) : (bloodReportImagePreview && (
+                          <div>
+                            <h6>Preview:</h6>
+                            <img
+                              src={bloodReportImagePreview}
+                              alt="Blood Report Preview"
+                              height="100px"
+                            />
+                            <button onClick={handleDeleteBloodReportImage}>Delete</button>
+                          </div>))) : (bloodReportImagePreview && (
                           <div>
                             <h6>Preview:</h6>
                             <img
@@ -1650,7 +1717,7 @@ export default function EditCase() {
                             />
                           </div>
                         </div>
-                        {(!isFeedingRecordImageDeleted) ? (path.state.data.medicaldetail?.feedingRecordImage  && <div>
+                        {(!isFeedingRecordImageDeleted) ? ((path.state.data.medicaldetail?.feedingRecordImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.medicaldetail?.feedingRecordImage}`}
@@ -1659,6 +1726,15 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteSavedFeedingRecordImage}>Delete</button>
                         </div>) : (feedingRecordImagePreview && (
+                          <div>
+                            <h6>Preview:</h6>
+                            <img
+                              src={feedingRecordImagePreview}
+                              alt="Feeding Record Preview"
+                              height="100px"
+                            />
+                            <button onClick={handleDeleteFeedingRecordImage}>Delete</button>
+                          </div>))) : (feedingRecordImagePreview && (
                           <div>
                             <h6>Preview:</h6>
                             <img
@@ -1839,7 +1915,7 @@ export default function EditCase() {
                             />
                           </div>
                         </div>
-                        {(!isMedicalPrescriptionImageDeleted) ? (path.state.data.operationdetail?.medicalPrescriptionImage && <div>
+                        {(!isMedicalPrescriptionImageDeleted) ? ((path.state.data.operationdetail?.medicalPrescriptionImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.operationdetail?.medicalPrescriptionImage}`}
@@ -1848,6 +1924,14 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteSavedMedicalPrescriptionImage}>Delete</button>
                         </div>) : (medicalPrescriptionImagePreview && (
+                          <div>
+                            <h6>Preview:</h6>
+                            <img
+                              src={medicalPrescriptionImagePreview}
+                              alt="Feeding Record Preview"
+                              height="100px"
+                            /><button onClick={handleDeleteMedicalPrescriptionImage}>Delete</button>
+                          </div>))) : (medicalPrescriptionImagePreview && (
                           <div>
                             <h6>Preview:</h6>
                             <img
@@ -1880,7 +1964,7 @@ export default function EditCase() {
                             />
                           </div>
                         </div>
-                        {(!isTreatmentRecordImageDeleted) ? (path.state.data.operationdetail?.treatmentRecordImage && <div>
+                        {(!isTreatmentRecordImageDeleted) ? ((path.state.data.operationdetail?.treatmentRecordImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.operationdetail?.treatmentRecordImage}`}
@@ -1889,6 +1973,14 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteSavedTreatmentRecordImage}>Delete</button>
                         </div>) : (treatmentRecordImagePreview && (
+                          <div>
+                            <h6>Preview:</h6>
+                            <img
+                              src={treatmentRecordImagePreview}
+                              alt="Treatment Records Preview"
+                              height="100px"
+                            /><button onClick={handleDeleteTreatmentRecordImage}>Delete</button>
+                          </div>))) : (treatmentRecordImagePreview && (
                           <div>
                             <h6>Preview:</h6>
                             <img
@@ -1918,7 +2010,7 @@ export default function EditCase() {
                             />
                           </div>
                         </div>
-                        {(!isOrganImageDeleted) ? (path.state.data.operationdetail?.organImage && <div>
+                        {(!isOrganImageDeleted) ? ((path.state.data.operationdetail?.organImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.operationdetail?.organImage}`}
@@ -1927,6 +2019,14 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteSavedOrganImage}>Delete</button>
                         </div>) : (organImagePreview && (
+                          <div>
+                            <h6>Preview:</h6>
+                            <img
+                              src={organImagePreview}
+                              alt="Organ Pictures Preview"
+                              height="100px"
+                            /><button onClick={handleDeleteOrganImage}>Delete</button>
+                          </div>))) : (organImagePreview && (
                           <div>
                             <h6>Preview:</h6>
                             <img
@@ -2146,7 +2246,7 @@ export default function EditCase() {
                             />
                           </div>
                         </div>
-                        {(!isPopPicturesDeleted) ? (path.state.data.postoperationdetail?.popPictures && <div>
+                        {(!isPopPicturesDeleted) ? ((path.state.data.postoperationdetail?.popPictures) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.postoperationdetail?.popPictures}`}
@@ -2155,6 +2255,14 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteSavedPopPictures}>Delete</button>
                         </div>) : (popPicturesPreview && (
+                          <div>
+                            <h6>Preview:</h6>
+                            <img
+                              src={popPicturesPreview}
+                              alt="Post Operation Pictures Preview"
+                              height="100px"
+                            /><button onClick={handleDeletePopPictures}>Delete</button>
+                          </div>))) : (popPicturesPreview && (
                           <div>
                             <h6>Preview:</h6>
                             <img
@@ -2187,7 +2295,7 @@ export default function EditCase() {
                             />
                           </div>
                         </div>
-                        {(!isReleasePicturesDeleted) ? (path.state.data.postoperationdetail?.releasePictures && <div>
+                        {(!isReleasePicturesDeleted) ? ((path.state.data.postoperationdetail?.releasePictures) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.postoperationdetail?.releasePictures}`}
@@ -2196,6 +2304,14 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteSavedReleasePictures}>Delete</button>
                         </div>) : (releasePicturesPreview && (
+                          <div>
+                            <h6>Preview:</h6>
+                            <img
+                              src={releasePicturesPreview}
+                              alt="Release Pictures Preview"
+                              height="100px"
+                            /><button onClick={handleDeleteReleasePictures}>Delete</button>
+                          </div>))) : (releasePicturesPreview && (
                           <div>
                             <h6>Preview:</h6>
                             <img
