@@ -8,6 +8,7 @@ import NGOManagement from "./NGO Management/NgoManagement";
 import VetManagement from "./Vet Management/VetManagement";
 import SponsorManagement from "./Sponsor Management/SponsorManagement";
 import UserManagement from "./User Management/UserManagement"
+import EditCase from "./Case Management/EditCase";
 function App() {
   return (
     <div className="App">
@@ -17,13 +18,14 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/Addcase" element={<Addcase />} />
+            <Route path="/Editcase" element={<EditCase />} />
             <Route path="/Reporter" element={<ReporterManagement/>} />
             <Route path="/NGO" element={<NGOManagement/>} />
             <Route path="/Vet" element={<VetManagement/>} />
             <Route path="/Sponsor" element={<SponsorManagement/>} />
             <Route path="/User Management" element={<UserManagement/>} />
           </Routes>
-          <div>
+          {/* <div>
   <hr style={{marginTop:"5rem"}}/>
 <footer
  style={{textAlign:"center",
@@ -32,7 +34,7 @@ function App() {
  display:"flex",
  fontSize:"0.8rem",
  justifyContent:"center"
-}}><span style={{ fontWeight:"bold",marginRight:"0.1rem"}}>copyright &copy; Sterilization 2022.</span> <span> All rights reserved</span></footer>   </div>
+}}><span style={{ fontWeight:"bold",marginRight:"0.1rem"}}>copyright &copy; Sterilization 2022.</span> <span> All rights reserved</span></footer></div> */}
         </AuthProvider>
       </Router>
     </div>
