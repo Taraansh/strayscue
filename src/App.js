@@ -15,6 +15,8 @@ import AddNgo from "./NGO Management/AddNgo";
 import AddReporter from "./Reporter Management/AddReporter";
 import AddVet from "./Vet Management/AddVet";
 import AddSponsor from "./Sponsor Management/AddSponsor";
+import EditCase from "./Case Management/EditCase";
+
 function App() {
   return (
     <div className="App">
@@ -47,6 +49,7 @@ function App() {
  fontSize:"0.8rem",
  justifyContent:"center"
 }}><span style={{ fontWeight:"bold",marginRight:"0.1rem"}}>copyright &copy; Sterilization 2022.</span> <span> All rights reserved</span></footer>   </div> */}
+
         </AuthProvider>
       </Router>
     </div>

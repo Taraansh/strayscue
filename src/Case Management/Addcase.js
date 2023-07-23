@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
 import "../styles/Cases.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../assets/profile.png";
 import '../styles/Addcase.css';
@@ -594,9 +594,9 @@ const Addcase = () => {
         <hr />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h4 className="mx-4 px-4">{type_of_case} Case</h4>
-          <Link style={{ marginRight: "2rem" }} to="/Dashboard">
+          {/* <Link style={{ marginRight: "2rem" }} to="/Dashboard">
             Dashboard
-          </Link>
+          </Link> */}
         </div>
 
         <div className="case-lists mx-auto px-4">
@@ -999,11 +999,11 @@ const Addcase = () => {
                         Next
                         </button>
                       <div className="form-buttons">
-                        <div className="mb-1">
+                        {/* <div className="mb-1">
                         <button type="button" className="btn btn-primary">
                         Previous
                       </button>
-                      {/* <button
+                      <button
                         type="button"
                         className="btn btn-primary float-end mx-1"
                         onClick={() => {
@@ -1016,8 +1016,8 @@ const Addcase = () => {
                         }}
                       >
                         Exit
-                      </button> */}
-                        </div>
+                      </button>
+                        </div> */}
                       <div>
 
                       {/* <button
@@ -2077,7 +2077,6 @@ const Addcase = () => {
                         Exit
                       </button> */}
                       <div className="form-buttons">
-
                       <div className="mb-1">
                       <button type="button" className="btn btn-primary">
                         Previous
@@ -2096,8 +2095,6 @@ const Addcase = () => {
                       </button> */}
                         </div>
                       </div>
-                     
-                     
                     </div>
                   </form>
                 </div>
@@ -2109,7 +2106,6 @@ const Addcase = () => {
       <div
         style={{
               position: "fixed",
-   
     boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
     right: "0.1rem",
     display:"flex",
@@ -2117,7 +2113,6 @@ const Addcase = () => {
     justifyContent:"flex-end",
     width:"100vw",
     fontSize: "20px",
-   
     zIndex: "9",
     padding: "0.5rem 0.5rem",
     backgroundColor:"#ffffff"
@@ -2140,9 +2135,6 @@ const Addcase = () => {
             onClick={logoutUser}
           ></i>
         </span>
-        
-        
-        
       </div>
     </div>
   ) : (
