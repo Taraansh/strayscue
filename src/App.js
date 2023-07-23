@@ -15,7 +15,6 @@ import AddNgo from "./NGO Management/AddNgo";
 import AddReporter from "./Reporter Management/AddReporter";
 import AddVet from "./Vet Management/AddVet";
 import AddSponsor from "./Sponsor Management/AddSponsor";
-import EditCase from "./Case Management/EditCase";
 
 function App() {
   return (
@@ -35,7 +34,6 @@ function App() {
             <Route path="/Vet/AddVet" element={<AddVet/>} />
             <Route path="/Sponsor" element={<SponsorManagement/>} />
             <Route path="/UserManagement" element={<UserManagement/>} />
-
             <Route path="/Sponsor/AddSponsor" element={<AddSponsor/>} />
             <Route path="/User Management" element={<UserManagement/>} />
             <Route path="/User Management/Add User" element={<AddUser/>} />

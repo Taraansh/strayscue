@@ -1,17 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 const AddReporter = () => {
     const { user, logoutUser } = useContext(AuthContext);
-    const [showPassword, setShowPassword] = useState(false);
-
-    // const navigate = useNavigate();
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
-    };
 
     return user ? (
         <div
