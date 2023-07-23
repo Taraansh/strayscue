@@ -151,18 +151,20 @@ const Dashboard = () => {
           height: "100vh",
         }}
       >
-        <NavBar />
-        <>
-          <div
-            style={{
-              paddingTop: "5rem",
-              width: "100vw",
-              paddingLeft: "50px",
-            }}
-            className="container"
-          >
-            <hr />
-            <h4 style={{ marginLeft: "10px" }}>Dashboard</h4>
+
+      <NavBar />
+      <>
+        <div
+          style={{
+            paddingTop: "5rem",
+            width: "100vw",
+            paddingLeft: "50px",
+           
+          }}
+          className="container"
+        >
+          <hr />
+          <h4 className="heading1">Dashboard</h4>
 
             {/* <h4 className="heading1">Dashboard</h4>
           <div className="cases mx-auto">
@@ -211,6 +213,7 @@ const Dashboard = () => {
                     style={{ fontSize: "1.3rem" }}
                     className="fa-light fa-plus"
                   ></i>
+
                   Add Case
                 </Link>
                 <input

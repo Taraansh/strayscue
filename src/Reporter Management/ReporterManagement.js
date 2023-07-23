@@ -38,7 +38,7 @@ const ReporterManagement = () => {
 
             <div className="menu1">
               <Link
-               
+               to="/Reporter/AddReporter"
                 style={{
                   background: "rgb(245, 145, 32)",
                   color: "#ffffff",

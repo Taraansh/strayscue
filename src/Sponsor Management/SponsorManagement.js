@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 
-const SponsorManagement = () => {
+const AddSponsor = () => {
   const { user, logoutUser } = useContext(AuthContext);
 
 
@@ -38,7 +38,7 @@ const SponsorManagement = () => {
 
             <div className="menu1">
               <Link
-               
+               to="/Sponsor/AddSponsor"
                 style={{
                   background: "rgb(245, 145, 32)",
                   color: "#ffffff",
@@ -130,4 +130,4 @@ const SponsorManagement = () => {
   );
 };
 
-export default SponsorManagement;
+export default AddSponsor;

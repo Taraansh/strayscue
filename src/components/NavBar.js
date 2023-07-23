@@ -147,7 +147,7 @@ function NavBar() {
                 boxSizing: "border-box",
                 textDecoration: "none",
               }}
-              to="/"
+              to="/Settings"
             >
               <i className="fas fa-solid fa-gear"></i>
               <span className="nav-items">Settings</span>
