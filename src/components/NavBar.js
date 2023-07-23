@@ -146,7 +146,7 @@ function NavBar() {
                 boxSizing: "border-box",
                 textDecoration: "none",
               }}
-              to="#"
+              to="/Settings"
             >
           <div className="links">
               <i className="fas fa-solid fa-gear"></i>

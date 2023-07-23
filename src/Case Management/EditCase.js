@@ -692,7 +692,7 @@ export default function EditCase() {
         </div>
 
         <div className="case-lists mx-auto px-4">
-          <div className="row mb-3">
+          <div className="row mb-3 top-menu">
             <div className="col">
               <label htmlFor="type_of_case" className="form-label">
                 Type of case
@@ -739,7 +739,7 @@ export default function EditCase() {
           <div className="mx-auto px-4 container-fluid">
             {/* Change bar */}
             <div
-              className="btn-group mt-2"
+              className="btn-group form-1 mt-2"
               style={{ width: "100%" }}
               role="group"
               aria-label="Basic outlined example"
@@ -801,7 +801,7 @@ export default function EditCase() {
                 <div className="my-3">
                   <h2>Reporter Details:</h2>
                   <form onSubmit={handleUpdateReportingDetails}>
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="reporterName" className="form-label">
@@ -878,7 +878,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="address" className="form-label">
@@ -1090,7 +1090,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="form-group">
                         <label
                           className="form-label"
@@ -1183,7 +1183,7 @@ export default function EditCase() {
                   <h2>Further Animal Details :</h2>
                   <h5>Animal ID:</h5>
                   <form onSubmit={handleUpdateAnimalDetails}>
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="animalSpecies" className="form-label">
@@ -1254,7 +1254,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="mb-3">
                           <label
@@ -1330,7 +1330,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="form-group col mb-3">
                         <label htmlFor="animalMarking" className="form-label">
                           Animal Marking
@@ -1386,7 +1386,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="form-group col mb-3">
                         <label htmlFor="animalWeight" className="form-label">
                           Animal Weight (kgs)
@@ -1423,7 +1423,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="form-group mb-3">
                         <label
                           className="form-label h5"
@@ -1473,6 +1473,8 @@ export default function EditCase() {
                     </div>
 
                     <div className="my-2">
+                      <div className="form-buttons">
+                      <div className='mb-2'>
                       <button
                         type="button"
                         className="btn btn-primary"
@@ -1491,15 +1493,17 @@ export default function EditCase() {
                       >
                         Next
                       </button>
+                      </div>
+                      <div>
                       <button
                         type="submit"
-                        className="btn btn-primary float-end mx-1"
+                        className="btn btn-primary "
                       >
                         Save
                       </button>
                       <button
                         type="button"
-                        className="btn btn-primary float-end mx-1"
+                        className="btn btn-primary mx-2"
                         onClick={() => {
                           const confirmDelete = window.confirm(
                             "Are you sure you want to Exit?"
@@ -1511,6 +1515,8 @@ export default function EditCase() {
                       >
                         Exit
                       </button>
+                      </div>
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -1521,7 +1527,7 @@ export default function EditCase() {
                 <div className="my-3">
                   <h2>Medical Details:</h2>
                   <form onSubmit={handleUpdateMedicalDetails}>
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="mb-3">
                           <label
@@ -1592,7 +1598,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="fitForSurgery" className="form-label">
@@ -1646,7 +1652,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="form-group mb-3">
                           <label
@@ -1749,6 +1755,8 @@ export default function EditCase() {
                     </div>
 
                     <div className="my-1">
+                      <div className="form-buttons">
+                      <div className='mb-2'>
                       <button
                         type="button"
                         className="btn btn-primary"
@@ -1767,15 +1775,18 @@ export default function EditCase() {
                       >
                         Next
                       </button>
-                      <button
+
+                      </div>
+                     <div>
+                     <button
                         type="submit"
-                        className="btn btn-primary float-end mx-1"
+                        className="btn btn-primary "
                       >
                         Save
                       </button>
                       <button
                         type="button"
-                        className="btn btn-primary float-end mx-1"
+                        className="btn btn-primary mx-1"
                         onClick={() => {
                           const confirmDelete = window.confirm(
                             "Are you sure you want to Exit?"
@@ -1787,6 +1798,8 @@ export default function EditCase() {
                       >
                         Exit
                       </button>
+                     </div>
+                     </div>
                     </div>
                   </form>
                 </div>
@@ -1797,7 +1810,7 @@ export default function EditCase() {
                 <div className="my-3">
                   <h2>Operation Details :</h2>
                   <form onSubmit={handleUpdateOperationDetails}>
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="form-group mb-3">
                           <label htmlFor="vetName" className="form-label">
@@ -1831,9 +1844,9 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col mb-3">
-                        <div className="row">
+                        <div className="row form-1">
                           <div className="form-group col">
                             <label
                               className="form-label"
@@ -1895,7 +1908,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="form-group mb-2">
                           <label
@@ -1944,7 +1957,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="form-group mb-2">
                           <label
@@ -1993,7 +2006,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="form-group mb-2">
                           <label className="form-label" htmlFor="organImage">
@@ -2040,6 +2053,8 @@ export default function EditCase() {
                     </div>
 
                     <div className="my-1">
+                      <div className="form-buttons">
+                      <div className='mb-2'>
                       <button
                         type="button"
                         className="btn btn-primary"
@@ -2058,15 +2073,18 @@ export default function EditCase() {
                       >
                         Next
                       </button>
+
+                      </div>
+                      <div>
                       <button
                         type="submit"
-                        className="btn btn-primary float-end mx-1"
+                        className="btn btn-primary "
                       >
                         Save
                       </button>
                       <button
                         type="button"
-                        className="btn btn-primary float-end mx-1"
+                        className="btn btn-primary mx-1"
                         onClick={() => {
                           const confirmDelete = window.confirm(
                             "Are you sure you want to Exit?"
@@ -2078,6 +2096,8 @@ export default function EditCase() {
                       >
                         Exit
                       </button>
+                      </div>
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -2088,7 +2108,7 @@ export default function EditCase() {
                 <div className="my-3">
                   <h2>Post Operation Details :</h2>
                   <form onSubmit={handleUpdatePostOperationDetails}>
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="popComment" className="form-label">
@@ -2149,7 +2169,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col mb-3">
                         <label className="form-label" htmlFor="popStartDate">
                           Post-Operation Start Date
@@ -2191,7 +2211,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="mb-3">
                           <label htmlFor="euthanized" className="form-label">
@@ -2229,7 +2249,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="form-group mb-2">
                           <label className="form-label" htmlFor="popPictures">
@@ -2275,7 +2295,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="col">
                         <div className="form-group mb-2">
                           <label
@@ -2361,14 +2381,22 @@ export default function EditCase() {
             )}
           </div>
         </div>
-      </div>
+        </div>
       <div
         style={{
-          position: "absolute",
-          top: "15px",
-          right: "2rem",
-          fontSize: "20px",
-          cursor: "pointer",
+              position: "fixed",
+   
+    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+    right: "0.1rem",
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"flex-end",
+    width:"100vw",
+    fontSize: "20px",
+   
+    zIndex: "9",
+    padding: "0.5rem 0.5rem",
+    backgroundColor:"#ffffff"
         }}
       >
         <span>
@@ -2376,19 +2404,23 @@ export default function EditCase() {
           {path.state.data.user_name}
           </label>
           <img
+         
             width="17%"
-            style={{ marginRight: "1.5rem" }}
+            style={{ marginRight: "1.5rem",  cursor: "pointer" }}
             src={logo}
             alt="Logo"
           ></img>
-        </span>
-        <span>
-          <i
+            <i 
+             style={{  cursor: "pointer" }}
             className="fa-solid fa-right-from-bracket"
             onClick={logoutUser}
           ></i>
         </span>
+        
+        
+        
       </div>
+           
     </div>
 </>
   )

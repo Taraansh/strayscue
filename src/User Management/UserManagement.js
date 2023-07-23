@@ -33,6 +33,7 @@ const UserManagement = () => {
           <div className="case-lists mx-auto">
             <div className="menu1">
               <Link
+              to="/User Management/Add User"
                 style={{
                   background: "rgb(245, 145, 32)",
                   color: "#ffffff",
