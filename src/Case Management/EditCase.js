@@ -12,6 +12,7 @@ export default function EditCase() {
     const {
         user,
         logoutUser,
+        username
       } = useContext(AuthContext);
 
   // Reporting Details State
@@ -54,7 +55,6 @@ export default function EditCase() {
 
   const [isAnimalPictureDeleted, setIsAnimalPictureDeleted] = useState(false);
 
-
   // Medical Details State
   const [medicalHistory, setMedicalHistory] = useState(null);
   const [vaccinationStatus, setVaccinationStatus] = useState(null);
@@ -63,14 +63,12 @@ export default function EditCase() {
   const [otherDetails, setOtherDetails] = useState(null);
   const [admissionDate, setAdmissionDate] = useState(null);
   const [feedingRecordImage, setFeedingRecordImage] = useState(null);
-  const [feedingRecordImagePreview, setFeedingRecordImagePreview] =
-    useState("");
+  const [feedingRecordImagePreview, setFeedingRecordImagePreview] = useState("");
   const [bloodReportImage, setBloodReportImage] = useState(null);
   const [bloodReportImagePreview, setBloodReportImagePreview] = useState("");
 
   const [isFeedingRecordImageDeleted, setIsFeedingRecordImageDeleted] = useState(false);
   const [isBloodReportImageDeleted, setIsBloodReportImageDeleted] = useState(false);
-
 
   // Operation Details State
   const [vetName, setVetName] = useState(null);
@@ -78,20 +76,16 @@ export default function EditCase() {
   const [operationStartTime, setOperationStartTime] = useState(null);
   const [operationEndTime, setOperationEndTime] = useState(null);
   const [operationOutcome, setOperationOutcome] = useState(null);
-  const [medicalPrescriptionImage, setMedicalPrescriptionImage] =
-    useState(null);
-  const [medicalPrescriptionImagePreview, setMedicalPrescriptionImagePreview] =
-    useState(null);
+  const [medicalPrescriptionImage, setMedicalPrescriptionImage] = useState(null);
+  const [medicalPrescriptionImagePreview, setMedicalPrescriptionImagePreview] = useState(null);
   const [treatmentRecordImage, setTreatmentRecordImage] = useState(null);
-  const [treatmentRecordImagePreview, setTreatmentRecordImagePreview] =
-    useState(null);
+  const [treatmentRecordImagePreview, setTreatmentRecordImagePreview] = useState(null);
   const [organImage, setOrganImage] = useState(null);
   const [organImagePreview, setOrganImagePreview] = useState(null);
 
   const [isMedicalPrescriptionImageDeleted, setIsMedicalPrescriptionImageDeleted] = useState(false);
   const [isTreatmentRecordImageDeleted, setIsTreatmentRecordImageDeleted] = useState(false);
   const [isOrganImageDeleted, setIsOrganImageDeleted] = useState(false);
-
   
   // Post Operation Details State
   const [popComment, setPopComment] = useState(null);
@@ -109,7 +103,6 @@ export default function EditCase() {
 
   const [isPopPicturesDeleted, setIsPopPicturesDeleted] = useState(false);
   const [isReleasePicturesDeleted, setIsReleasePicturesDeleted] = useState(false);
-
 
   const buttonStyle = {
     border: "1px solid black",
@@ -932,7 +925,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="form-group col">
                         <label className="form-label" htmlFor="reporteddate">
                           Reported Date
@@ -1025,8 +1018,7 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteFrontImage}>Delete</button>
                             </div>))
-                        ) : (
-                        frontImagePreview && (
+                        ) : (frontImagePreview && (
                             <div>
                             <h6>Preview:</h6>
                             <img
@@ -1035,9 +1027,7 @@ export default function EditCase() {
                                 height="100px"
                             />
                             <button onClick={handleDeleteFrontImage}>Delete</button>
-                            </div>
-                        )
-                        )}
+                            </div>))}
 
                       </div>
                       <div className="col">
@@ -1056,7 +1046,7 @@ export default function EditCase() {
                             />
                           </div>
                         </div>
-                        { (!isBackImageDeleted) ? ((path.state.data.reportingdetail?.backImage) ? (<div>
+                        {(!isBackImageDeleted) ? ((path.state.data.reportingdetail?.backImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.reportingdetail?.backImage}`}
@@ -1074,8 +1064,7 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteBackImage}>Delete</button>
                             </div>))
-                        ) : (
-                        backImagePreview && (
+                        ) : (backImagePreview && (
                             <div>
                             <h6>Preview:</h6>
                             <img
@@ -1084,9 +1073,7 @@ export default function EditCase() {
                                 height="100px"
                             />
                             <button onClick={handleDeleteBackImage}>Delete</button>
-                            </div>
-                        )
-                        )}
+                            </div>))}
                       </div>
                     </div>
 
@@ -1109,7 +1096,7 @@ export default function EditCase() {
                           />
                         </div>
                       </div>
-                      { (!isConsentFormImageDeleted) ? ((path.state.data.reportingdetail?.consentFormImage) ? (<div>
+                      {(!isConsentFormImageDeleted) ? ((path.state.data.reportingdetail?.consentFormImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.reportingdetail?.consentFormImage}`}
@@ -1127,8 +1114,7 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteConsentFormImage}>Delete</button>
                             </div>))
-                        ) : (
-                        consentFormImagePreview && (
+                        ) : (consentFormImagePreview && (
                             <div>
                             <h6>Preview:</h6>
                             <img
@@ -1137,9 +1123,7 @@ export default function EditCase() {
                                 height="100px"
                             />
                             <button onClick={handleDeleteConsentFormImage}>Delete</button>
-                            </div>
-                        )
-                        )}
+                            </div>))}
                     </div>
 
                     <div className="my-3">
@@ -1468,8 +1452,7 @@ export default function EditCase() {
                               height="100px"
                             />
                           <button onClick={handleDeleteAnimalPicture}>Delete</button>
-                        </div>
-                      ))}
+                        </div>))}
                     </div>
 
                     <div className="my-2">
@@ -1698,8 +1681,7 @@ export default function EditCase() {
                               height="100px"
                             />
                             <button onClick={handleDeleteBloodReportImage}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -1749,8 +1731,7 @@ export default function EditCase() {
                               height="100px"
                             />
                             <button onClick={handleDeleteFeedingRecordImage}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -1952,8 +1933,7 @@ export default function EditCase() {
                               alt="Feeding Record Preview"
                               height="100px"
                             /><button onClick={handleDeleteMedicalPrescriptionImage}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -2001,8 +1981,7 @@ export default function EditCase() {
                               alt="Treatment Records Preview"
                               height="100px"
                             /><button onClick={handleDeleteTreatmentRecordImage}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -2047,8 +2026,7 @@ export default function EditCase() {
                               alt="Organ Pictures Preview"
                               height="100px"
                             /><button onClick={handleDeleteOrganImage}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -2290,8 +2268,7 @@ export default function EditCase() {
                               alt="Post Operation Pictures Preview"
                               height="100px"
                             /><button onClick={handleDeletePopPictures}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -2339,8 +2316,7 @@ export default function EditCase() {
                               alt="Release Pictures Preview"
                               height="100px"
                             /><button onClick={handleDeleteReleasePictures}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -2369,8 +2345,7 @@ export default function EditCase() {
                           );
                           if (confirmDelete) {
                             navigate("/Dashboard");
-                          }
-                        }}
+                          }}}
                       >
                         Exit
                       </button>
@@ -2385,26 +2360,22 @@ export default function EditCase() {
       <div
         style={{
               position: "fixed",
-   
-    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-    right: "0.1rem",
-    display:"flex",
-    flexDirection:"row",
-    justifyContent:"flex-end",
-    width:"100vw",
-    fontSize: "20px",
-   
-    zIndex: "9",
-    padding: "0.5rem 0.5rem",
-    backgroundColor:"#ffffff"
-        }}
-      >
+              boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+              right: "0.1rem",
+              display:"flex",
+              flexDirection:"row",
+              justifyContent:"flex-end",
+              width:"100vw",
+              fontSize: "20px",
+              zIndex: "9",
+              padding: "0.5rem 0.5rem",
+              backgroundColor:"#ffffff"
+              }}>
         <span>
           <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
-          {path.state.data.user_name}
+          {username}
           </label>
           <img
-         
             width="17%"
             style={{ marginRight: "1.5rem",  cursor: "pointer" }}
             src={logo}
@@ -2416,11 +2387,7 @@ export default function EditCase() {
             onClick={logoutUser}
           ></i>
         </span>
-        
-        
-        
       </div>
-           
     </div>
 </>
   )

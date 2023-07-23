@@ -225,7 +225,7 @@ const Dashboard = () => {
               </div>
               {/* Displaying Case Data */}
               <div>
-                <div className="container-fluid">
+                <div className="container-fluid" style={{overflow : "scroll"}}>
                   <div
                     className="btn-group my-2 mb-4"
                     style={{ width: "100%" }}
@@ -299,7 +299,7 @@ const Dashboard = () => {
                       {filteredCases.map((data, index) => {
                         return (
                           <tr key={index}>
-                            <th scope="row">
+                            <th scope="row" style={{display: "flex", justifyContent: "space-evenly"}}>
                               {/* {index + 1} */}
                               <button
                                 className="btn btn-primary"
@@ -307,7 +307,7 @@ const Dashboard = () => {
                                   handleEditCaseButton(data);
                                 }}
                               >
-                                Edit Case
+                                Edit
                               </button>
                               <div
                                 className="btn btn-primary mx-1"
