@@ -135,7 +135,7 @@ const Dashboard = () => {
           className="container"
         >
           <hr />
-          <h4 style={{ marginLeft: "10px" }}>Dashboard</h4>
+          <h4 className="heading1">Dashboard</h4>
 
           {/* <h4 className="heading1">Dashboard</h4>
           <div className="cases mx-auto">
@@ -190,7 +190,7 @@ const Dashboard = () => {
             </div>
             {/* Displaying Case Data */}
             <div>
-            <div className="container-fluid">
+            <div className="container-fluid" style={{overflow:"scroll"}}>
       <div
         className="btn-group my-2 mb-4"
         style={{ width: "100%" }}
@@ -265,11 +265,12 @@ const Dashboard = () => {
 
             return (
               <tr key={index}>
-                <th scope="row">
+                <th scope="row" style={{display: "flex",
+    justifyContent: "space-evenly"}}>
                   {/* {index + 1} */}
-                  <button className="btn btn-primary" onClick={()=>{handleEditCaseButton(data)}}>Edit Case</button>
+                  <button className="btn btn-primary" onClick={()=>{handleEditCaseButton(data)}}>Edit</button>
                   <div
-                    className="btn btn-primary mx-1"
+                    className="btn btn-primary"
                     onClick={() => {
                       handleCaseDeleteButton(data.case_id);
                     }}

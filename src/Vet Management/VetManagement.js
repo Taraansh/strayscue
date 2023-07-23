@@ -40,7 +40,7 @@ const VetManagement = () => {
 
             <div className="menu1">
               <Link
-               
+                to="/Vet/AddVet"
                 style={{
                   background: "rgb(245, 145, 32)",
                   color: "#ffffff",

@@ -40,6 +40,7 @@ const UserManagement = () => {
 
             <div className="menu1">
               <Link
+              to="/User Management/Add User"
                
                 style={{
                   background: "rgb(245, 145, 32)",
