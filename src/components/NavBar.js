@@ -7,7 +7,6 @@ function NavBar() {
     <nav>
       <ul>
         <li className="item">
-          <div>
             <Link
               style={{
                 outline: "none",
@@ -21,14 +20,14 @@ function NavBar() {
               to="/Dashboard"
               className="logo"
             >
+          <div>
               <img src={logo} alt="" />
+          </div>
               <span className="nav-items">Strayscue</span>
             </Link>
-          </div>
         </li>
 
         <li className="item">
-          <div className="links">
             <Link
               style={{
                 outline: "none",
@@ -40,13 +39,13 @@ function NavBar() {
               }}
               to="/Dashboard"
             >
+          <div className="links">
               <i className="fas fa-home"></i>
               <span className="nav-items">Dashboard</span>
-            </Link>
           </div>
+            </Link>
         </li>
         <li className="item">
-          <div className="links">
             <Link
               style={{
                 outline: "none",
@@ -56,15 +55,15 @@ function NavBar() {
                 boxSizing: "border-box",
                 textDecoration: "none",
               }}
-              to="/User Management"
+              to="/UserManagement"
             >
+          <div className="links">
               <i className="fas fa-solid fa-user"></i>
               <span className="nav-items">User Management</span>
-            </Link>
           </div>
+            </Link>
         </li>
         <li className="item">
-          <div className="links">
             <Link
               style={{
                 outline: "none",
@@ -76,13 +75,13 @@ function NavBar() {
               }}
               to="/NGO"
             >
+          <div className="links">
               <i className="fas fa-solid fa-n"></i>
               <span className="nav-items">NGO Management</span>
-            </Link>
           </div>
+            </Link>
         </li>
         <li className="item">
-          <div className="links">
             <Link
               style={{
                 outline: "none",
@@ -94,13 +93,13 @@ function NavBar() {
               }}
               to="/Reporter"
             >
+          <div className="links">
               <i className="fas fa-solid fa-r"></i>
               <span className="nav-items">Reporter Management</span>
-            </Link>
           </div>
+            </Link>
         </li>
         <li className="item">
-          <div className="links">
             <Link
               style={{
                 outline: "none",
@@ -112,13 +111,13 @@ function NavBar() {
               }}
               to="/Vet"
             >
+          <div className="links">
               <i className="fas fa-solid fa-v"></i>
               <span className="nav-items">Vet Management</span>
-            </Link>
           </div>
+            </Link>
         </li>
         <li className="item">
-          <div className="links">
             <Link
               style={{
                 outline: "none",
@@ -130,14 +129,14 @@ function NavBar() {
               }}
               to="/Sponsor"
             >
+          <div className="links">
               <i className="fas fa-solid fa-s"></i>
               <span className="nav-items">Sponser Management</span>
-            </Link>
           </div>
+            </Link>
         </li>
 
         <li className="item">
-          <div className="links">
             <Link
               style={{
                 outline: "none",
@@ -147,12 +146,13 @@ function NavBar() {
                 boxSizing: "border-box",
                 textDecoration: "none",
               }}
-              to="/"
+              to="#"
             >
+          <div className="links">
               <i className="fas fa-solid fa-gear"></i>
               <span className="nav-items">Settings</span>
-            </Link>
           </div>
+            </Link>
         </li>
       </ul>
     </nav>

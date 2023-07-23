@@ -23,7 +23,7 @@ function App() {
             <Route path="/NGO" element={<NGOManagement/>} />
             <Route path="/Vet" element={<VetManagement/>} />
             <Route path="/Sponsor" element={<SponsorManagement/>} />
-            <Route path="/User Management" element={<UserManagement/>} />
+            <Route path="/UserManagement" element={<UserManagement/>} />
           </Routes>
           {/* <div>
   <hr style={{marginTop:"5rem"}}/>
