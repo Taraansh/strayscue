@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
 import "../styles/Reporter.css";
@@ -6,7 +7,8 @@ import logo from "../assets/profile.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const AddSponsor = () => {
+export default function EditSponsor() {
+  const path = useLocation();
   const { user, logoutUser } = useContext(AuthContext);
   const [sponsor_name, setSponsorName] = useState(null);
   const [animal_fit_for_surgery, setAnimalFitForSurgery] = useState(null);
@@ -15,6 +17,8 @@ const AddSponsor = () => {
   const [end_date, setEndDate] = useState(null);
   const [sponsor_logo, setSponsorLogo] = useState(null);
   const [sponsorLogoPreview, setSponsorLogoPreview] = useState("");
+
+  const [isSponsorLogoDeleted, setIsSponsorLogoDeleted] = useState(false);
 
   const navigate = useNavigate();
 
@@ -38,22 +42,31 @@ const AddSponsor = () => {
     setSponsorLogoPreview("");
   };
 
-  const handleSponsorDetailSubmit = async (e) => {
+  const handleDeleteSavedSponsorLogo = () => {
+    setIsSponsorLogoDeleted(true);
+  };
+
+  const handleUpdateSponsorDetail = async (e) => {
     e.preventDefault();
-    const sponsor_profile_creator = localStorage.getItem("id");
 
     const formData = new FormData();
-    formData.append("sponsor_name", sponsor_name);
-    formData.append("animal_fit_for_surgery", animal_fit_for_surgery);
-    formData.append("sponsor_amount", sponsor_amount);
-    formData.append("start_date", start_date ? start_date : "1111-11-11");
-    formData.append("end_date", end_date ? end_date : "1111-11-11");
-    formData.append("sponsor_logo", sponsor_logo);
-    formData.append("sponsor_profile_creator", sponsor_profile_creator);
+    formData.append("sponsor_name", sponsor_name ? sponsor_name : path.state.data.sponsor_name );
+    formData.append("animal_fit_for_surgery", animal_fit_for_surgery ? animal_fit_for_surgery : path.state.data.animal_fit_for_surgery);
+    formData.append("sponsor_amount", sponsor_amount ? sponsor_amount : path.state.data.sponsor_amount);
+    formData.append("start_date", start_date ? (start_date ? start_date : "1111-11-11") : path.state.data.start_date);
+    formData.append("end_date", end_date ? (end_date ? end_date : "1111-11-11") : path.state.data.end_date);
+
+    if (sponsor_logo) {
+      formData.append("sponsor_logo", sponsor_logo ? sponsor_logo : null);
+    } else if (isSponsorLogoDeleted) {
+      formData.append("sponsor_logo", "null");
+    } else {
+      formData.append("sponsor_logo", path.state.data.sponsor_logo);
+    }
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/sponsors/addsponsor/",
+      const response = await axios.put(
+        `http://127.0.0.1:8000/sponsors/update/${path.state.data.id}/`,
         formData,
         {
           headers: {
@@ -61,21 +74,17 @@ const AddSponsor = () => {
           },
         }
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         console.log("Success:", response.data);
-        alert("Sponsor Added Successfully");
+        alert("Sponsor Updated Successfully");
         navigate("/Sponsor");
         // Handle success or display a success message.
-      } else {
-        console.error("Error:", response.data);
-        // Handle error or display an error message.
       }
     } catch (error) {
       console.error("Error:", error);
       // Handle error or display an error message.
     }
   };
-
   return user ? (
     <div
       style={{
@@ -96,12 +105,12 @@ const AddSponsor = () => {
           }}
           className="container"
         >
-          <h4 className="heading1">Add Sponsor</h4>
+          <h4 className="heading1">Edit Sponsor</h4>
 
           <div className="case-lists mx-auto">
             <h4 className="heading1">Sponsor Details:</h4>
             <div style={{ padding: "1rem" }}>
-              <form className="row g-3" onSubmit={handleSponsorDetailSubmit}>
+              <form className="row g-3" onSubmit={handleUpdateSponsorDetail}>
                 <div className="col-md-4">
                   <label
                     htmlFor="sponsor_name"
@@ -117,7 +126,7 @@ const AddSponsor = () => {
                     aria-label="sponsor_name"
                     id="sponsor_name"
                     name="sponsor_name"
-                    required
+                    defaultValue={path.state.data.sponsor_name || ""}
                     onChange={(e) => setSponsorName(e.target.value)}
                   />
                 </div>
@@ -133,10 +142,11 @@ const AddSponsor = () => {
                     id="animal_fit_for_surgery"
                     className="form-select"
                     name="animal_fit_for_surgery"
+                    defaultValue={path.state.data.animal_fit_for_surgery}
                     onChange={(e) => setAnimalFitForSurgery(e.target.value)}
                   >
                     <option value="">Choose</option>
-                    <option value="Vacciation">Vacciation</option>
+                    <option value="Vaccination">Vaccination</option>
                     <option value="Sterilization">Sterilization</option>
                     <option value="OPD">OPD</option>
                     <option value="IPD">IPD</option>
@@ -145,6 +155,7 @@ const AddSponsor = () => {
                     <option value="Other">Other</option>
                   </select>
                 </div>
+
                 <div className="col-md-4">
                   <label
                     htmlFor="sponsor_amount"
@@ -159,7 +170,7 @@ const AddSponsor = () => {
                     id="sponsor_amount"
                     name="sponsor_amount"
                     placeholder="Amout"
-                    required
+                    defaultValue={path.state.data.sponsor_amount || ""}
                     onChange={(e) => setAmount(e.target.value)}
                   />
                 </div>
@@ -174,6 +185,13 @@ const AddSponsor = () => {
                       id="start_date"
                       name="start_date"
                       type="date"
+                      defaultValue={
+                        path.state.data.start_date
+                          ? path.state.data.start_date === "1111-11-11"
+                            ? ""
+                            : path.state.data.start_date
+                          : ""
+                      }
                       onChange={(e) => setStartDate(e.target.value)}
                     />
                   </div>
@@ -186,6 +204,13 @@ const AddSponsor = () => {
                       id="end_date"
                       name="end_date"
                       type="date"
+                      defaultValue={
+                        path.state.data.end_date
+                          ? path.state.data.end_date === "1111-11-11"
+                            ? ""
+                            : path.state.data.end_date
+                          : ""
+                      }
                       onChange={(e) => setEndDate(e.target.value)}
                     />
                   </div>
@@ -213,18 +238,48 @@ const AddSponsor = () => {
                         onChange={handleSponsorLogoChange}
                       />
                     </div>
-                    {sponsorLogoPreview && (
-                      <div>
-                        <h6>Preview:</h6>
-                        <img
-                          src={sponsorLogoPreview}
-                          alt="Sponsor Logo Preview"
-                          height="100px"
-                        />
-                        <button onClick={handleDeleteSponsorLogo}>
-                          Delete
-                        </button>
-                      </div>
+                    {!isSponsorLogoDeleted ? (
+                      path.state.data.sponsor_logo ? (
+                        <div>
+                          <h6>Preview:</h6>
+                          <img
+                            src={`http://localhost:8000${path.state.data.sponsor_logo}`}
+                            alt="Consent Form Preview"
+                            height="100px"
+                          />
+                          <button onClick={handleDeleteSavedSponsorLogo}>
+                            Delete
+                          </button>
+                        </div>
+                      ) : (
+                        sponsorLogoPreview && (
+                          <div>
+                            <h6>Preview:</h6>
+                            <img
+                              src={sponsorLogoPreview}
+                              alt="Sponsor Logo Preview"
+                              height="100px"
+                            />
+                            <button onClick={handleDeleteSponsorLogo}>
+                              Delete
+                            </button>
+                          </div>
+                        )
+                      )
+                    ) : (
+                      sponsorLogoPreview && (
+                        <div>
+                          <h6>Preview:</h6>
+                          <img
+                            src={sponsorLogoPreview}
+                            alt="Sponsor Logo Preview"
+                            height="100px"
+                          />
+                          <button onClick={handleDeleteSponsorLogo}>
+                            Delete
+                          </button>
+                        </div>
+                      )
                     )}
                   </div>
                 </div>
@@ -249,7 +304,9 @@ const AddSponsor = () => {
                     }}
                     type="button"
                     className="btn mx-2"
-                    onClick={()=>{navigate('/Sponsor')}}
+                    onClick={() => {
+                      navigate("/Sponsor");
+                    }}
                   >
                     Cancel
                   </button>
@@ -298,6 +355,6 @@ const AddSponsor = () => {
       <p>You are not logged in, redirecting...</p>
     </div>
   );
-};
+}
 
-export default AddSponsor;
+// <div>EditSponsor - {path.state.data.sponsor_name}</div>
