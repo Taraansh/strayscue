@@ -7,7 +7,7 @@ import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
 
 const VetManagement = () => {
-  const { user, logoutUser, allVets, getAllVets } = useContext(AuthContext);
+  const { user, logoutUser, allVets, getAllVets, websiteUrl } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -41,7 +41,7 @@ const VetManagement = () => {
       try {
         // Delete the specific Vet by making an API call
         const response = await fetch(
-          `http://127.0.0.1:8000/vets/delete/${id}/`,
+          `${websiteUrl}/vets/delete/${id}/`,
           {
             method: "DELETE",
           }

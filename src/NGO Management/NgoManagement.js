@@ -6,7 +6,7 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 
 const NGOManagement = () => {
-  const { user, logoutUser, allNgos, getAllNgos } = useContext(AuthContext);
+  const { user, logoutUser, allNgos, getAllNgos, websiteUrl } = useContext(AuthContext);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredNgos, setFilteredNgos] = useState([]);
   const isSuperUser = localStorage.getItem("is_superuser");
@@ -41,7 +41,7 @@ const NGOManagement = () => {
       try {
         // Delete the specific NGO by making an API call
         const response = await fetch(
-          `http://127.0.0.1:8000/ngos/delete/${id}/`,
+          `${websiteUrl}/ngos/delete/${id}/`,
           {
             method: "DELETE",
           }

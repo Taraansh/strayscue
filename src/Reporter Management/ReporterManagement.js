@@ -7,7 +7,7 @@ import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
 
 const ReporterManagement = () => {
-  const { user, logoutUser, allReporters, getAllReporters } =
+  const { user, logoutUser, allReporters, getAllReporters, websiteUrl } =
     useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -46,7 +46,7 @@ const ReporterManagement = () => {
       try {
         // Delete the specific Reporter by making an API call
         const response = await fetch(
-          `http://127.0.0.1:8000/reporters/delete/${id}/`,
+          `${websiteUrl}/reporters/delete/${id}/`,
           {
             method: "DELETE",
           }

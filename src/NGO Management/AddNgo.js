@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AddNgo = () => {
-  const { user, logoutUser } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl } = useContext(AuthContext);
   const isSuperUser = localStorage.getItem("is_superuser");
   const navigate = useNavigate();
   const [ngo_name, setNgoName] = useState(null);
@@ -67,7 +67,7 @@ const AddNgo = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/ngos/addngo/",
+        `${websiteUrl}/ngos/addngo/`,
         formData,
         {
           headers: {

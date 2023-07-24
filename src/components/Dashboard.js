@@ -7,7 +7,7 @@ import "../styles/Cases.css";
 import logo from "../assets/profile.png";
 
 const Dashboard = () => {
-  const { user, logoutUser, allCases, getAllCases } =
+  const { user, logoutUser, allCases, getAllCases, websiteUrl } =
     useContext(AuthContext);
   const [modalShow, setModalShow] = React.useState(false);
   const [activeButton, setActiveButton] = useState(0);
@@ -89,7 +89,7 @@ const Dashboard = () => {
   const handleStatusChange = async (case_id, newStatus) => {
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/cases/update/${case_id}/`,
+        `${websiteUrl}/cases/update/${case_id}/`,
         {
           method: "PUT",
           headers: {
@@ -121,7 +121,7 @@ const Dashboard = () => {
       try {
         // Delete the specific case by making an API call
         const response = await fetch(
-          `http://127.0.0.1:8000/cases/delete/${case_id}/`,
+          `${websiteUrl}/cases/delete/${case_id}/`,
           {
             method: "DELETE",
           }

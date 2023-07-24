@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AddVet = () => {
-  const { user, logoutUser } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl } = useContext(AuthContext);
   const [vet_name, setVetName] = useState(null);
   const [registration_id, setRegistrationId] = useState(null);
   const [vet_certification, setVetCertification] = useState(null);
@@ -71,7 +71,7 @@ const AddVet = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/vets/addvet/",
+        `${websiteUrl}/vets/addvet/`,
         formData,
         {
           headers: {

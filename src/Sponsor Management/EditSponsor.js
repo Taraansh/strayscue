@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function EditSponsor() {
   const path = useLocation();
-  const { user, logoutUser } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl } = useContext(AuthContext);
   const [sponsor_name, setSponsorName] = useState(null);
   const [animal_fit_for_surgery, setAnimalFitForSurgery] = useState(null);
   const [sponsor_amount, setAmount] = useState(null);
@@ -66,7 +66,7 @@ export default function EditSponsor() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/sponsors/update/${path.state.data.id}/`,
+        `${websiteUrl}/sponsors/update/${path.state.data.id}/`,
         formData,
         {
           headers: {

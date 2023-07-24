@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function EditVet() {
   const path = useLocation();
-  const { user, logoutUser } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl } = useContext(AuthContext);
   const [vet_name, setVetName] = useState(null);
   const [registration_id, setRegistrationId] = useState(null);
   const [vet_certification, setVetCertification] = useState(null);
@@ -103,7 +103,7 @@ export default function EditVet() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/vets/update/${path.state.data.id}/`,
+        `http://127.0.0.1:${websiteUrl}8000/vets/update/${path.state.data.id}/`,
         formData,
         {
           headers: {

@@ -8,10 +8,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function EditNgo() {
+  const { user, logoutUser, websiteUrl } = useContext(AuthContext);
+  const isSuperUser = localStorage.getItem("is_superuser");
+
   const path = useLocation();
   const navigate = useNavigate();
-  const isSuperUser = localStorage.getItem("is_superuser");
-  const { user, logoutUser } = useContext(AuthContext);
+  
   const [ngo_name, setNgoName] = useState(null);
   const [darpan_id, setDarpanId] = useState(null);
   const [description, setDescription] = useState(null);
@@ -116,7 +118,7 @@ export default function EditNgo() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/ngos/update/${path.state.data.id}/`,
+        `${websiteUrl}/ngos/update/${path.state.data.id}/`,
         formData,
         {
           headers: {

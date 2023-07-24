@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const AddSponsor = () => {
-  const { user, logoutUser } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl } = useContext(AuthContext);
   const [sponsor_name, setSponsorName] = useState(null);
   const [animal_fit_for_surgery, setAnimalFitForSurgery] = useState(null);
   const [sponsor_amount, setAmount] = useState(null);
@@ -53,7 +53,7 @@ const AddSponsor = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/sponsors/addsponsor/",
+        `${websiteUrl}/sponsors/addsponsor/`,
         formData,
         {
           headers: {

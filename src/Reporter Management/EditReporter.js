@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function EditReporter() {
     const path = useLocation();
     const navigate = useNavigate();
-    const { user, logoutUser } = useContext(AuthContext);
+    const { user, logoutUser, websiteUrl } = useContext(AuthContext);
     const [reported_name, setReportedName] = useState(null);
     const [phone_number, setPhoneNumber] = useState(null);
     const [alternate_phone_number, setAlternatePhoneNumber] = useState(null);
@@ -63,7 +63,7 @@ export default function EditReporter() {
     
         try {
           const response = await axios.put(
-            `http://127.0.0.1:8000/reporters/update/${path.state.data.id}/`,
+            `${websiteUrl}/reporters/update/${path.state.data.id}/`,
             formData,
             {
               headers: {

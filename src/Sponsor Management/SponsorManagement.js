@@ -6,7 +6,7 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 
 const AddSponsor = () => {
-  const { user, logoutUser, allSponsors, getAllSponsors } =
+  const { user, logoutUser, allSponsors, getAllSponsors, websiteUrl } =
     useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ const AddSponsor = () => {
       try {
         // Delete the specific Sponsor by making an API call
         const response = await fetch(
-          `http://127.0.0.1:8000/sponsors/delete/${id}/`,
+          `${websiteUrl}/sponsors/delete/${id}/`,
           {
             method: "DELETE",
           }

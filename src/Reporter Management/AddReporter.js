@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AddReporter = () => {
-  const { user, logoutUser } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl } = useContext(AuthContext);
   const navigate = useNavigate();
   const [reported_name, setReportedName] = useState(null);
   const [phone_number, setPhoneNumber] = useState(null);
@@ -50,7 +50,7 @@ const AddReporter = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/reporters/addreporter/",
+        `${websiteUrl}/reporters/addreporter/`,
         formData,
         {
           headers: {
