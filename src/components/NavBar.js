@@ -2,7 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/NavBar.css";
 import logo from "../assets/logo.png";
+
 function NavBar() {
+  const isSuperUser = localStorage.getItem("is_superuser")
+
   return (
     <nav>
       <ul>
@@ -63,7 +66,7 @@ function NavBar() {
           </div>
             </Link>
         </li>
-        <li className="item">
+        { (isSuperUser === "true") && <li className="item">
             <Link
               style={{
                 outline: "none",
@@ -80,7 +83,7 @@ function NavBar() {
               <span className="nav-items">NGO Management</span>
           </div>
             </Link>
-        </li>
+        </li>}
         <li className="item">
             <Link
               style={{
