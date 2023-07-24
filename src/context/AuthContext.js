@@ -9,13 +9,11 @@ export default AuthContext;
 export const AuthProvider = ({ children }) => {
   const [case_id, setCaseID] = useState("");
   const [allCases, setAllCases] = useState([])
-  // const [reportingdetail_set, setReportingdetail_set] = useState([]);
-  // const [animaldetail_set, setAnimaldetail_set] = useState([]);
-  // const [medicaldetail_set, setMedicaldetail_set] = useState([]);
-  // const [operationdetail_set, setOperationdetail_set] = useState([]);
-  // const [postoperationdetail_set, setPostoperationdetail_set] = useState([]);
+  const [allSponsors, setAllSponsors] = useState([])
+  const [allVets, setAllVets] = useState([])
+  const [allReporters, setAllReporters] = useState([])
+  const [allNgos, setAllNgos] = useState([])
   const [type_of_case, setType_of_case] = useState("");
-  const [username, setUsername] = useState("");
   const [status_of_case, setStatus_of_case] = useState("");
   const [mortality_of_case, setMortality_of_case] = useState("");
   let [user, setUser] = useState(() =>
@@ -53,12 +51,14 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("authTokens", JSON.stringify(data));
       setAuthTokens(data);
       setUser(jwtDecode(data.access));
-      const username = jwtDecode(data.access).username
-      setUsername(username)
       const userEmail = jwtDecode(data.access).email;
       const userId = jwtDecode(data.access).user_id;
+      const username = jwtDecode(data.access).username;
+      const is_superuser = jwtDecode(data.access).is_superuser;
       localStorage.setItem("email", userEmail);
       localStorage.setItem("id", userId);
+      localStorage.setItem("username", username);
+      localStorage.setItem("is_superuser", is_superuser);
       navigate("/");
     }
   };
@@ -69,6 +69,8 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("authTokens");
       localStorage.removeItem("email");
       localStorage.removeItem("id");
+      localStorage.removeItem("username");
+      localStorage.removeItem("is_superuser");
       setAuthTokens(null);
       setUser(null);
       navigate("/");
@@ -102,12 +104,6 @@ export const AuthProvider = ({ children }) => {
           console.error("Enter correct details");
         } else {
           setCaseID(data.case_id);
-          console.log(data.case_id);
-          // setReportingdetail_set(data.reportingdetail_set);
-          // setAnimaldetail_set(data.animaldetail_set);
-          // setMedicaldetail_set(data.medicaldetail_set);
-          // setOperationdetail_set(data.operationdetail_set);
-          // setPostoperationdetail_set(data.postoperationdetail_set);
           setType_of_case(data.type_of_case);
           setStatus_of_case(data.status_of_case);
           setMortality_of_case(data.mortality_of_case);
@@ -128,6 +124,54 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       // Handle error, e.g., set an error state or display an error message
       console.error('Error fetching cases:', error);
+    }
+  }, []);
+
+  const getAllSponsors = useCallback(async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/sponsors/all/${localStorage.getItem('email')}/`);
+      const data = await response.json();
+      console.log(data);
+      setAllSponsors(data);
+    } catch (error) {
+      // Handle error, e.g., set an error state or display an error message
+      console.error('Error fetching Sponsors:', error);
+    }
+  }, []);
+
+  const getAllVets = useCallback(async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/vets/all/${localStorage.getItem('email')}/`);
+      const data = await response.json();
+      console.log(data);
+      setAllVets(data);
+    } catch (error) {
+      // Handle error, e.g., set an error state or display an error message
+      console.error('Error fetching Vets:', error);
+    }
+  }, []);
+
+  const getAllReporters = useCallback(async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/reporters/all/${localStorage.getItem('email')}/`);
+      const data = await response.json();
+      console.log(data);
+      setAllReporters(data);
+    } catch (error) {
+      // Handle error, e.g., set an error state or display an error message
+      console.error('Error fetching Reporters:', error);
+    }
+  }, []);
+
+  const getAllNgos = useCallback(async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/ngos/all/${localStorage.getItem('email')}/`);
+      const data = await response.json();
+      console.log(data);
+      setAllNgos(data);
+    } catch (error) {
+      // Handle error, e.g., set an error state or display an error message
+      console.error('Error fetching Reporters:', error);
     }
   }, []);
 
@@ -160,21 +204,24 @@ export const AuthProvider = ({ children }) => {
   let contextData = {
     user: user,
     case_id: case_id,
-    allCases: allCases,
-    username: username,
-    // reportingdetail_set:reportingdetail_set,
-    // animaldetail_set:animaldetail_set,
-    // medicaldetail_set:medicaldetail_set,
-    // operationdetail_set:operationdetail_set,
-    // postoperationdetail_set:postoperationdetail_set,
     type_of_case: type_of_case,
     status_of_case: status_of_case,
     mortality_of_case: mortality_of_case,
+    allCases: allCases,
+    allSponsors: allSponsors,
+    allVets: allVets,
+    allReporters: allReporters,
+    allNgos: allNgos,
+
     authTokens: authTokens,
     loginUser: loginUser,
     logoutUser: logoutUser,
     addNewCase: addNewCase,
     getAllCases: getAllCases,
+    getAllSponsors: getAllSponsors,
+    getAllVets: getAllVets,
+    getAllReporters: getAllReporters,
+    getAllNgos: getAllNgos,
   };
 
   useEffect(() => {
