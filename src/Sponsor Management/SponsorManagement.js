@@ -40,7 +40,7 @@ const AddSponsor = () => {
     );
     if (confirmDelete) {
       try {
-        // Delete the specific order by making an API call
+        // Delete the specific Sponsor by making an API call
         const response = await fetch(
           `http://127.0.0.1:8000/sponsors/delete/${id}/`,
           {
@@ -48,15 +48,15 @@ const AddSponsor = () => {
           }
         );
         if (response.ok) {
-          // Order successfully deleted, perform any necessary actions (e.g., refresh the order list)
-          getAllSponsors(); // Refresh the order list after deletion
+          // Sponsor successfully deleted, perform any necessary actions (e.g., refresh the Sponsor list)
+          getAllSponsors(); // Refresh the Sponsor list after deletion
         } else {
           // Handle the case when the delete request fails
-          console.log("Failed to Add Sponsor:", id);
+          console.log("Failed to Delete Sponsor:", id);
         }
       } catch (error) {
         // Handle any errors that occur during the delete operation
-        console.error("Error Adding Sponsor:", error);
+        console.error("Error Deleting Sponsor:", error);
       }
     }
   };
