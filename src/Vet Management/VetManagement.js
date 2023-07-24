@@ -18,7 +18,7 @@ const VetManagement = () => {
   }, [getAllVets]);
 
   useEffect(() => {
-    // Filter sponsors based on search query
+    // Filter vets based on search query
     const filtered = allVets.filter((data) => {
       const lowerCaseSearchQuery = searchQuery.toLowerCase();
       return (
