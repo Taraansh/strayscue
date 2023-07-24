@@ -378,6 +378,20 @@ const AddNgo = () => {
                     >
                       Submit
                     </button>
+                    <button
+                    style={{
+                      background: "rgb(245, 145, 32)",
+                      color: "#ffffff",
+                      cursor: "pointer",
+                    }}
+                    type="button"
+                    className="btn mx-2"
+                    onClick={() => {
+                      navigate("/NGO");
+                    }}
+                  >
+                    Cancel
+                  </button>
                   </div>
                 </form>
               </div>

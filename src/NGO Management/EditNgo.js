@@ -158,7 +158,7 @@ export default function EditNgo() {
             }}
             className="container"
           >
-            <h4 className="heading1">Add NGO</h4>
+            <h4 className="heading1">Edit NGO</h4>
             <div className="case-lists mx-auto">
               <h4 className="heading1">NGO Details:</h4>
               <div style={{ padding: "1rem" }}>
@@ -457,6 +457,20 @@ export default function EditNgo() {
                     >
                       Submit
                     </button>
+                    <button
+                    style={{
+                      background: "rgb(245, 145, 32)",
+                      color: "#ffffff",
+                      cursor: "pointer",
+                    }}
+                    type="button"
+                    className="btn mx-2"
+                    onClick={() => {
+                      navigate("/NGO");
+                    }}
+                  >
+                    Cancel
+                  </button>
                   </div>
                 </form>
               </div>
