@@ -98,10 +98,10 @@ const NGOManagement = () => {
                 </Link>
                 <input
                   type="text"
-                  placeholder="Search by Name/Type"
+                  placeholder="Search by Name/Darpan ID"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                />{" "}
+                />
               </div>
               {/* Displaying Case Data */}
               <div className="container-fluid" style={{ overflow: "scroll" }}>
