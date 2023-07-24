@@ -7,7 +7,7 @@ import "../styles/Cases.css";
 import logo from "../assets/profile.png";
 
 const Dashboard = () => {
-  const { user, logoutUser, username, allCases, getAllCases } =
+  const { user, logoutUser, allCases, getAllCases } =
     useContext(AuthContext);
   const [modalShow, setModalShow] = React.useState(false);
   const [activeButton, setActiveButton] = useState(0);
@@ -115,11 +115,11 @@ const Dashboard = () => {
 
   const handleCaseDeleteButton = async (case_id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this order?"
+      "Are you sure you want to delete this case?"
     );
     if (confirmDelete) {
       try {
-        // Delete the specific order by making an API call
+        // Delete the specific case by making an API call
         const response = await fetch(
           `http://127.0.0.1:8000/cases/delete/${case_id}/`,
           {
@@ -128,14 +128,14 @@ const Dashboard = () => {
         );
         if (response.ok) {
           // Order successfully deleted, perform any necessary actions (e.g., refresh the order list)
-          getAllCases(); // Refresh the order list after deletion
+          getAllCases(); // Refresh the case list after deletion
         } else {
           // Handle the case when the delete request fails
-          console.log("Failed to delete order:", case_id);
+          console.log("Failed to delete Case:", case_id);
         }
       } catch (error) {
         // Handle any errors that occur during the delete operation
-        console.error("Error deleting order:", error);
+        console.error("Error deleting case:", error);
       }
     }
   };
@@ -382,7 +382,7 @@ const Dashboard = () => {
         >
           <span>
             <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
-              {username}
+              {localStorage.getItem("username")}
             </label>
             <img
               width="17%"

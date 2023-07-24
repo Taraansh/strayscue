@@ -13,8 +13,7 @@ const Addcase = () => {
     type_of_case,
     status_of_case,
     mortality_of_case,
-    case_id,
-    username
+    case_id
   } = useContext(AuthContext);
   const navigate = useNavigate();
   // Active Button State
@@ -2120,7 +2119,7 @@ const Addcase = () => {
       >
         <span>
           <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
-            {username}
+          {localStorage.getItem("username")}
           </label>
           <img
          

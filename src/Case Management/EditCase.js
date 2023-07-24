@@ -11,8 +11,7 @@ export default function EditCase() {
     const [activeButton, setActiveButton] = useState(0);
     const {
         user,
-        logoutUser,
-        username
+        logoutUser
       } = useContext(AuthContext);
 
   // Reporting Details State
@@ -2373,7 +2372,7 @@ export default function EditCase() {
               }}>
         <span>
           <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
-          {username}
+          {localStorage.getItem("username")}
           </label>
           <img
             width="17%"
