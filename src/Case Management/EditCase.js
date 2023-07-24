@@ -11,7 +11,7 @@ export default function EditCase() {
     const [activeButton, setActiveButton] = useState(0);
     const {
         user,
-        logoutUser
+        logoutUser, websiteUrl
       } = useContext(AuthContext);
 
   // Reporting Details State
@@ -426,7 +426,7 @@ export default function EditCase() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/cases/updatereporter/${path.state.data.reportingdetail?.id}/`,
+        `${websiteUrl}/cases/updatereporter/${path.state.data.reportingdetail?.id}/`,
         formData,
         {
           headers: {
@@ -473,7 +473,7 @@ export default function EditCase() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/cases/updateanimal/${path.state.data.animaldetail?.id}/`,
+        `${websiteUrl}/cases/updateanimal/${path.state.data.animaldetail?.id}/`,
         formData,
         {
           headers: {
@@ -524,7 +524,7 @@ export default function EditCase() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/cases/updatemedical/${path.state.data.medicaldetail?.id}/`,
+        `${websiteUrl}/cases/updatemedical/${path.state.data.medicaldetail?.id}/`,
         formData,
         {
           headers: {
@@ -583,7 +583,7 @@ export default function EditCase() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/cases/updateoperational/${path.state.data.operationdetail?.id}/`,
+        `${websiteUrl}/cases/updateoperational/${path.state.data.operationdetail?.id}/`,
         formData,
         {
           headers: {
@@ -634,7 +634,7 @@ export default function EditCase() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/cases/updatepostoperational/${path.state.data.postoperationdetail?.id}/`,
+        `${websiteUrl}/cases/updatepostoperational/${path.state.data.postoperationdetail?.id}/`,
         formData,
         {
           headers: {

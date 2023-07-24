@@ -13,7 +13,7 @@ const Addcase = () => {
     type_of_case,
     status_of_case,
     mortality_of_case,
-    case_id
+    case_id, websiteUrl
   } = useContext(AuthContext);
   const navigate = useNavigate();
   // Active Button State
@@ -358,7 +358,7 @@ const Addcase = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/cases/addreporter/",
+        `${websiteUrl}/cases/addreporter/`,
         formData,
         {
           headers: {
@@ -406,7 +406,7 @@ const Addcase = () => {
     console.log(formData.get("animalSpecies"));
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/cases/addanimal/",
+        `${websiteUrl}/cases/addanimal/`,
         formData,
         {
           headers: {
@@ -452,7 +452,7 @@ const Addcase = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/cases/addmedical/",
+        `${websiteUrl}/cases/addmedical/`,
         formData,
         {
           headers: {
@@ -504,7 +504,7 @@ const Addcase = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/cases/addoperational/",
+        `${websiteUrl}/cases/addoperational/`,
         formData,
         {
           headers: {
@@ -546,7 +546,7 @@ const Addcase = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/cases/addpostop/",
+        `${websiteUrl}/cases/addpostop/`,
         formData,
         {
           headers: {
