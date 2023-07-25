@@ -7,12 +7,15 @@ const AuthContext = createContext();
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
+  const websiteUrl = "http://127.0.0.1:8000";
   const [case_id, setCaseID] = useState("");
-  const [allCases, setAllCases] = useState([])
-  const [allSponsors, setAllSponsors] = useState([])
-  const [allVets, setAllVets] = useState([])
-  const [allReporters, setAllReporters] = useState([])
-  const [allNgos, setAllNgos] = useState([])
+  const [profileData, setProfileData] = useState(null);
+
+  const [allCases, setAllCases] = useState([]);
+  const [allSponsors, setAllSponsors] = useState([]);
+  const [allVets, setAllVets] = useState([]);
+  const [allReporters, setAllReporters] = useState([]);
+  const [allNgos, setAllNgos] = useState([]);
   const [type_of_case, setType_of_case] = useState("");
   const [status_of_case, setStatus_of_case] = useState("");
   const [mortality_of_case, setMortality_of_case] = useState("");
@@ -32,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
   let loginUser = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://127.0.0.1:8000/authorize/token/", {
+    const response = await fetch(`${websiteUrl}/authorize/token/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -59,9 +62,21 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("id", userId);
       localStorage.setItem("username", username);
       localStorage.setItem("is_superuser", is_superuser);
+      getUserProfile()
       navigate("/");
     }
   };
+
+  const getUserProfile = useCallback(async () => {
+    try {
+        const response = await fetch(`${websiteUrl}/authorize/getprofile/${localStorage.getItem("email")}/`);
+        const data = await response.json()
+        console.log(data)
+        setProfileData(data)
+    } catch (error) {
+        console.error("Error fetching Vets:", error);
+    }
+}, [websiteUrl])
 
   const logoutUser = useCallback(
     (e) => {
@@ -81,7 +96,7 @@ export const AuthProvider = ({ children }) => {
   let addNewCase = async (typeOfCase, statusOfCase, mortalityOfCase) => {
     const userAddingThisCase = localStorage.getItem("id");
 
-    const response = await fetch("http://127.0.0.1:8000/cases/add/", {
+    const response = await fetch(`${websiteUrl}/cases/add/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -117,67 +132,77 @@ export const AuthProvider = ({ children }) => {
 
   const getAllCases = useCallback(async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/cases/allcases/${localStorage.getItem('email')}/`);
+      const response = await fetch(
+        `${websiteUrl}/cases/allcases/${localStorage.getItem("email")}/`
+      );
       const data = await response.json();
       console.log(data);
       setAllCases(data);
     } catch (error) {
       // Handle error, e.g., set an error state or display an error message
-      console.error('Error fetching cases:', error);
+      console.error("Error fetching cases:", error);
     }
   }, []);
 
   const getAllSponsors = useCallback(async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/sponsors/all/${localStorage.getItem('email')}/`);
+      const response = await fetch(
+        `${websiteUrl}/sponsors/all/${localStorage.getItem("email")}/`
+      );
       const data = await response.json();
       console.log(data);
       setAllSponsors(data);
     } catch (error) {
       // Handle error, e.g., set an error state or display an error message
-      console.error('Error fetching Sponsors:', error);
+      console.error("Error fetching Sponsors:", error);
     }
   }, []);
 
   const getAllVets = useCallback(async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/vets/all/${localStorage.getItem('email')}/`);
+      const response = await fetch(
+        `${websiteUrl}/vets/all/${localStorage.getItem("email")}/`
+      );
       const data = await response.json();
       console.log(data);
       setAllVets(data);
     } catch (error) {
       // Handle error, e.g., set an error state or display an error message
-      console.error('Error fetching Vets:', error);
+      console.error("Error fetching Vets:", error);
     }
   }, []);
 
   const getAllReporters = useCallback(async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/reporters/all/${localStorage.getItem('email')}/`);
+      const response = await fetch(
+        `${websiteUrl}/reporters/all/${localStorage.getItem("email")}/`
+      );
       const data = await response.json();
       console.log(data);
       setAllReporters(data);
     } catch (error) {
       // Handle error, e.g., set an error state or display an error message
-      console.error('Error fetching Reporters:', error);
+      console.error("Error fetching Reporters:", error);
     }
   }, []);
 
   const getAllNgos = useCallback(async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/ngos/all/${localStorage.getItem('email')}/`);
+      const response = await fetch(
+        `${websiteUrl}/ngos/all/${localStorage.getItem("email")}/`
+      );
       const data = await response.json();
       console.log(data);
       setAllNgos(data);
     } catch (error) {
       // Handle error, e.g., set an error state or display an error message
-      console.error('Error fetching Reporters:', error);
+      console.error("Error fetching Reporters:", error);
     }
   }, []);
 
   const updateToken = useCallback(async () => {
     const response = await fetch(
-      "http://127.0.0.1:8000/authorize/token/refresh/",
+      `${websiteUrl}/authorize/token/refresh/`,
       {
         method: "POST",
         headers: {
@@ -202,6 +227,7 @@ export const AuthProvider = ({ children }) => {
   }, [authTokens, setAuthTokens, setUser, logoutUser, loading]);
 
   let contextData = {
+    websiteUrl: websiteUrl,
     user: user,
     case_id: case_id,
     type_of_case: type_of_case,
@@ -212,6 +238,9 @@ export const AuthProvider = ({ children }) => {
     allVets: allVets,
     allReporters: allReporters,
     allNgos: allNgos,
+
+
+    profileData:profileData,
 
     authTokens: authTokens,
     loginUser: loginUser,
