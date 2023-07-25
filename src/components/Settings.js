@@ -1,229 +1,435 @@
 import React, { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
-import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
+import axios from "axios";
 
 const Settings = () => {
-    const { user, logoutUser } = useContext(AuthContext);
-    const [showPassword1, setShowPassword1] = useState(false);
-    const [showPassword2, setShowPassword2] = useState(false);
-    const [showPassword3, setShowPassword3] = useState(false);
-    // const navigate = useNavigate();
-    const togglePasswordVisibility1 = () => {
-        setShowPassword1(!showPassword1);
-    };
-    const togglePasswordVisibility2 = () => {
-        setShowPassword2(!showPassword2);
-    };
-    const togglePasswordVisibility3 = () => {
-        setShowPassword3(!showPassword3);
-    };
-    return user ? (
+  const { user, logoutUser, websiteUrl, profileData } = useContext(AuthContext);
+
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [showPassword3, setShowPassword3] = useState(false);
+
+  const [oldPassword, setOldPassword] = useState(null);
+  const [newPassword, setNewPassword] = useState(null);
+  const [confirmNewPassword, setConfirmNewPassword] = useState(null);
+
+  const [username, setUsername] = useState(null);
+  const [profilePhoto, setProfilePhoto] = useState(null);
+  const [profilePhotoPreview, setProfilePhotoPreview] = useState("");
+
+  const [isProfilePhotoDeleted, setIsProfilePhotoDeleted] = useState(false);
+
+  const handleProfilePhotoChange = (event) => {
+    const file = event.target.files[0];
+    setProfilePhoto(file);
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePhotoPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setProfilePhotoPreview("");
+    }
+  };
+
+  const handleDeleteProfilePhoto = () => {
+    setProfilePhoto(null);
+    setProfilePhotoPreview("");
+  };
+
+  const handleDeleteSavedProfilePhoto = () => {
+    setIsProfilePhotoDeleted(true);
+  };
+
+  // const navigate = useNavigate();
+  const togglePasswordVisibility1 = () => {
+    setShowPassword1(!showPassword1);
+  };
+  const togglePasswordVisibility2 = () => {
+    setShowPassword2(!showPassword2);
+  };
+  const togglePasswordVisibility3 = () => {
+    setShowPassword3(!showPassword3);
+  };
+
+
+  const handleModifyProfile = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("username", username ? username : profileData.username)
+    
+    if (profilePhoto) {
+        formData.append("profilePhoto", profilePhoto ? profilePhoto : null);
+      } else if (isProfilePhotoDeleted) {
+        formData.append("profilePhoto", "null");
+      } else {
+        formData.append("profilePhoto", profileData.username);
+      }
+
+    try {
+        const response = await axios.put(
+            `${websiteUrl}/authorize/update/${localStorage.getItem("email")}/`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            }
+        )
+        if (response.status === 200){
+            console.log("Success", response.data)
+            alert("Updated Succesfully")
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+  }
+
+  const handleModifyPassword = async (e) => {
+    e.preventDefault();
+    try {
+      if (newPassword === confirmNewPassword) {
+        const data = {
+          password: oldPassword,
+          new_password: newPassword,
+        };
+        const response = await fetch(
+          `${websiteUrl}/authorize/passchange/${localStorage.getItem(
+            "email"
+          )}/`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        );
+
+        // Check if the response status is 200 (OK)
+        if (response.status === 200) {
+          const responseData = await response.json(); // Parse the response data as JSON
+          console.log(responseData);
+          logoutUser(e);
+          alert("Password Changed Successfully. Please Login Again");
+        } else if (response.status === 401) {
+          alert("Enter Old Password Again");
+        } else {
+          alert("Something went wrong.");
+        }
+      } else {
+        alert("Enter New Password Again");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  return user ? (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        padding: "0",
+        margin: "0",
+        height: "100vh",
+      }}
+    >
+      <NavBar />
+      <>
         <div
-            style={{
-                display: "flex",
-                flexDirection: "row",
-                padding: "0",
-                margin: "0",
-                height: "100vh",
-            }}
+          style={{
+            paddingTop: "5rem",
+            width: "100vw",
+            paddingLeft: "50px",
+          }}
+          className="container"
         >
-            <NavBar />
-            <>
-                <div
-                    style={{
-                        paddingTop: "5rem",
-                        width: "100vw",
-                        paddingLeft: "50px",
-                    }}
-                    className="container"
-                >
-
-                    <h4 className="heading1">Profile Settings</h4>
-
-
-                    <div className="case-lists mx-auto" >
-
-
-
-                        <div className="container-fluid" style={{ overflow: "scroll", paddingBottom: "2rem" }} >
-                            <div class="mb-3">
-                                <label style={{ fontWeight: "bold" }} for="User1" className="form-label">User Name:</label>
-                                <input type="text" style={{ width: "auto" }} className="form-control" id="username" />
-
-                            </div>
-                            <div className="form-1" style={{ display: "flex" }}>
-                                <div class="mb-3" style={{ marginRight: "2rem" }}>
-                                    <label style={{ fontWeight: "bold" }} for="formFile" className="form-label">Profile Photo:</label>
-                                    <input className="form-control" type="file" id="formFile" />
-                                </div>
-                                <div >
-                                    <label style={{ fontWeight: "bold" }} className="form-label">Preview:</label>
-
-                                </div>
-                            </div>
-                            <div style={{ display: "flex", justifyContent: "flex-end", paddingRight: "1rem" }}>
-                                <Link
-
-                                    style={{
-                                        background: "rgb(245, 145, 32)",
-                                        color: "#ffffff",
-                                        cursor: "pointer",
-                                    }}
-                                    className="btn "
-                                >
-
-                                    Submit
-                                </Link>
-                            </div>
-
-
-                        </div>
-                    </div>
-
-
-                    <h4 className="heading1 my-3">Change Password</h4>
-                    <div className="case-lists mx-auto" >
-
-
-
-                       
-                        <div className="container-fluid" style={{ overflow: "scroll", paddingBottom: "2rem" }} >
-                            <div>
-
-                           
-                        <label style={{ fontWeight: "bold" }} for="User1" className="form-label">Old Password:</label>
-                            <div className="input-group mb-3 w-75" >
-                                <input type={showPassword1 ? "text" : "password"} className="form-control" placeholder="Password"
-                                    required
-                                    id="current-password"
-                                    name="password"
-                                    autoComplete="current-password" aria-label="Username" aria-describedby="basic-addon1" />
-                                <span className="input-group-text" id="basic-addon1"><i
-                                    style={{
-                                        cursor: "pointer",
-                                       
-                                        
-                                        fontSize: "1rem",
-                                        zIndex: "99999",
-                                    }}
-                                    onClick={togglePasswordVisibility1}
-                                >
-                                    {showPassword1 ? <FaEyeSlash /> : <FaEye />}
-                                </i></span>
-                            </div>
-                            <label style={{ fontWeight: "bold" }} for="User1" className="form-label">New Password:</label>
-                            <div className="input-group mb-3 w-75" >
-                                <input type={showPassword2 ? "text" : "password"} className="form-control" placeholder="Password"
-                                    required
-                                    id="current-password"
-                                    name="password"
-                                    autoComplete="current-password" aria-label="Username" aria-describedby="basic-addon1" />
-                                <span className="input-group-text" id="basic-addon1"><i
-                                    style={{
-                                        cursor: "pointer",
-                                       
-                                        
-                                        fontSize: "1rem",
-                                        zIndex: "99999",
-                                    }}
-                                    onClick={togglePasswordVisibility2}
-                                >
-                                    {showPassword2 ? <FaEyeSlash /> : <FaEye />}
-                                </i></span>
-                            </div>
-                            <label style={{ fontWeight: "bold" }} for="User1" className="form-label">Confirm New Password:</label>
-                            <div className="input-group mb-3 w-75" >
-                                
-                                <input type={showPassword3 ? "text" : "password"} className="form-control" placeholder="Password"
-                                    required
-                                    id="current-password"
-                                    name="password"
-                                    autoComplete="current-password" aria-label="Username" aria-describedby="basic-addon1" />
-                                <span className="input-group-text" id="basic-addon1"><i
-                                    style={{
-                                        cursor: "pointer",
-                                       
-                                        
-                                        fontSize: "1rem",
-                                        zIndex: "99999",
-                                    }}
-                                    onClick={togglePasswordVisibility3}
-                                >
-                                    {showPassword3 ? <FaEyeSlash /> : <FaEye />}
-                                </i></span>
-                            </div>
-                            </div>
-                            <div style={{ display: "flex", justifyContent: "flex-end", paddingRight: "1rem" }}>
-                                <Link
-
-                                    style={{
-                                        background: "rgb(245, 145, 32)",
-                                        color: "#ffffff",
-                                        cursor: "pointer",
-                                    }}
-                                    className="btn "
-                                >
-
-                                    Submit
-                                </Link>
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                </div>
-
-
-            </>
+          <h4 className="heading1">Profile Settings</h4>
+          <div className="case-lists mx-auto">
             <div
-                style={{
-                    position: "absolute",
-
-                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-                    right: "0.1rem",
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-end",
-                    width: "100vw",
-                    fontSize: "20px",
-
-                    padding: "0.5rem 0.5rem",
-                    backgroundColor: "#ffffff"
-                }}
+              className="container-fluid"
+              style={{ overflow: "scroll", paddingBottom: "2rem" }}
             >
-                <span>
-                    <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
-                        Chetan
-                    </label>
-                    <img
-                        width="17%"
-                        style={{ marginRight: "1.5rem", cursor: "pointer", }}
-                        src={logo}
-                        alt="Logo"
-                    ></img>
-                    <i
-                        style={{ cursor: "pointer" }}
-                        className="fa-solid fa-right-from-bracket"
-                        onClick={logoutUser}
-                    ></i>
-                </span>
+                <form onSubmit={handleModifyProfile}>
+              <div className="mb-3">
+                <label
+                  style={{ fontWeight: "bold" }}
+                  htmlFor="username"
+                  className="form-label"
+                >
+                  Username:
+                </label>
+                <input
+                  type="text"
+                  style={{ width: "auto" }}
+                  className="form-control"
+                  id="username"
+                  defaultValue={profileData.username || ''}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              <div className="form-1" style={{ display: "flex" }}>
+                <div className="mb-3" style={{ marginRight: "2rem" }}>
+                  <label
+                    style={{ fontWeight: "bold" }}
+                    htmlFor="profilePhoto"
+                    className="form-label"
+                  >
+                    Profile Photo:
+                  </label>
+                  <div className="custom-file">
+                    <input
+                      className="form-control custom-file-imput"
+                      type="file"
+                      id="profilePhoto"
+                      name="profilePhoto"
+                      accept="image/*"
+                      onChange={handleProfilePhotoChange}
+                    />
+                  </div>
+                  {
+                  !isProfilePhotoDeleted ? 
+                  (
+                    profileData.profilePhoto ? (
+                      <div>
+                        <h6>Preview:</h6>
+                        <img
+                          src={`http://localhost:8000${profileData.profilePhoto}`}
+                          alt="Preview"
+                          height="100px"
+                        />
+                        <button onClick={handleDeleteSavedProfilePhoto}>
+                          Delete
+                        </button>
+                      </div>
+                    ) : (
+                      profilePhotoPreview && (
+                        <div>
+                          <h6>Preview:</h6>
+                          <img
+                            src={profilePhotoPreview}
+                            alt="Preview"
+                            height="100px"
+                          />
+                          <button onClick={handleDeleteProfilePhoto}>
+                            Delete
+                          </button>
+                        </div>
+                      )
+                    )
+                  ) : 
+                  (
+                    profilePhotoPreview && (
+                      <div>
+                        <h6>Preview:</h6>
+                        <img
+                          src={profilePhotoPreview}
+                          alt="Preview"
+                          height="100px"
+                        />
+                        <button onClick={handleDeleteProfilePhoto}>
+                          Delete
+                        </button>
+                      </div>
+                    )
+                  )}
+                </div>
+                <div></div>
+              </div>
 
-
-
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  paddingRight: "1rem",
+                }}
+              >
+                <button
+                  style={{
+                    background: "rgb(245, 145, 32)",
+                    color: "#ffffff",
+                    cursor: "pointer",
+                  }}
+                  className="btn"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </div>
+              </form>
             </div>
+          </div>
+
+          <h4 className="heading1 my-3">Change Password</h4>
+          <div className="case-lists mx-auto">
+            <div
+              className="container-fluid"
+              style={{ overflow: "scroll", paddingBottom: "2rem" }}
+            >
+              <form onSubmit={handleModifyPassword}>
+                <label
+                  style={{ fontWeight: "bold" }}
+                  htmlFor="password"
+                  className="form-label"
+                >
+                  Old Password:
+                </label>
+                <div className="input-group mb-3 w-75">
+                  <input
+                    type={showPassword1 ? "text" : "password"}
+                    className="form-control"
+                    placeholder="Old Password"
+                    required
+                    id="password"
+                    name="password"
+                    autoComplete="current-password"
+                    aria-describedby="PasswordHelp"
+                    onChange={(e) => setOldPassword(e.target.value)}
+                  />
+                  <span className="input-group-text" id="basic-addon1">
+                    <i
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "1rem",
+                        zIndex: "99999",
+                      }}
+                      onClick={togglePasswordVisibility1}
+                    >
+                      {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+                    </i>
+                  </span>
+                </div>
+                <label
+                  style={{ fontWeight: "bold" }}
+                  htmlFor="new_password"
+                  className="form-label"
+                >
+                  New Password:
+                </label>
+                <div className="input-group mb-3 w-75">
+                  <input
+                    type={showPassword2 ? "text" : "password"}
+                    className="form-control"
+                    placeholder="New Password"
+                    id="new_password"
+                    name="new_password"
+                    autoComplete="new-password"
+                    aria-describedby="NewPwdHelp"
+                    required
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                  <span className="input-group-text" id="basic-addon1">
+                    <i
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "1rem",
+                        zIndex: "99999",
+                      }}
+                      onClick={togglePasswordVisibility2}
+                    >
+                      {showPassword2 ? <FaEyeSlash /> : <FaEye />}
+                    </i>
+                  </span>
+                </div>
+                <label
+                  style={{ fontWeight: "bold" }}
+                  htmlFor="confirm_new_password"
+                  className="form-label"
+                >
+                  Confirm New Password:
+                </label>
+                <div className="input-group mb-3 w-75">
+                  <input
+                    type={showPassword3 ? "text" : "password"}
+                    className="form-control"
+                    placeholder="Confirm New Password"
+                    required
+                    id="confirm_new_password"
+                    name="confirm_new_password"
+                    aria-describedby="ConfirmNewPwdHelp"
+                    autoComplete="new-password"
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  />
+                  <span className="input-group-text" id="basic-addon1">
+                    <i
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "1rem",
+                        zIndex: "99999",
+                      }}
+                      onClick={togglePasswordVisibility3}
+                    >
+                      {showPassword3 ? <FaEyeSlash /> : <FaEye />}
+                    </i>
+                  </span>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    paddingRight: "1rem",
+                  }}
+                >
+                  <button
+                    style={{
+                      background: "rgb(245, 145, 32)",
+                      color: "#ffffff",
+                      cursor: "pointer",
+                    }}
+                    className="btn"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-    ) : (
-        <div>
-            <p>You are not logged in, redirecting...</p>
-        </div>
-    );
+      </>
+      <div
+        style={{
+          position: "absolute",
+          boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+          right: "0.1rem",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+          width: "100vw",
+          fontSize: "20px",
+          padding: "0.5rem 0.5rem",
+          backgroundColor: "#ffffff",
+        }}
+      >
+        <span>
+          <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
+            {localStorage.getItem("username")}
+          </label>
+          <img
+            width="17%"
+            style={{ marginRight: "1.5rem", cursor: "pointer" }}
+            src={logo}
+            alt="Logo"
+          ></img>
+          <i
+            style={{ cursor: "pointer" }}
+            className="fa-solid fa-right-from-bracket"
+            onClick={logoutUser}
+          ></i>
+        </span>
+      </div>
+    </div>
+  ) : (
+    <div>
+      <p>You are not logged in, redirecting...</p>
+    </div>
+  );
 };
 
 export default Settings;
-
