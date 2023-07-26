@@ -209,11 +209,6 @@ const Dashboard = () => {
                   }}
                   className="btn "
                 >
-                  <i
-                    style={{ fontSize: "1.3rem" }}
-                    className="fa-light fa-plus"
-                  ></i>
-
                   Add Case
                 </Link>
                 <input
