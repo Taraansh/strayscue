@@ -122,7 +122,7 @@ export const AuthProvider = ({ children }) => {
           setType_of_case(data.type_of_case);
           setStatus_of_case(data.status_of_case);
           setMortality_of_case(data.mortality_of_case);
-          navigate("/Addcase");
+          navigate("/Editcase", {state: {data: data}});
         }
       }
     } catch (error) {
