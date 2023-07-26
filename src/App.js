@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./components/Login";
 import { AuthProvider } from "./context/AuthContext";
 import Dashboard from "./components/Dashboard";
-import Addcase from "./Case Management/Addcase";
 import Editcase from "./Case Management/EditCase";
 import ReporterManagement from "./Reporter Management/ReporterManagement";
 import NGOManagement from "./NGO Management/NgoManagement";
@@ -28,7 +27,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/Dashboard" element={<Dashboard />} />
-            <Route path="/Addcase" element={<Addcase />} />
             <Route path="/Editcase" element={<Editcase />} />
 
             <Route path="/Reporter" element={<ReporterManagement />} />
@@ -48,7 +46,7 @@ function App() {
             <Route path="/Sponsor/EditSponsor" element={<EditSponsor />} />
 
             <Route path="/UserManagement" element={<UserManagement />} />
-            <Route path="/UserManagement/Add User" element={<AddUser />} />
+            <Route path="/UserManagement/AddUser" element={<AddUser />} />
 
             <Route path="/Settings" element={<Settings />} />
           </Routes>
