@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 
+
 const AddSponsor = () => {
   const { user, logoutUser } = useContext(AuthContext);
 
@@ -82,6 +83,7 @@ const AddSponsor = () => {
       </table>
           </div>
           </div>
+     
         </div>
 
        

@@ -594,9 +594,13 @@ const Addcase = () => {
         <hr />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h4 className="mx-4 px-4">{type_of_case} Case</h4>
-          <Link style={{ marginRight: "2rem" }} to="/Dashboard">
+          <div>
+          <Link style={{marginRight:"0.2rem", textDecoration:"none", fontWeight:"bold"}} to="/Dashboard">
             Dashboard
           </Link>
+          <span style={{fontWeight:"bold", textDecoration:"none"}}>/Add Case</span>
+          </div>
+        
         </div>
 
         <div className="case-lists mx-auto px-4">
@@ -977,7 +981,7 @@ const Addcase = () => {
                             alt="Consent Form Preview"
                             height="100px"
                           />
-                          <button onClick={handleDeleteConsentFormImage}>Delete</button>
+                          <button  onClick={handleDeleteConsentFormImage}>Delete</button>
                         </div>
                       )}
                     </div>
@@ -993,14 +997,15 @@ const Addcase = () => {
                         Next
                       </button> */}
                       <button
+                      style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
                         type="submit"
-                        className="btn btn-primary float-end mx-1"
+                        className="btn float-end mx-1"
                       >
                         Next
                         </button>
                       <div className="form-buttons">
                         <div className="mb-1">
-                        <button type="button" className="btn btn-primary">
+                        <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn">
                         Previous
                       </button>
                       {/* <button
@@ -1337,7 +1342,8 @@ const Addcase = () => {
                       </button> */}
                       <button
                         type="submit"
-                        className="btn btn-primary float-end mx-1"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn float-end mx-1"
                       >
                         Next
                       </button>
@@ -1580,7 +1586,8 @@ const Addcase = () => {
                       </button> */}
                       <button
                         type="submit"
-                        className="btn btn-primary float-end mx-1"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn float-end mx-1"
                       >
                         Next
                       </button>
@@ -1819,7 +1826,8 @@ const Addcase = () => {
                       </button> */}
                       <button
                         type="submit"
-                        className="btn btn-primary float-end mx-1"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn  float-end mx-1"
                       >
                         Next
                       </button>
@@ -2058,7 +2066,8 @@ const Addcase = () => {
                       </button> */}
                       <button
                         type="submit"
-                        className="btn btn-primary float-end mx-1"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn  float-end mx-1"
                       >
                         Save
                       </button>
@@ -2079,10 +2088,10 @@ const Addcase = () => {
                       <div className="form-buttons">
 
                       <div className="mb-1">
-                      <button type="button" className="btn btn-primary">
+                      <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn ">
                         Previous
                       </button>
-                      <button type="button" className="btn btn-primary mx-2">
+                      <button type="button"  style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn mx-2">
                         Exit
                       </button>
                       </div>

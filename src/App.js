@@ -24,18 +24,18 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/Addcase" element={<Addcase />} />
-            <Route path="/Editcase" element={<Editcase/>} />
-            <Route path="/Reporter" element={<ReporterManagement/>} />
-            <Route path="/Reporter/AddReporter" element={<AddReporter/>} />
-            <Route path="/NGO" element={<NGOManagement/>} />
-            <Route path="/NGO/AddNgo" element={<AddNgo/>} />
-            <Route path="/Vet" element={<VetManagement/>} />
-            <Route path="/Vet/AddVet" element={<AddVet/>} />
-            <Route path="/Sponsor" element={<SponsorManagement/>} />
-            <Route path="/Sponsor/AddSponsor" element={<AddSponsor/>} />
-            <Route path="/User Management" element={<UserManagement/>} />
-            <Route path="/User Management/Add User" element={<AddUser/>} />
-            <Route path="/Settings" element={<Settings/>} />
+            <Route path="/Editcase" element={<Editcase />} />
+            <Route path="/Reporter" element={<ReporterManagement />} />
+            <Route path="/Reporter/AddReporter" element={<AddReporter />} />
+            <Route path="/NGO" element={<NGOManagement />} />
+            <Route path="/NGO/AddNgo" element={<AddNgo />} />
+            <Route path="/Vet" element={<VetManagement />} />
+            <Route path="/Vet/AddVet" element={<AddVet />} />
+            <Route path="/Sponsor" element={<SponsorManagement />} />
+            <Route path="/Sponsor/AddSponsor" element={<AddSponsor />} />
+            <Route path="/User Management" element={<UserManagement />} />
+            <Route path="/User Management/Add User" element={<AddUser />} />
+            <Route path="/Settings" element={<Settings />} />
           </Routes>
           {/* <div>
   <hr style={{marginTop:"5rem"}}/>
@@ -46,7 +46,8 @@ function App() {
  display:"flex",
  fontSize:"0.8rem",
  justifyContent:"center"
-}}><span style={{ fontWeight:"bold",marginRight:"0.1rem"}}>copyright &copy; Sterilization 2022.</span> <span> All rights reserved</span></footer>   </div> */}
+}}><span style={{ fontWeight:"bold",marginRight:"0.1rem"}}>copyright &copy; Sterilization 2022.</span> <span> All rights reserved</span></footer>   
+</div> */}
         </AuthProvider>
       </Router>
     </div>

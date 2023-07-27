@@ -3,7 +3,7 @@ import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
-
+import { Link } from 'react-router-dom'
 const AddVet = () => {
     const { user, logoutUser } = useContext(AuthContext);
    
@@ -30,7 +30,15 @@ const AddVet = () => {
                     className="container"
                 >
 
-                    <h4 className="heading1">Add Vet</h4>
+<div style={{ display: "flex", justifyContent: "space-between" }}>
+          <h4 className="mx-4 px-4">Add Vet</h4>
+          <div style={{paddingRight:"2rem"}}>
+          <Link style={{marginRight:"0.2rem", textDecoration:"none", fontWeight:"bold"}} to="/Dashboard">
+            Dashboard
+          </Link>
+          <span style={{fontWeight:"bold", textDecoration:"none"}}>/Add Vet</span>
+          </div>
+        </div>
 
 
                     <div className="case-lists mx-auto" >

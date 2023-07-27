@@ -6,6 +6,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
+import Footer from "./Footer";
 
 const Settings = () => {
     const { user, logoutUser } = useContext(AuthContext);
@@ -39,6 +40,7 @@ const Settings = () => {
                         paddingTop: "5rem",
                         width: "100vw",
                         paddingLeft: "50px",
+                        height:"900px"
                     }}
                     className="container"
                 >
@@ -177,6 +179,7 @@ const Settings = () => {
                         </div>
                     </div>
 
+                       <Footer/>
                 </div>
 
 
@@ -217,6 +220,8 @@ const Settings = () => {
 
 
             </div>
+           
+      
         </div>
     ) : (
         <div>
