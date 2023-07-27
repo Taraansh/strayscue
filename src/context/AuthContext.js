@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   let loginUser = async (e) => {
+   
     e.preventDefault();
     const response = await fetch(`${websiteUrl}/authorize/token/`, {
       method: "POST",

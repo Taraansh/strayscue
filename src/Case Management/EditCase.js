@@ -678,9 +678,12 @@ export default function EditCase() {
         <hr />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h4 className="mx-4 px-4">{path.state.data.type_of_case} Case</h4>
-          <Link style={{ marginRight: "2rem" }} to="/Dashboard">
+          <div style={{paddingRight:"2rem"}}>
+          <Link style={{marginRight:"0.2rem", textDecoration:"none", fontWeight:"bold"}} to="/Dashboard">
             Dashboard
           </Link>
+          <span style={{fontWeight:"bold", textDecoration:"none"}}>/Edit Case</span>
+          </div>
         </div>
 
         <div className="case-lists mx-auto px-4">
@@ -1133,7 +1136,8 @@ export default function EditCase() {
                     <div className="my-3">
                       <button
                         type="button"
-                        className="btn btn-primary"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn"
                         onClick={() => {
                           setActiveButton(1);
                         }}
@@ -1142,13 +1146,15 @@ export default function EditCase() {
                       </button>
                       <button
                         type="submit"
-                        className="btn btn-primary float-end mx-1"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn  float-end mx-1"
                       >
                         Save
                       </button>
                       <button
                         type="button"
-                        className="btn btn-primary float-end mx-1"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn  float-end mx-1"
                         onClick={() => {
                           const confirmDelete = window.confirm(
                             "Are you sure you want to Exit?"
@@ -1464,7 +1470,8 @@ export default function EditCase() {
                       <div className='mb-2'>
                       <button
                         type="button"
-                        className="btn btn-primary"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn "
                         onClick={() => {
                           setActiveButton(0);
                         }}
@@ -1473,7 +1480,8 @@ export default function EditCase() {
                       </button>
                       <button
                         type="button"
-                        className="btn btn-primary mx-2"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn mx-2"
                         onClick={() => {
                           setActiveButton(2);
                         }}
@@ -1483,8 +1491,16 @@ export default function EditCase() {
                       </div>
                       <div>
                       <button
+                        type="submit"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn"
+                      >
+                        Save
+                      </button>
+                      <button
                         type="button"
-                        className="btn btn-primary mx-2"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn mx-2"
                         onClick={() => {
                           const confirmDelete = window.confirm(
                             "Are you sure you want to Exit?"
@@ -1744,7 +1760,8 @@ export default function EditCase() {
                       <div className='mb-2'>
                       <button
                         type="button"
-                        className="btn btn-primary"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn"
                         onClick={() => {
                           setActiveButton(1);
                         }}
@@ -1753,7 +1770,8 @@ export default function EditCase() {
                       </button>
                       <button
                         type="button"
-                        className="btn btn-primary mx-2"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn  mx-2"
                         onClick={() => {
                           setActiveButton(3);
                         }}
@@ -1765,7 +1783,8 @@ export default function EditCase() {
                      <div>
                       <button
                         type="button"
-                        className="btn btn-primary mx-1"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn  mx-1"
                         onClick={() => {
                           const confirmDelete = window.confirm(
                             "Are you sure you want to Exit?"
@@ -2039,7 +2058,8 @@ export default function EditCase() {
                       <div className='mb-2'>
                       <button
                         type="button"
-                        className="btn btn-primary"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn "
                         onClick={() => {
                           setActiveButton(2);
                         }}
@@ -2048,7 +2068,8 @@ export default function EditCase() {
                       </button>
                       <button
                         type="button"
-                        className="btn btn-primary mx-2"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn  mx-2"
                         onClick={() => {
                           setActiveButton(4);
                         }}
@@ -2060,7 +2081,8 @@ export default function EditCase() {
                       <div>
                       <button
                         type="button"
-                        className="btn btn-primary mx-1"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn  mx-1"
                         onClick={() => {
                           const confirmDelete = window.confirm(
                             "Are you sure you want to Exit?"
@@ -2327,7 +2349,8 @@ export default function EditCase() {
                     <div className="my-1">
                       <button
                         type="button"
-                        className="btn btn-primary"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn "
                         onClick={() => {
                           setActiveButton(3);
                         }}
@@ -2336,13 +2359,15 @@ export default function EditCase() {
                       </button>
                       <button
                         type="submit"
-                        className="btn btn-primary float-end mx-1"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn float-end mx-1"
                       >
                         Save
                       </button>
                       <button
                         type="Button"
-                        className="btn btn-primary float-end mx-1"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                        className="btn  float-end mx-1"
                         onClick={() => {
                           const confirmDelete = window.confirm(
                             "Are you sure you want to Exit?"

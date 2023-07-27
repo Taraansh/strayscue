@@ -3,6 +3,7 @@ import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
+import { Link } from 'react-router-dom'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 

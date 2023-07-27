@@ -158,6 +158,7 @@ const Login = () => {
           </Form>
         </Card>
         <Modal
+        style={{zIndex:"999999999999"}}
           className="bottom-modal"
           size="sm"
           show={smShow}
@@ -167,15 +168,16 @@ const Login = () => {
           <Modal.Header closeButton>
             <Modal.Body>
               <div>
-                <i
+                <span><i
                   style={{
                     fontSize: "20px",
                     marginRight: "10px",
                     color: "#ffffff",
                   }}
                   className="fa-solid fa-circle-exclamation"
-                ></i>
-                Contact Your Administrator
+                ></i></span>
+                <span> Contact Your Admin</span>
+               
               </div>
             </Modal.Body>
           </Modal.Header>

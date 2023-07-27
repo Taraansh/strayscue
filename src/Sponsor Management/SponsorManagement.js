@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 
+
 const AddSponsor = () => {
   const { user, logoutUser, allSponsors, getAllSponsors, websiteUrl } =
     useContext(AuthContext);
@@ -155,6 +156,7 @@ const AddSponsor = () => {
               </table>
             </div>
           </div>
+     
         </div>
       </>
       <div
