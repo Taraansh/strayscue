@@ -16,6 +16,8 @@ export const AuthProvider = ({ children }) => {
   const [allVets, setAllVets] = useState([]);
   const [allReporters, setAllReporters] = useState([]);
   const [allNgos, setAllNgos] = useState([]);
+  const [allCasesLinkedWithNGO, setAllCasesLinkedWithNGO] = useState([]);
+  const [allUsersLinkedWithNgo, setAllUsersLinkedWithNgo] = useState([]);
   const [type_of_case, setType_of_case] = useState("");
   const [status_of_case, setStatus_of_case] = useState("");
   const [mortality_of_case, setMortality_of_case] = useState("");
@@ -58,10 +60,14 @@ export const AuthProvider = ({ children }) => {
       const userId = jwtDecode(data.access).user_id;
       const username = jwtDecode(data.access).username;
       const is_superuser = jwtDecode(data.access).is_superuser;
+      const type_of_user_in_ngo = jwtDecode(data.access).type_of_user_in_ngo;
+      const ngo_linked_with_this_user = jwtDecode(data.access).ngo_linked_with_this_user;
       localStorage.setItem("email", userEmail);
       localStorage.setItem("id", userId);
       localStorage.setItem("username", username);
       localStorage.setItem("is_superuser", is_superuser);
+      localStorage.setItem("type_of_user_in_ngo", type_of_user_in_ngo);
+      localStorage.setItem("ngo_linked_with_this_user", ngo_linked_with_this_user);
       getUserProfile()
       navigate("/");
     }
@@ -72,9 +78,11 @@ export const AuthProvider = ({ children }) => {
         const response = await fetch(`${websiteUrl}/authorize/getprofile/${localStorage.getItem("email")}/`);
         const data = await response.json()
         console.log(data)
+        localStorage.setItem("ngo_linked_with_this_user", data.ngo_linked_with_this_user)
+        localStorage.setItem("ngo_name", data.ngo_name)
         setProfileData(data)
     } catch (error) {
-        console.error("Error fetching Vets:", error);
+        console.error("Error fetching Profile:", error);
     }
 }, [websiteUrl])
 
@@ -86,6 +94,9 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("id");
       localStorage.removeItem("username");
       localStorage.removeItem("is_superuser");
+      localStorage.removeItem("type_of_user_in_ngo");
+      localStorage.removeItem("ngo_linked_with_this_user");
+      localStorage.removeItem("ngo_name");
       setAuthTokens(null);
       setUser(null);
       navigate("/");
@@ -196,7 +207,35 @@ export const AuthProvider = ({ children }) => {
       setAllNgos(data);
     } catch (error) {
       // Handle error, e.g., set an error state or display an error message
-      console.error("Error fetching Reporters:", error);
+      console.error("Error fetching NGOs:", error);
+    }
+  }, []);
+
+  const getAllCasesLinkedWithNgo = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${websiteUrl}/cases/ngocases/${localStorage.getItem("email")}/`
+      );
+      const data = await response.json();
+      console.log(data);
+      setAllCasesLinkedWithNGO(data);
+    } catch (error) {
+      // Handle error, e.g., set an error state or display an error message
+      console.error("Error fetching Cases:", error);
+    }
+  }, []);
+
+  const getAllUsersLinkedWithNgo = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${websiteUrl}/ngos/allusers/${localStorage.getItem("email")}/`
+      );
+      const data = await response.json();
+      console.log(data);
+      setAllUsersLinkedWithNgo(data);
+    } catch (error) {
+      // Handle error, e.g., set an error state or display an error message
+      console.error("Error fetching Users:", error);
     }
   }, []);
 
@@ -238,9 +277,9 @@ export const AuthProvider = ({ children }) => {
     allVets: allVets,
     allReporters: allReporters,
     allNgos: allNgos,
-
-
+    allUsersLinkedWithNgo: allUsersLinkedWithNgo,
     profileData:profileData,
+    allCasesLinkedWithNGO: allCasesLinkedWithNGO,
 
     authTokens: authTokens,
     loginUser: loginUser,
@@ -251,6 +290,8 @@ export const AuthProvider = ({ children }) => {
     getAllVets: getAllVets,
     getAllReporters: getAllReporters,
     getAllNgos: getAllNgos,
+    getAllUsersLinkedWithNgo: getAllUsersLinkedWithNgo,
+    getAllCasesLinkedWithNgo: getAllCasesLinkedWithNgo,
   };
 
   useEffect(() => {
