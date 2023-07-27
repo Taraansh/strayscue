@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const AddVet = () => {
+export default function EditVet() {
+  const path = useLocation();
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
   const [vet_name, setVetName] = useState(null);
   const [registration_id, setRegistrationId] = useState(null);
@@ -15,6 +17,10 @@ const AddVet = () => {
 
   const [vetCertificationPreview, setVetCertificationPreview] = useState("");
   const [verificationIdPreview, setVerificationIdPreview] = useState("");
+
+  const [isVetCertificationDeleted, setIsVetCertificationDeleted] =
+    useState(false);
+  const [isVerificationIdDeleted, setIsVerificationIdDeleted] = useState(false);
 
   const navigate = useNavigate();
 
@@ -33,6 +39,15 @@ const AddVet = () => {
     }
   };
 
+  const handleDeleteVetCertification = () => {
+    setVetCertification(null);
+    setVetCertificationPreview("");
+  };
+
+  const handleDeleteSavedVetCertification = () => {
+    setIsVetCertificationDeleted(true);
+  };
+
   const handleVerificationIdChange = (event) => {
     const file = event.target.files[0];
     setVerificationId(file);
@@ -48,30 +63,47 @@ const AddVet = () => {
     }
   };
 
-  const handleDeleteVetCertification = () => {
-    setVetCertification(null);
-    setVetCertificationPreview("");
-  };
-
   const handleDeleteVerificationId = () => {
     setVerificationId(null);
     setVerificationIdPreview("");
   };
 
-  const handleVetDetailSubmit = async (e) => {
+  const handleDeleteSavedVerificationId = () => {
+    setIsVerificationIdDeleted(true);
+  };
+
+  const handleUpdateVetDetail = async (e) => {
     e.preventDefault();
-    const vet_profile_creator = localStorage.getItem("id");
 
     const formData = new FormData();
-    formData.append("vet_name", vet_name);
-    formData.append("registration_id", registration_id);
-    formData.append("vet_certification", vet_certification);
-    formData.append("verification_id", verification_id);
-    formData.append("vet_profile_creator", vet_profile_creator);
+    formData.append("vet_name", vet_name ? vet_name : path.state.data.vet_name);
+    formData.append("registration_id", registration_id ? registration_id : path.state.data.registration_id);
+
+    if (vet_certification) {
+      formData.append(
+        "vet_certification",
+        vet_certification ? vet_certification : null
+      );
+    } else if (isVetCertificationDeleted) {
+      formData.append("vet_certification", "null");
+    } else {
+      formData.append("vet_certification", path.state.data.vet_certification);
+    }
+
+    if (verification_id) {
+      formData.append(
+        "verification_id",
+        verification_id ? verification_id : null
+      );
+    } else if (isVetCertificationDeleted) {
+      formData.append("verification_id", "null");
+    } else {
+      formData.append("verification_id", path.state.data.verification_id);
+    }
 
     try {
-      const response = await axios.post(
-        `${websiteUrl}/vets/addvet/`,
+      const response = await axios.put(
+        `http://127.0.0.1:${websiteUrl}8000/vets/update/${path.state.data.id}/`,
         formData,
         {
           headers: {
@@ -79,14 +111,11 @@ const AddVet = () => {
           },
         }
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         console.log("Success:", response.data);
-        alert("Vet Added Successfully");
+        alert("Vet Updated Successfully");
         navigate("/Vet");
         // Handle success or display a success message.
-      } else {
-        console.error("Error:", response.data);
-        // Handle error or display an error message.
       }
     } catch (error) {
       console.error("Error:", error);
@@ -114,12 +143,12 @@ const AddVet = () => {
           }}
           className="container"
         >
-          <h4 className="heading1">Add Vet</h4>
+          <h4 className="heading1">Edit Vet</h4>
 
           <div className="case-lists mx-auto">
             <h4 className="heading1">Vet Details:</h4>
             <div style={{ padding: "1rem" }}>
-              <form className="row g-3" onSubmit={handleVetDetailSubmit}>
+              <form className="row g-3" onSubmit={handleUpdateVetDetail}>
                 <div className="col-md-6">
                   <label
                     htmlFor="vet_name"
@@ -132,9 +161,9 @@ const AddVet = () => {
                     type="text"
                     className="form-control"
                     placeholder="Name"
-                    required
                     id="vet_name"
                     name="vet_name"
+                    defaultValue={path.state.data.vet_name || ""}
                     onChange={(e) => setVetName(e.target.value)}
                   />
                 </div>
@@ -153,7 +182,7 @@ const AddVet = () => {
                     id="registration_id"
                     name="registration_id"
                     placeholder="Enter ID"
-                    required
+                    defaultValue={path.state.data.registration_id || ""}
                     onChange={(e) => setRegistrationId(e.target.value)}
                   />
                 </div>
@@ -179,18 +208,48 @@ const AddVet = () => {
                       onChange={handleVetCerificationChange}
                     />
                   </div>
-                  {vetCertificationPreview && (
-                    <div>
-                      <h6>Preview:</h6>
-                      <img
-                        src={vetCertificationPreview}
-                        alt="Vet Certification Preview"
-                        height="100px"
-                      />
-                      <button onClick={handleDeleteVetCertification}>
-                        Delete
-                      </button>
-                    </div>
+                  {!isVetCertificationDeleted ? (
+                    path.state.data.vet_certification ? (
+                      <div>
+                        <h6>Preview:</h6>
+                        <img
+                          src={`http://localhost:8000${path.state.data.vet_certification}`}
+                          alt="Vet Certification Preview"
+                          height="100px"
+                        />
+                        <button onClick={handleDeleteSavedVetCertification}>
+                          Delete
+                        </button>
+                      </div>
+                    ) : (
+                      vetCertificationPreview && (
+                        <div>
+                          <h6>Preview:</h6>
+                          <img
+                            src={vetCertificationPreview}
+                            alt="Vet Certification Preview"
+                            height="100px"
+                          />
+                          <button onClick={handleDeleteVetCertification}>
+                            Delete
+                          </button>
+                        </div>
+                      )
+                    )
+                  ) : (
+                    vetCertificationPreview && (
+                      <div>
+                        <h6>Preview:</h6>
+                        <img
+                          src={vetCertificationPreview}
+                          alt="Vet Certification Preview"
+                          height="100px"
+                        />
+                        <button onClick={handleDeleteVetCertification}>
+                          Delete
+                        </button>
+                      </div>
+                    )
                   )}
                 </div>
 
@@ -215,18 +274,48 @@ const AddVet = () => {
                       onChange={handleVerificationIdChange}
                     />
                   </div>
-                  {verificationIdPreview && (
-                    <div>
-                      <h6>Preview:</h6>
-                      <img
-                        src={verificationIdPreview}
-                        alt="Verification Id Preview"
-                        height="100px"
-                      />
-                      <button onClick={handleDeleteVerificationId}>
-                        Delete
-                      </button>
-                    </div>
+                  {!isVerificationIdDeleted ? (
+                    path.state.data.verification_id ? (
+                      <div>
+                        <h6>Preview:</h6>
+                        <img
+                          src={`http://localhost:8000${path.state.data.verification_id}`}
+                          alt="Verification Id Preview"
+                          height="100px"
+                        />
+                        <button onClick={handleDeleteSavedVerificationId}>
+                          Delete
+                        </button>
+                      </div>
+                    ) : (
+                      verificationIdPreview && (
+                        <div>
+                          <h6>Preview:</h6>
+                          <img
+                            src={verificationIdPreview}
+                            alt="Verification Id Preview"
+                            height="100px"
+                          />
+                          <button onClick={handleDeleteVerificationId}>
+                            Delete
+                          </button>
+                        </div>
+                      )
+                    )
+                  ) : (
+                    verificationIdPreview && (
+                      <div>
+                        <h6>Preview:</h6>
+                        <img
+                          src={verificationIdPreview}
+                          alt="Verification Id Preview"
+                          height="100px"
+                        />
+                        <button onClick={handleDeleteVerificationId}>
+                          Delete
+                        </button>
+                      </div>
+                    )
                   )}
                 </div>
 
@@ -280,7 +369,7 @@ const AddVet = () => {
       >
         <span>
           <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
-          {localStorage.getItem("username")}
+            {localStorage.getItem("username")}
           </label>
           <img
             width="17%"
@@ -301,6 +390,4 @@ const AddVet = () => {
       <p>You are not logged in, redirecting...</p>
     </div>
   );
-};
-
-export default AddVet;
+}

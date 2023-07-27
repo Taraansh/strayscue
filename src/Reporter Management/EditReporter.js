@@ -1,77 +1,87 @@
 import React, { useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const AddReporter = () => {
-  const { user, logoutUser, websiteUrl } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const [reported_name, setReportedName] = useState(null);
-  const [phone_number, setPhoneNumber] = useState(null);
-  const [alternate_phone_number, setAlternatePhoneNumber] = useState(null);
-  const [email_id, setEmailId] = useState(null);
-  const [verification_id, setVerificationId] = useState(null);
-  const [verificationIdPreview, setVerificationIdPreview] = useState("");
+export default function EditReporter() {
+    const path = useLocation();
+    const navigate = useNavigate();
+    const { user, logoutUser, websiteUrl } = useContext(AuthContext);
+    const [reported_name, setReportedName] = useState(null);
+    const [phone_number, setPhoneNumber] = useState(null);
+    const [alternate_phone_number, setAlternatePhoneNumber] = useState(null);
+    const [email_id, setEmailId] = useState(null);
+    const [verification_id, setVerificationId] = useState(null);
+    const [verificationIdPreview, setVerificationIdPreview] = useState("");
 
-  const handleVerificationIdChange = (event) => {
-    const file = event.target.files[0];
-    setVerificationId(file);
+    const [isVerificationIdDeleted, setIsVerificationIdDeleted] = useState(false);
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setVerificationIdPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setVerificationIdPreview("");
-    }
-  };
-
-  const handleDeleteVerificationId = () => {
-    setVerificationId(null);
-    setVerificationIdPreview("");
-  };
-
-  const handleReporterDetailSubmit = async (e) => {
-    e.preventDefault();
-    const reporter_profile_creator = localStorage.getItem("id");
-
-    const formData = new FormData();
-    formData.append("reported_name", reported_name);
-    formData.append("phone_number", phone_number);
-    formData.append("alternate_phone_number", alternate_phone_number);
-    formData.append("email_id", email_id);
-    formData.append("verification_id", verification_id);
-    formData.append("reporter_profile_creator", reporter_profile_creator);
-
-    try {
-      const response = await axios.post(
-        `${websiteUrl}/reporters/addreporter/`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+    const handleVerificationIdChange = (event) => {
+        const file = event.target.files[0];
+        setVerificationId(file);
+    
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setVerificationIdPreview(reader.result);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          setVerificationIdPreview("");
         }
-      );
-      if (response.status === 201) {
-        console.log("Success:", response.data);
-        alert("Reporter Added Successfully");
-        navigate("/Reporter");
-        // Handle success or display a success message.
-      } else {
-        console.error("Error:", response.data);
-        // Handle error or display an error message.
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      // Handle error or display an error message.
-    }
-  };
+      };
+    
+      const handleDeleteVerificationId = () => {
+        setVerificationId(null);
+        setVerificationIdPreview("");
+      };
+
+      const handleDeleteSavedVerificationId = () => {
+        setIsVerificationIdDeleted(true);
+      };
+
+      const handleUpdateReporterDetail = async (e) => {
+        e.preventDefault();
+    
+        const formData = new FormData();
+        formData.append("reported_name", reported_name ? reported_name : path.state.data.reported_name );
+        formData.append("phone_number", phone_number ? phone_number : path.state.data.phone_number);
+        formData.append("alternate_phone_number", alternate_phone_number ? alternate_phone_number : path.state.data.alternate_phone_number);
+        formData.append("email_id", email_id ? email_id : path.state.data.email_id);
+    
+        if (verification_id) {
+          formData.append("verification_id", verification_id ? verification_id : null);
+        } else if (isVerificationIdDeleted) {
+          formData.append("verification_id", "null");
+        } else {
+          formData.append("verification_id", path.state.data.verification_id);
+        }
+    
+        try {
+          const response = await axios.put(
+            `${websiteUrl}/reporters/update/${path.state.data.id}/`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          if (response.status === 200) {
+            console.log("Success:", response.data);
+            alert("Reporter Updated Successfully");
+            navigate("/Reporter");
+            // Handle success or display a success message.
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          // Handle error or display an error message.
+        }
+      };
 
   return user ? (
     <div
@@ -94,11 +104,10 @@ const AddReporter = () => {
           className="container"
         >
           <h4 className="heading1">Add Reporter</h4>
-
           <div className="case-lists mx-auto">
             <h4 className="heading1">Reporter Details:</h4>
             <div style={{ padding: "1rem" }}>
-              <form className="row g-3" onSubmit={handleReporterDetailSubmit}>
+              <form className="row g-3" onSubmit={handleUpdateReporterDetail}>
                 <div className="col-md-6">
                   <label
                     htmlFor="reported_name"
@@ -114,7 +123,7 @@ const AddReporter = () => {
                     aria-label="Name"
                     id="reported_name"
                     name="reported_name"
-                    required
+                    defaultValue={path.state.data.reported_name || ""}
                     onChange={(e) => setReportedName(e.target.value)}
                   />
                 </div>
@@ -132,7 +141,7 @@ const AddReporter = () => {
                     id="phone_number"
                     name="phone_number"
                     placeholder="Phone No"
-                    required
+                    defaultValue={path.state.data.phone_number || ""}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </div>
@@ -150,6 +159,7 @@ const AddReporter = () => {
                     id="email_id"
                     name="email_id"
                     placeholder="E-mail"
+                    defaultValue={path.state.data.email_id || ""}
                     onChange={(e) => setEmailId(e.target.value)}
                   />
                 </div>
@@ -167,6 +177,7 @@ const AddReporter = () => {
                     id="alternate_phone_number"
                     name="alternate_phone_number"
                     placeholder="Alternate Phone No"
+                    defaultValue={path.state.data.alternate_phone_number || ""}
                     onChange={(e) => setAlternatePhoneNumber(e.target.value)}
                   />
                 </div>
@@ -191,18 +202,39 @@ const AddReporter = () => {
                       onChange={handleVerificationIdChange}
                     />
                   </div>
-                  {verificationIdPreview && (
+                  {(!isVerificationIdDeleted) ? ((path.state.data.verification_id)?(<div>
+                          <h6>Preview:</h6>
+                          <img
+                            src={`http://localhost:8000${path.state.data.verification_id}`}
+                            alt="Verification ID Preview"
+                            height="100px"
+                          />
+                          <button onClick={handleDeleteSavedVerificationId}>
+                            Delete
+                          </button>
+                        </div>):(verificationIdPreview && (
                     <div>
                       <h6>Preview:</h6>
                       <img
                         src={verificationIdPreview}
-                        alt="Verification ID preview"
+                        alt="Verification ID Preview"
                         height="100px"
                       />
                       <button onClick={handleDeleteVerificationId}>
                         Delete
                       </button>
-                    </div>
+                    </div>))) : (verificationIdPreview && (
+                    <div>
+                      <h6>Preview:</h6>
+                      <img
+                        src={verificationIdPreview}
+                        alt="Verification ID Preview"
+                        height="100px"
+                      />
+                      <button onClick={handleDeleteVerificationId}>
+                        Delete
+                      </button>
+                    </div>)
                   )}
                 </div>
 
@@ -273,6 +305,4 @@ const AddReporter = () => {
       <p>You are not logged in, redirecting...</p>
     </div>
   );
-};
-
-export default AddReporter;
+}

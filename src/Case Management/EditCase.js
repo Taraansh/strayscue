@@ -11,7 +11,7 @@ export default function EditCase() {
     const [activeButton, setActiveButton] = useState(0);
     const {
         user,
-        logoutUser,
+        logoutUser, websiteUrl
       } = useContext(AuthContext);
 
   // Reporting Details State
@@ -54,7 +54,6 @@ export default function EditCase() {
 
   const [isAnimalPictureDeleted, setIsAnimalPictureDeleted] = useState(false);
 
-
   // Medical Details State
   const [medicalHistory, setMedicalHistory] = useState(null);
   const [vaccinationStatus, setVaccinationStatus] = useState(null);
@@ -63,14 +62,12 @@ export default function EditCase() {
   const [otherDetails, setOtherDetails] = useState(null);
   const [admissionDate, setAdmissionDate] = useState(null);
   const [feedingRecordImage, setFeedingRecordImage] = useState(null);
-  const [feedingRecordImagePreview, setFeedingRecordImagePreview] =
-    useState("");
+  const [feedingRecordImagePreview, setFeedingRecordImagePreview] = useState("");
   const [bloodReportImage, setBloodReportImage] = useState(null);
   const [bloodReportImagePreview, setBloodReportImagePreview] = useState("");
 
   const [isFeedingRecordImageDeleted, setIsFeedingRecordImageDeleted] = useState(false);
   const [isBloodReportImageDeleted, setIsBloodReportImageDeleted] = useState(false);
-
 
   // Operation Details State
   const [vetName, setVetName] = useState(null);
@@ -78,20 +75,16 @@ export default function EditCase() {
   const [operationStartTime, setOperationStartTime] = useState(null);
   const [operationEndTime, setOperationEndTime] = useState(null);
   const [operationOutcome, setOperationOutcome] = useState(null);
-  const [medicalPrescriptionImage, setMedicalPrescriptionImage] =
-    useState(null);
-  const [medicalPrescriptionImagePreview, setMedicalPrescriptionImagePreview] =
-    useState(null);
+  const [medicalPrescriptionImage, setMedicalPrescriptionImage] = useState(null);
+  const [medicalPrescriptionImagePreview, setMedicalPrescriptionImagePreview] = useState(null);
   const [treatmentRecordImage, setTreatmentRecordImage] = useState(null);
-  const [treatmentRecordImagePreview, setTreatmentRecordImagePreview] =
-    useState(null);
+  const [treatmentRecordImagePreview, setTreatmentRecordImagePreview] = useState(null);
   const [organImage, setOrganImage] = useState(null);
   const [organImagePreview, setOrganImagePreview] = useState(null);
 
   const [isMedicalPrescriptionImageDeleted, setIsMedicalPrescriptionImageDeleted] = useState(false);
   const [isTreatmentRecordImageDeleted, setIsTreatmentRecordImageDeleted] = useState(false);
   const [isOrganImageDeleted, setIsOrganImageDeleted] = useState(false);
-
   
   // Post Operation Details State
   const [popComment, setPopComment] = useState(null);
@@ -109,7 +102,6 @@ export default function EditCase() {
 
   const [isPopPicturesDeleted, setIsPopPicturesDeleted] = useState(false);
   const [isReleasePicturesDeleted, setIsReleasePicturesDeleted] = useState(false);
-
 
   const buttonStyle = {
     border: "1px solid black",
@@ -427,14 +419,14 @@ export default function EditCase() {
     formData.append("location", location ? location : path.state.data.reportingdetail?.location);
     formData.append("pincode", pincode ? pincode : path.state.data.reportingdetail?.pincode);
     formData.append("landmark", landmark ? landmark : path.state.data.reportingdetail?.landmark);
-    formData.append("reportedDate", reportedDate ? (reportedDate ? reportedDate : "1111-11-11") : path.state.data.reportingdetail?.reportedDate);
-    formData.append("reportedTime", reportedTime ? (reportedTime ? reportedTime : "11:11:11") : path.state.data.reportingdetail?.reportedTime);
-    formData.append("pickupDate", pickupDate ? (pickupDate ? pickupDate : "1111-11-11") : path.state.data.reportingdetail?.pickupDate);
-    formData.append("pickupTime", pickupTime ? (pickupTime ? pickupTime : "11:11:11") : path.state.data.reportingdetail?.pickupTime);
+    formData.append("reportedDate", reportedDate ? (reportedDate ? reportedDate : "1111-11-11") : (path.state.data.reportingdetail?.reportedDate ? path.state.data.reportingdetail?.reportedDate : "1111-11-11"));
+    formData.append("reportedTime", reportedTime ? (reportedTime ? reportedTime : "11:11:11") : (path.state.data.reportingdetail?.reportedTime ? path.state.data.reportingdetail?.reportedTime : "11:11:11"));
+    formData.append("pickupDate", pickupDate ? (pickupDate ? pickupDate : "1111-11-11") : (path.state.data.reportingdetail?.pickupDate ? path.state.data.reportingdetail?.pickupDate : "1111-11-11"));
+    formData.append("pickupTime", pickupTime ? (pickupTime ? pickupTime : "11:11:11") : (path.state.data.reportingdetail?.pickupTime ? path.state.data.reportingdetail?.pickupTime : "11:11:11"));
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/cases/updatereporter/${path.state.data.reportingdetail?.id}/`,
+        `${websiteUrl}/cases/updatereporter/${path.state.data.reportingdetail?.id}/`,
         formData,
         {
           headers: {
@@ -481,7 +473,7 @@ export default function EditCase() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/cases/updateanimal/${path.state.data.animaldetail?.id}/`,
+        `${websiteUrl}/cases/updateanimal/${path.state.data.animaldetail?.id}/`,
         formData,
         {
           headers: {
@@ -528,11 +520,11 @@ export default function EditCase() {
     formData.append("dewormed", dewormed ? dewormed : path.state.data.medicaldetail?.dewormed);
     formData.append("fitForSurgery", fitForSurgery ? fitForSurgery : path.state.data.medicaldetail?.fitForSurgery);
     formData.append("otherDetails", otherDetails ? otherDetails : path.state.data.medicaldetail?.otherDetails);
-    formData.append("admissionDate", admissionDate ? (admissionDate ? admissionDate : "1111-11-11") : path.state.data.medicaldetail?.admissionDate);
+    formData.append("admissionDate", admissionDate ? (admissionDate ? admissionDate : "1111-11-11") : (path.state.data.medicaldetail?.admissionDate ? path.state.data.medicaldetail?.admissionDate : "1111-11-11"));
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/cases/updatemedical/${path.state.data.medicaldetail?.id}/`,
+        `${websiteUrl}/cases/updatemedical/${path.state.data.medicaldetail?.id}/`,
         formData,
         {
           headers: {
@@ -591,7 +583,7 @@ export default function EditCase() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/cases/updateoperational/${path.state.data.operationdetail?.id}/`,
+        `${websiteUrl}/cases/updateoperational/${path.state.data.operationdetail?.id}/`,
         formData,
         {
           headers: {
@@ -634,15 +626,15 @@ export default function EditCase() {
     formData.append("popComment", popComment ? popComment : path.state.data.postoperationdetail?.popComment);
     formData.append("popFacility", popFacility ? popFacility : path.state.data.postoperationdetail?.popFacility);
     formData.append("popExpectedDays", popExpectedDays ? popExpectedDays : path.state.data.postoperationdetail?.popExpectedDays);
-    formData.append("popStartDate", popStartDate ? (popStartDate ? popStartDate : "1111-11-11") : path.state.data.postoperationdetail?.popStartDate);
-    formData.append("popEndDate", popEndDate ? (popEndDate ? popEndDate : "1111-11-11") : path.state.data.postoperationdetail?.popEndDate);
-    formData.append("releaseDate", releaseDate ? (releaseDate ? releaseDate : "1111-11-11") : path.state.data.postoperationdetail?.releaseDate);
+    formData.append("popStartDate", popStartDate ? (popStartDate ? popStartDate : "1111-11-11") : (path.state.data.postoperationdetail?.popStartDate ? path.state.data.postoperationdetail?.popStartDate : "1111-11-11"));
+    formData.append("popEndDate", popEndDate ? (popEndDate ? popEndDate : "1111-11-11") : (path.state.data.postoperationdetail?.popEndDate ? path.state.data.postoperationdetail?.popEndDate : "1111-11-11"));
+    formData.append("releaseDate", releaseDate ? (releaseDate ? releaseDate : "1111-11-11") : (path.state.data.postoperationdetail?.releaseDate ? path.state.data.postoperationdetail?.releaseDate : "1111-11-11"));
     formData.append("euthanized", euthanized ? euthanized : path.state.data.postoperationdetail?.euthanized);
     formData.append("comments", comments ? comments : path.state.data.postoperationdetail?.comments);
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/cases/updatepostoperational/${path.state.data.postoperationdetail?.id}/`,
+        `${websiteUrl}/cases/updatepostoperational/${path.state.data.postoperationdetail?.id}/`,
         formData,
         {
           headers: {
@@ -685,7 +677,7 @@ export default function EditCase() {
       >
         <hr />
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h4 className="mx-4 px-4">Edit {path.state.data.type_of_case} Case</h4>
+          <h4 className="mx-4 px-4">{path.state.data.type_of_case} Case</h4>
           <div style={{paddingRight:"2rem"}}>
           <Link style={{marginRight:"0.2rem", textDecoration:"none", fontWeight:"bold"}} to="/Dashboard">
             Dashboard
@@ -817,7 +809,8 @@ export default function EditCase() {
                             aria-describedby="reporterNameHelp"
                             name="reporterName"
                             placeholder="Name"
-                            defaultValue={path.state.data.reportingdetail?.reporterName || ''}
+                            required
+                            defaultValue={(path.state.data.reportingdetail?.reporterName === "null") ? '' : path.state.data.reportingdetail?.reporterName}
                             onChange={(e) => setReporterName(e.target.value)}
                             autoComplete="name"
                           />
@@ -835,9 +828,10 @@ export default function EditCase() {
                             aria-describedby="contactHelp"
                             name="reporterContact"
                             placeholder="Phone Number"
+                            required
                             defaultValue={path.state.data.reportingdetail?.reporterContact || ''}
                             onChange={(e) => setReporterContact(e.target.value)}
-                            autoComplete="contact"
+                            autoComplete="tel"
                           />
                         </div>
                       </div>
@@ -852,7 +846,7 @@ export default function EditCase() {
                             id="altcontact"
                             aria-describedby="altCcontactHelp"
                             name="reporterAltContact"
-                            defaultValue={path.state.data.reportingdetail?.reporterAltContact || ''}
+                            defaultValue={path.state.data.reportingdetail?.reporterAltContact==="null" ? '' : path.state.data.reportingdetail?.reporterAltContact}
                             placeholder="Alternate Phone Number"
                             onChange={(e) =>
                               setReporterAltContact(e.target.value)
@@ -873,7 +867,7 @@ export default function EditCase() {
                             aria-describedby="emailHelp"
                             name="reporterEmail"
                             placeholder="Email ID"
-                            defaultValue={path.state.data.reportingdetail?.reporterEmail || ''}
+                            defaultValue={path.state.data.reportingdetail?.reporterEmail==="null" ? '' : path.state.data.reportingdetail?.reporterEmail}
                             onChange={(e) => setReporterEmail(e.target.value)}
                             autoComplete="email"
                           />
@@ -894,7 +888,8 @@ export default function EditCase() {
                             aria-describedby="addressHelp"
                             name="landmark"
                             placeholder="Near to xyz place"
-                            defaultValue={path.state.data.reportingdetail?.landmark || ''}
+                            required
+                            defaultValue={path.state.data.reportingdetail?.landmark==="null" ? '' : path.state.data.reportingdetail?.landmark}
                             onChange={(e) => setLandmark(e.target.value)}
                           />
                         </div>
@@ -911,7 +906,8 @@ export default function EditCase() {
                             aria-describedby="pincodeHelp"
                             name="pincode"
                             placeholder="Pincode"
-                            defaultValue={path.state.data.reportingdetail?.pincode || ''}
+                            required
+                            defaultValue={path.state.data.reportingdetail?.pincode==="null" ? '' : path.state.data.reportingdetail?.pincode}
                             onChange={(e) => setPincode(e.target.value)}
                           />
                         </div>
@@ -928,14 +924,15 @@ export default function EditCase() {
                             aria-describedby="locationHelp"
                             name="location"
                             placeholder="Location"
-                            defaultValue={path.state.data.reportingdetail?.location || ''}
+                            required
+                            defaultValue={path.state.data.reportingdetail?.location==="null" ? '' : path.state.data.reportingdetail?.location}
                             onChange={(e) => setLocation(e.target.value)}
                           />
                         </div>
                       </div>
                     </div>
 
-                    <div className="row">
+                    <div className="row form-1">
                       <div className="form-group col">
                         <label className="form-label" htmlFor="reporteddate">
                           Reported Date
@@ -1028,8 +1025,7 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteFrontImage}>Delete</button>
                             </div>))
-                        ) : (
-                        frontImagePreview && (
+                        ) : (frontImagePreview && (
                             <div>
                             <h6>Preview:</h6>
                             <img
@@ -1038,9 +1034,7 @@ export default function EditCase() {
                                 height="100px"
                             />
                             <button onClick={handleDeleteFrontImage}>Delete</button>
-                            </div>
-                        )
-                        )}
+                            </div>))}
 
                       </div>
                       <div className="col">
@@ -1059,7 +1053,7 @@ export default function EditCase() {
                             />
                           </div>
                         </div>
-                        { (!isBackImageDeleted) ? ((path.state.data.reportingdetail?.backImage) ? (<div>
+                        {(!isBackImageDeleted) ? ((path.state.data.reportingdetail?.backImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.reportingdetail?.backImage}`}
@@ -1077,8 +1071,7 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteBackImage}>Delete</button>
                             </div>))
-                        ) : (
-                        backImagePreview && (
+                        ) : (backImagePreview && (
                             <div>
                             <h6>Preview:</h6>
                             <img
@@ -1087,9 +1080,7 @@ export default function EditCase() {
                                 height="100px"
                             />
                             <button onClick={handleDeleteBackImage}>Delete</button>
-                            </div>
-                        )
-                        )}
+                            </div>))}
                       </div>
                     </div>
 
@@ -1112,7 +1103,7 @@ export default function EditCase() {
                           />
                         </div>
                       </div>
-                      { (!isConsentFormImageDeleted) ? ((path.state.data.reportingdetail?.consentFormImage) ? (<div>
+                      {(!isConsentFormImageDeleted) ? ((path.state.data.reportingdetail?.consentFormImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
                             src={`http://localhost:8000${path.state.data.reportingdetail?.consentFormImage}`}
@@ -1130,8 +1121,7 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteConsentFormImage}>Delete</button>
                             </div>))
-                        ) : (
-                        consentFormImagePreview && (
+                        ) : (consentFormImagePreview && (
                             <div>
                             <h6>Preview:</h6>
                             <img
@@ -1140,9 +1130,7 @@ export default function EditCase() {
                                 height="100px"
                             />
                             <button onClick={handleDeleteConsentFormImage}>Delete</button>
-                            </div>
-                        )
-                        )}
+                            </div>))}
                     </div>
 
                     <div className="my-3">
@@ -1200,7 +1188,7 @@ export default function EditCase() {
                             className="form-select"
                             aria-label="Animal Species"
                             name="animalSpecies"
-                            value={path.state.data.animaldetail?.animalSpecies}
+                            defaultValue={path.state.data.animaldetail?.animalSpecies || ''}
                             onChange={(e) => {
                               setAnimalSpecies(e.target.value);
                             }}
@@ -1223,7 +1211,7 @@ export default function EditCase() {
                             className="form-select"
                             aria-label="Animal Breed"
                             name="animalBreed"
-                            defaultValue={path.state.data.animaldetail?.animalBreed}
+                            defaultValue={path.state.data.animaldetail?.animalBreed || ''}
                             onChange={(e) => {
                               setAnimalBreed(e.target.value);
                             }}
@@ -1245,7 +1233,7 @@ export default function EditCase() {
                             className="form-select"
                             aria-label="Animal Age"
                             name="animalAge"
-                            defaultValue={path.state.data.animaldetail?.animalAge}
+                            defaultValue={path.state.data.animaldetail?.animalAge || ''}
                             onChange={(e) => {
                               setAnimalAge(e.target.value);
                             }}
@@ -1274,7 +1262,7 @@ export default function EditCase() {
                             className="form-select"
                             aria-label="Animal Temperament"
                             name="animalTemperament"
-                            defaultValue={path.state.data.animaldetail?.animalTemperament}
+                            defaultValue={path.state.data.animaldetail?.animalTemperament || ''}
                             onChange={(e) => {
                               setAnimalTemperament(e.target.value);
                             }}
@@ -1297,7 +1285,7 @@ export default function EditCase() {
                             className="form-select"
                             aria-label="Animal Gender"
                             name="animalGender"
-                            defaultValue={path.state.data.animaldetail?.animalGender}
+                            defaultValue={path.state.data.animaldetail?.animalGender || ''}
                             onChange={(e) => {
                               setAnimalGender(e.target.value);
                             }}
@@ -1322,7 +1310,7 @@ export default function EditCase() {
                             className="form-select"
                             aria-label="Animal Pregnant"
                             name="animalPregnant"
-                            defaultValue={path.state.data.animaldetail?.animalPregnant}
+                            defaultValue={path.state.data.animaldetail?.animalPregnant || ''}
                             onChange={(e) => {
                               setAnimalPregnant(e.target.value);
                             }}
@@ -1348,7 +1336,7 @@ export default function EditCase() {
                           name="animalMarking"
                           placeholder="Animal Marking"
                           aria-label="Animal Marking"
-                          defaultValue={path.state.data.animaldetail?.animalMarking || ''}
+                          defaultValue={path.state.data.animaldetail?.animalMarking==="null" ? '' : path.state.data.animaldetail?.animalMarking}
                           onChange={(e) => {
                             setAnimalMarking(e.target.value);
                           }}
@@ -1365,7 +1353,7 @@ export default function EditCase() {
                           name="animalColor"
                           placeholder="Animal Color"
                           aria-label="Animal Color"
-                          defaultValue={path.state.data.animaldetail?.animalColor || ''}
+                          defaultValue={path.state.data.animaldetail?.animalColor==="null" ? '' : path.state.data.animaldetail?.animalColor}
                           onChange={(e) => {
                             setAnimalColor(e.target.value);
                           }}
@@ -1404,7 +1392,7 @@ export default function EditCase() {
                           name="animalWeight"
                           placeholder="Animal Weight"
                           aria-label="Animal Weight (kgs)"
-                          defaultValue={path.state.data.animaldetail?.animalWeight || ''}
+                          defaultValue={path.state.data.animaldetail?.animalWeight==="null" ? '' : path.state.data.animaldetail?.animalWeight}
                           onChange={(e) => {
                             setAnimalWeight(e.target.value);
                           }}
@@ -1421,7 +1409,7 @@ export default function EditCase() {
                           name="admissionReason"
                           placeholder="Reason for Admission"
                           aria-label="Reason for Admission"
-                          defaultValue={path.state.data.animaldetail?.admissionReason || ''}
+                          defaultValue={path.state.data.animaldetail?.admissionReason==="null" ? '' : path.state.data.animaldetail?.admissionReason}
                           onChange={(e) => {
                             setAdmissionReason(e.target.value);
                           }}
@@ -1474,8 +1462,7 @@ export default function EditCase() {
                               height="100px"
                             />
                           <button onClick={handleDeleteAnimalPicture}>Delete</button>
-                        </div>
-                      ))}
+                        </div>))}
                     </div>
 
                     <div className="my-2">
@@ -1525,6 +1512,12 @@ export default function EditCase() {
                       >
                         Exit
                       </button>
+                      <button
+                        type="submit"
+                        className="btn btn-primary "
+                      >
+                        Save
+                      </button>
                       </div>
                       </div>
                     </div>
@@ -1550,7 +1543,7 @@ export default function EditCase() {
                             type="text"
                             className="form-control"
                             id="medicalHistory"
-                            defaultValue={path.state.data.medicaldetail?.medicalHistory || ''}
+                            defaultValue={path.state.data.medicaldetail?.medicalHistory==="null" ? '' : path.state.data.medicaldetail?.medicalHistory}
                             name="medicalHistory"
                             placeholder="Medical History / Other Issues"
                             onChange={(e) => setMedicalHistory(e.target.value)}
@@ -1570,7 +1563,7 @@ export default function EditCase() {
                             className="form-select"
                             aria-label="Animal Vaccinated"
                             name="vaccinationStatus"
-                            value={path.state.data.medicaldetail?.vaccinationStatus}
+                            defaultValue={path.state.data.medicaldetail?.vaccinationStatus || ''}
                             onChange={(e) =>
                               setVaccinationStatus(e.target.value)
                             }
@@ -1593,7 +1586,7 @@ export default function EditCase() {
                             className="form-select"
                             aria-label="Animal Dewormed"
                             name="dewormed"
-                            value={path.state.data.medicaldetail?.dewormed}
+                            defaultValue={path.state.data.medicaldetail?.dewormed || ''}
                             onChange={(e) => setDewormed(e.target.value)}
                           >
                             <option value="">Choose</option>
@@ -1619,7 +1612,7 @@ export default function EditCase() {
                             className="form-select"
                             aria-label="Animal Fit for Surgery"
                             name="fitForSurgery"
-                            value={path.state.data.medicaldetail?.fitForSurgery}
+                            defaultValue={path.state.data.medicaldetail?.fitForSurgery || ''}
                             onChange={(e) => setFitForSurgery(e.target.value)}
                           >
                             <option value="">Choose</option>
@@ -1638,7 +1631,7 @@ export default function EditCase() {
                             type="text"
                             className="form-control"
                             id="otherDetails"
-                            defaultValue={path.state.data.medicaldetail?.otherDetails || ''}
+                            defaultValue={path.state.data.medicaldetail?.otherDetails==="null" ? '' : path.state.data.medicaldetail?.otherDetails}
                             name="otherDetails"
                             placeholder="Other Details"
                             onChange={(e) => setOtherDetails(e.target.value)}
@@ -1708,8 +1701,7 @@ export default function EditCase() {
                               height="100px"
                             />
                             <button onClick={handleDeleteBloodReportImage}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -1759,8 +1751,7 @@ export default function EditCase() {
                               height="100px"
                             />
                             <button onClick={handleDeleteFeedingRecordImage}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -1790,13 +1781,6 @@ export default function EditCase() {
 
                       </div>
                      <div>
-                     <button
-                        type="submit"
-                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
-                        className="btn "
-                      >
-                        Save
-                      </button>
                       <button
                         type="button"
                         style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
@@ -1811,6 +1795,12 @@ export default function EditCase() {
                         }}
                       >
                         Exit
+                      </button>
+                     <button
+                        type="submit"
+                        className="btn btn-primary "
+                      >
+                        Save
                       </button>
                      </div>
                      </div>
@@ -1834,7 +1824,7 @@ export default function EditCase() {
                             type="text"
                             className="form-control"
                             id="vetName"
-                            defaultValue={path.state.data.operationdetail?.vetName || ''}
+                            defaultValue={path.state.data.operationdetail?.vetName==="null" ? '' : path.state.data.operationdetail?.vetName}
                             name="vetName"
                             placeholder="Vet Name"
                             onChange={(e) => setVetName(e.target.value)}
@@ -1911,7 +1901,7 @@ export default function EditCase() {
                           className="form-select"
                           aria-label="Operation Outcome"
                           name="operationOutcome"
-                          value={path.state.data.operationdetail?.operationOutcome}
+                          defaultValue={path.state.data.operationdetail?.operationOutcome || ''}
                           onChange={(e) => setOperationOutcome(e.target.value)}
                         >
                           <option value="">Choose Outcome</option>
@@ -1966,8 +1956,7 @@ export default function EditCase() {
                               alt="Feeding Record Preview"
                               height="100px"
                             /><button onClick={handleDeleteMedicalPrescriptionImage}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -2015,8 +2004,7 @@ export default function EditCase() {
                               alt="Treatment Records Preview"
                               height="100px"
                             /><button onClick={handleDeleteTreatmentRecordImage}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -2061,8 +2049,7 @@ export default function EditCase() {
                               alt="Organ Pictures Preview"
                               height="100px"
                             /><button onClick={handleDeleteOrganImage}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -2093,13 +2080,6 @@ export default function EditCase() {
                       </div>
                       <div>
                       <button
-                        type="submit"
-                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
-                        className="btn  "
-                      >
-                        Save
-                      </button>
-                      <button
                         type="button"
                         style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
                         className="btn  mx-1"
@@ -2113,6 +2093,12 @@ export default function EditCase() {
                         }}
                       >
                         Exit
+                      </button>
+                      <button
+                        type="submit"
+                        className="btn btn-primary "
+                      >
+                        Save
                       </button>
                       </div>
                       </div>
@@ -2136,7 +2122,7 @@ export default function EditCase() {
                             type="text"
                             className="form-control"
                             id="popComment"
-                            defaultValue={path.state.data.postoperationdetail?.popComment || ''}
+                            defaultValue={path.state.data.postoperationdetail?.popComment==="null" ? '' : path.state.data.postoperationdetail?.popComment}
                             name="popComment"
                             placeholder="Comments"
                             onChange={(e) => setPopComment(e.target.value)}
@@ -2153,7 +2139,7 @@ export default function EditCase() {
                             className="form-select"
                             aria-label="Post-Operation facility"
                             name="popFacility"
-                            value={path.state.data.postoperationdetail?.popFacility}
+                            defaultValue={path.state.data.postoperationdetail?.popFacility || ''}
                             onChange={(e) => setPopFacility(e.target.value)}
                           >
                             <option value="">Choose Facility</option>
@@ -2178,7 +2164,7 @@ export default function EditCase() {
                             type="text"
                             className="form-control"
                             id="popExpectedDays"
-                            defaultValue={path.state.data.postoperationdetail?.popExpectedDays || ''}
+                            defaultValue={path.state.data.postoperationdetail?.popExpectedDays==="null" ? '' : path.state.data.postoperationdetail?.popExpectedDays}
                             name="popExpectedDays"
                             placeholder="Expected Days"
                             onChange={(e) => setPopExpectedDays(e.target.value)}
@@ -2240,7 +2226,7 @@ export default function EditCase() {
                             className="form-select"
                             aria-label="Euthanized"
                             name="euthanized"
-                            defaultValue={path.state.data.postoperationdetail?.euthanized}
+                            defaultValue={path.state.data.postoperationdetail?.euthanized || ''}
                             onChange={(e) => setEuthanized(e.target.value)}
                           >
                             <option value="">Choose</option>
@@ -2258,7 +2244,7 @@ export default function EditCase() {
                             type="text"
                             className="form-control"
                             id="comments"
-                            defaultValue={path.state.data.postoperationdetail?.comments || ''}
+                            defaultValue={path.state.data.postoperationdetail?.comments==="null" ? '' : path.state.data.postoperationdetail?.comments}
                             name="comments"
                             placeholder="Other Comments"
                             onChange={(e) => setComments(e.target.value)}
@@ -2308,8 +2294,7 @@ export default function EditCase() {
                               alt="Post Operation Pictures Preview"
                               height="100px"
                             /><button onClick={handleDeletePopPictures}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -2357,8 +2342,7 @@ export default function EditCase() {
                               alt="Release Pictures Preview"
                               height="100px"
                             /><button onClick={handleDeleteReleasePictures}>Delete</button>
-                          </div>
-                        ))}
+                          </div>))}
                       </div>
                     </div>
 
@@ -2390,8 +2374,7 @@ export default function EditCase() {
                           );
                           if (confirmDelete) {
                             navigate("/Dashboard");
-                          }
-                        }}
+                          }}}
                       >
                         Exit
                       </button>
@@ -2406,26 +2389,22 @@ export default function EditCase() {
       <div
         style={{
               position: "fixed",
-   
-    boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-    right: "0.1rem",
-    display:"flex",
-    flexDirection:"row",
-    justifyContent:"flex-end",
-    width:"100vw",
-    fontSize: "20px",
-   
-    zIndex: "9",
-    padding: "0.5rem 0.5rem",
-    backgroundColor:"#ffffff"
-        }}
-      >
+              boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+              right: "0.1rem",
+              display:"flex",
+              flexDirection:"row",
+              justifyContent:"flex-end",
+              width:"100vw",
+              fontSize: "20px",
+              zIndex: "9",
+              padding: "0.5rem 0.5rem",
+              backgroundColor:"#ffffff"
+              }}>
         <span>
           <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
-          {path.state.data.user_name}
+          {localStorage.getItem("username")}
           </label>
           <img
-         
             width="17%"
             style={{ marginRight: "1.5rem",  cursor: "pointer" }}
             src={logo}
@@ -2437,11 +2416,7 @@ export default function EditCase() {
             onClick={logoutUser}
           ></i>
         </span>
-        
-        
-        
       </div>
-           
     </div>
 </>
   )

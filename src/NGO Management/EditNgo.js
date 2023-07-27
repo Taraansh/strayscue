@@ -1,21 +1,26 @@
 import React, { useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const AddNgo = () => {
+export default function EditNgo() {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
   const isSuperUser = localStorage.getItem("is_superuser");
+
+  const path = useLocation();
   const navigate = useNavigate();
+  
   const [ngo_name, setNgoName] = useState(null);
   const [darpan_id, setDarpanId] = useState(null);
   const [description, setDescription] = useState(null);
   const [mission_statement, setMissionStatement] = useState(null);
   const [helpline_number, setHelplineNumber] = useState(null);
-  const [alternate_helpline_number, setAlternateHelplineNumber] = useState(null);
+  const [alternate_helpline_number, setAlternateHelplineNumber] =
+    useState(null);
   const [facebook_page, setFacebookPage] = useState(null);
   const [linkedin_page, setLinkedinPage] = useState(null);
   const [instagram_page, setInstagramPage] = useState(null);
@@ -24,6 +29,8 @@ const AddNgo = () => {
   const [ngo_website, setNgoWebsite] = useState(null);
   const [ngo_logo, setNgoLogo] = useState(null);
   const [ngoLogoPreview, setNgoLogoPreview] = useState(null);
+
+  const [isNgoLogoDeleted, setIsNgoLogoDeleted] = useState(false);
 
   const handleNgoLogoChange = (event) => {
     const file = event.target.files[0];
@@ -45,29 +52,73 @@ const AddNgo = () => {
     setNgoLogoPreview("");
   };
 
+  const handleDeleteSavedNgoLogo = () => {
+    setIsNgoLogoDeleted(true);
+  };
+
   const handleNgoDetailSubmit = async (e) => {
     e.preventDefault();
-    const ngo_profile_creator = localStorage.getItem("id");
 
     const formData = new FormData();
-    formData.append("ngo_name", ngo_name);
-    formData.append("darpan_id", darpan_id);
-    formData.append("description", description);
-    formData.append("mission_statement", mission_statement);
-    formData.append("helpline_number", helpline_number);
-    formData.append("alternate_helpline_number", alternate_helpline_number);
-    formData.append("facebook_page", facebook_page);
-    formData.append("linkedin_page", linkedin_page);
-    formData.append("instagram_page", instagram_page);
-    formData.append("twitter_page", twitter_page);
-    formData.append("ngo_email", ngo_email);
-    formData.append("ngo_website", ngo_website);
-    formData.append("ngo_logo", ngo_logo);
-    formData.append("ngo_profile_creator", ngo_profile_creator);
+    formData.append("ngo_name", ngo_name ? ngo_name : path.state.data.ngo_name);
+    formData.append(
+      "darpan_id",
+      darpan_id ? darpan_id : path.state.data.darpan_id
+    );
+    formData.append(
+      "description",
+      description ? description : path.state.data.description
+    );
+    formData.append(
+      "mission_statement",
+      mission_statement ? mission_statement : path.state.data.mission_statement
+    );
+    formData.append(
+      "helpline_number",
+      helpline_number ? helpline_number : path.state.data.helpline_number
+    );
+    formData.append(
+      "alternate_helpline_number",
+      alternate_helpline_number
+        ? alternate_helpline_number
+        : path.state.data.alternate_helpline_number
+    );
+    formData.append(
+      "facebook_page",
+      facebook_page ? facebook_page : path.state.data.facebook_page
+    );
+    formData.append(
+      "linkedin_page",
+      linkedin_page ? linkedin_page : path.state.data.linkedin_page
+    );
+    formData.append(
+      "instagram_page",
+      instagram_page ? instagram_page : path.state.data.instagram_page
+    );
+    formData.append(
+      "twitter_page",
+      twitter_page ? twitter_page : path.state.data.twitter_page
+    );
+    formData.append(
+      "ngo_email",
+      ngo_email ? ngo_email : path.state.data.ngo_email
+    );
+    formData.append(
+      "ngo_website",
+      ngo_website ? ngo_website : path.state.data.ngo_website
+    );
+
+    if (ngo_logo) {
+      formData.append("ngo_logo", ngo_logo ? ngo_logo : null);
+    } else if (isNgoLogoDeleted) {
+      formData.append("ngo_logo", "null");
+    } else {
+      formData.append("ngo_logo", path.state.data.ngo_logo);
+    }
 
     try {
-      const response = await axios.post(
-        `${websiteUrl}/ngos/addngo/`,
+      const response = await axios.put(
+        `${websiteUrl}/ngos/update/${path.state.data.id}/`,
         formData,
         {
           headers: {
@@ -75,14 +126,11 @@ const AddNgo = () => {
           },
         }
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         console.log("Success:", response.data);
-        alert("NGO Added Successfully");
+        alert("NGO Updated Successfully");
         navigate("/NGO");
         // Handle success or display a success message.
-      } else {
-        console.error("Error:", response.data);
-        // Handle error or display an error message.
       }
     } catch (error) {
       console.error("Error:", error);
@@ -91,9 +139,9 @@ const AddNgo = () => {
   };
 
   return (
+      // <div>EditNgo - {path.state.data.ngo_name}</div>
     isSuperUser === "true" &&
-    user && (
-      <div
+    user && (<div
         style={{
           display: "flex",
           flexDirection: "row",
@@ -112,7 +160,7 @@ const AddNgo = () => {
             }}
             className="container"
           >
-            <h4 className="heading1">Add NGO</h4>
+            <h4 className="heading1">Edit NGO</h4>
             <div className="case-lists mx-auto">
               <h4 className="heading1">NGO Details:</h4>
               <div style={{ padding: "1rem" }}>
@@ -130,9 +178,9 @@ const AddNgo = () => {
                       className="form-control"
                       placeholder="NGO Name"
                       aria-label="NGO name"
-                      required
                       id="ngo_name"
                       name="ngo_name"
+                      defaultValue={path.state.data.ngo_name || ""}
                       onChange={(e)=> setNgoName(e.target.value)}
                     />
                   </div>
@@ -150,7 +198,7 @@ const AddNgo = () => {
                       className="form-control"
                       id="darpan_id"
                       name="darpan_id"
-                      required
+                      defaultValue={path.state.data.darpan_id || ""}
                       onChange={(e)=> setDarpanId(e.target.value)}
                     />
                   </div>
@@ -168,6 +216,7 @@ const AddNgo = () => {
                       className="form-control"
                       id="description"
                       name="description"
+                      defaultValue={path.state.data.description || ""}
                       onChange={(e)=> setDescription(e.target.value)}
                     />
                   </div>
@@ -186,6 +235,7 @@ const AddNgo = () => {
                       placeholder="Mission Statement"
                       id="mission_statement"
                       name="mission_statement"
+                      defaultValue={path.state.data.mission_statement || ""}
                       onChange={(e)=> setMissionStatement(e.target.value)}
                     />
                   </div>
@@ -203,6 +253,7 @@ const AddNgo = () => {
                       placeholder="Helpline No"
                       id="helpline_number"
                       name="helpline_number"
+                      defaultValue={path.state.data.helpline_number || ""}
                       onChange={(e)=> setHelplineNumber(e.target.value)}
                     />
                   </div>
@@ -220,6 +271,7 @@ const AddNgo = () => {
                       placeholder="Alternate Helpline No"
                       id="alternate_helpline_number"
                       name="alternate_helpline_number"
+                      defaultValue={path.state.data.alternate_helpline_number || ""}
                       onChange={(e)=> setAlternateHelplineNumber(e.target.value)}
                     />
                   </div>
@@ -238,6 +290,7 @@ const AddNgo = () => {
                       placeholder="Facebook Page"
                       id="facebook_page"
                       name="facebook_page"
+                      defaultValue={path.state.data.facebook_page || ""}
                       onChange={(e)=> setFacebookPage(e.target.value)}
                     />
                   </div>
@@ -255,6 +308,7 @@ const AddNgo = () => {
                       placeholder="Linkdin Page"
                       id="linkedin_page"
                       name="linkedin_page"
+                      defaultValue={path.state.data.linkedin_page || ""}
                       onChange={(e)=> setLinkedinPage(e.target.value)}
                     />
                   </div>
@@ -272,6 +326,7 @@ const AddNgo = () => {
                       placeholder="Instagram Page"
                       id="instagram_page"
                       name="instagram_page"
+                      defaultValue={path.state.data.instagram_page || ""}
                       onChange={(e)=> setInstagramPage(e.target.value)}
                     />
                   </div>
@@ -290,6 +345,7 @@ const AddNgo = () => {
                       placeholder="Twitter Page"
                       id="twitter_page"
                       name="twitter_page"
+                      defaultValue={path.state.data.twitter_page || ""}
                       onChange={(e)=> setTwitterPage(e.target.value)}
                     />
                   </div>
@@ -307,6 +363,7 @@ const AddNgo = () => {
                       placeholder="NGO Email"
                       id="ngo_email"
                       name="ngo_email"
+                      defaultValue={path.state.data.ngo_email || ""}
                       onChange={(e)=> setNgoEmail(e.target.value)}
                     />
                   </div>
@@ -324,6 +381,7 @@ const AddNgo = () => {
                       placeholder="NGO Website"
                       id="ngo_website"
                       name="ngo_website"
+                      defaultValue={path.state.data.ngo_website || ""}
                       onChange={(e)=> setNgoWebsite(e.target.value)}
                     />
                   </div>
@@ -350,7 +408,19 @@ const AddNgo = () => {
                         onChange={handleNgoLogoChange}
                       />
                     </div>
-                    {ngoLogoPreview && (
+                    {(!isNgoLogoDeleted) ? ((path.state.data.ngo_logo) ? (
+                        <div>
+                            <h6>Preview:</h6>
+                            <img
+                            src={`http://localhost:8000${path.state.data.ngo_logo}`}
+                            alt="NGO Logo Preview"
+                            height="100px"
+                          />
+                          <button onClick={handleDeleteSavedNgoLogo}>
+                            Delete
+                          </button>
+                        </div>
+                    ) : (ngoLogoPreview && (
                       <div>
                         <h6>Preview:</h6>
                         <img
@@ -361,7 +431,18 @@ const AddNgo = () => {
                         <button onClick={handleDeleteNgoLogo}>
                           Delete
                         </button>
-                      </div>
+                      </div>))): (ngoLogoPreview && (
+                      <div>
+                        <h6>Preview:</h6>
+                        <img
+                          src={ngoLogoPreview}
+                          alt="NGO Logo Preview"
+                          height="100px"
+                        />
+                        <button onClick={handleDeleteNgoLogo}>
+                          Delete
+                        </button>
+                      </div>)
                     )}
                   </div>
                     </div>
@@ -429,9 +510,6 @@ const AddNgo = () => {
             ></i>
           </span>
         </div>
-      </div>
-    )
+      </div>)
   );
-};
-
-export default AddNgo;
+}
