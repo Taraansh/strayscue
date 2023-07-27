@@ -18,6 +18,7 @@ import EditSponsor from "./Sponsor Management/EditSponsor";
 import EditVet from "./Vet Management/EditVet";
 import EditReporter from "./Reporter Management/EditReporter";
 import EditNgo from "./NGO Management/EditNgo";
+import EditUser from "./User Management/EditUser";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
 
             <Route path="/UserManagement" element={<UserManagement />} />
             <Route path="/UserManagement/AddUser" element={<AddUser />} />
+            <Route path="/UserManagement/EditUser" element={<EditUser />} />
 
             <Route path="/Settings" element={<Settings />} />
           </Routes>
