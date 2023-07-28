@@ -21,6 +21,7 @@ export default function EditUser() {
   const [email, setEmail] = useState(null);
   const [user_contact, setUser_contact] = useState(null);
   const [type_of_user_in_ngo, setType_of_user_in_ngo] = useState(null);
+  const [is_active, setIsActive] = useState(null);
   // const [ngo_linked_with_this_user, setNgo_linked_with_this_user] = useState(null);
 
   const handleUpdateUserLinkedWithNgo = async (e) => {
@@ -29,10 +30,10 @@ export default function EditUser() {
       username: username ? username : path.state.data.username,
       user_contact: user_contact ? user_contact : path.state.data.user_contact,
       email: email ? email : path.state.data.email,
-      type_of_user_in_ngo: type_of_user_in_ngo
-        ? type_of_user_in_ngo
-        : path.state.data.type_of_user_in_ngo,
+      type_of_user_in_ngo: type_of_user_in_ngo ? type_of_user_in_ngo : path.state.data.type_of_user_in_ngo,
+      is_active: is_active ? is_active: path.state.data.is_active,
     };
+    console.log(update_data)
 
     try {
       const response = await axios.put(
@@ -181,6 +182,26 @@ export default function EditUser() {
                       <option value="Founder">Founder</option>
                       <option value="Manager">Manager</option>
                       <option value="Worker">Worker</option>
+                    </select>
+                  </div>
+                  <div className="col-md-6">
+                    <label
+                      htmlFor="is_active"
+                      style={{ fontWeight: "bold" }}
+                      className="form-label"
+                    >
+                      Status <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <select
+                      id="is_active"
+                      name="is_active"
+                      className="form-select"
+                      defaultValue={path.state.data.is_active}
+                      onChange={(e) => setIsActive(e.target.value)}
+                    >
+                      <option value="">Choose</option>
+                      <option value="Active">Active</option>
+                      <option value="Not Active">Not Active</option>
                     </select>
                   </div>
 
