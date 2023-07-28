@@ -52,45 +52,45 @@ const Dashboard = () => {
     }
   };
 
-// Filtering logic for filteredCases
-const filteredCases = allCases.filter((data) => {
-  const lowerCaseSearchQuery = searchQuery.toLowerCase();
-  const isEmptyLocation = !data.reportingdetail?.location;
-  const isEmptyReporterName = !data.reportingdetail?.reporterName;
-  const isEmptyLandmark = !data.reportingdetail?.landmark;
 
-  if (searchQuery.trim() === "") {
-    // Show all cases when there is no search query (blank search)
-    return true;
-  } else {
-    // Show cases matching the search query, excluding blank cases
-    return (
-      (!isEmptyLocation && data.reportingdetail.location.toLowerCase().includes(lowerCaseSearchQuery)) ||
-      (!isEmptyReporterName && data.reportingdetail.reporterName.toLowerCase().includes(lowerCaseSearchQuery)) ||
-      (!isEmptyLandmark && data.reportingdetail.landmark.toLowerCase().includes(lowerCaseSearchQuery))
-    );
-  }
-});
+  // Updated filtering logic for filteredCases and filteredNGOCases
+  const filteredCases = allCases.filter((data) => {
+    const lowerCaseSearchQuery = searchQuery.toLowerCase();
+    const isEmptyLocation = !data.reportingdetail?.location;
+    const isEmptyReporterName = !data.reportingdetail?.reporterName;
+    const isEmptyLandmark = !data.reportingdetail?.landmark;
 
-// Filtering logic for filteredNGOCases
-const filteredNGOCases = allCasesLinkedWithNGO.filter((data) => {
-  const lowerCaseSearchQuery = searchQuery.toLowerCase();
-  const isEmptyLocation = !data.reportingdetail?.location;
-  const isEmptyReporterName = !data.reportingdetail?.reporterName;
-  const isEmptyLandmark = !data.reportingdetail?.landmark;
+    if (searchQuery.trim() === "") {
+      // Show all cases when there is no search query (blank search)
+      return activeButton === 0 || data.type_of_case === getCaseType(activeButton);
+    } else {
+      // Show cases matching the search query, excluding blank cases, and matching the active button type
+      return (
+        (!isEmptyLocation && data.reportingdetail.location.toLowerCase().includes(lowerCaseSearchQuery)) ||
+        (!isEmptyReporterName && data.reportingdetail.reporterName.toLowerCase().includes(lowerCaseSearchQuery)) ||
+        (!isEmptyLandmark && data.reportingdetail.landmark.toLowerCase().includes(lowerCaseSearchQuery))
+      ) && (activeButton === 0 || data.type_of_case === getCaseType(activeButton));
+    }
+  });
 
-  if (searchQuery.trim() === "") {
-    // Show all cases when there is no search query (blank search)
-    return true;
-  } else {
-    // Show cases matching the search query, excluding blank cases
-    return (
-      (!isEmptyLocation && data.reportingdetail.location.toLowerCase().includes(lowerCaseSearchQuery)) ||
-      (!isEmptyReporterName && data.reportingdetail.reporterName.toLowerCase().includes(lowerCaseSearchQuery)) ||
-      (!isEmptyLandmark && data.reportingdetail.landmark.toLowerCase().includes(lowerCaseSearchQuery))
-    );
-  }
-});
+  const filteredNGOCases = allCasesLinkedWithNGO.filter((data) => {
+    const lowerCaseSearchQuery = searchQuery.toLowerCase();
+    const isEmptyLocation = !data.reportingdetail?.location;
+    const isEmptyReporterName = !data.reportingdetail?.reporterName;
+    const isEmptyLandmark = !data.reportingdetail?.landmark;
+
+    if (searchQuery.trim() === "") {
+      // Show all cases when there is no search query (blank search)
+      return activeButton === 0 || data.type_of_case === getCaseType(activeButton);
+    } else {
+      // Show cases matching the search query, excluding blank cases, and matching the active button type
+      return (
+        (!isEmptyLocation && data.reportingdetail.location.toLowerCase().includes(lowerCaseSearchQuery)) ||
+        (!isEmptyReporterName && data.reportingdetail.reporterName.toLowerCase().includes(lowerCaseSearchQuery)) ||
+        (!isEmptyLandmark && data.reportingdetail.landmark.toLowerCase().includes(lowerCaseSearchQuery))
+      ) && (activeButton === 0 || data.type_of_case === getCaseType(activeButton));
+    }
+  });
 
   const handleEditCaseButton = (data) => {
     navigate("/Editcase", { state: { data: data } });
