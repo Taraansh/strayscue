@@ -309,6 +309,7 @@ const Dashboard = () => {
                               {/* {index + 1} */}
                               <button
                                 className="btn btn-primary"
+                                style={{ background: "rgb(245, 145, 32)", border:"none"}}
                                 onClick={() => {
                                   handleEditCaseButton(data);
                                 }}
