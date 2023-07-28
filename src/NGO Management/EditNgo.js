@@ -216,7 +216,7 @@ export default function EditNgo() {
                       className="form-control"
                       id="description"
                       name="description"
-                      defaultValue={path.state.data.description || ""}
+                      defaultValue={path.state.data.description==="null" ? '' : path.state.data.description}
                       onChange={(e)=> setDescription(e.target.value)}
                     />
                   </div>
@@ -235,7 +235,7 @@ export default function EditNgo() {
                       placeholder="Mission Statement"
                       id="mission_statement"
                       name="mission_statement"
-                      defaultValue={path.state.data.mission_statement || ""}
+                      defaultValue={path.state.data.mission_statement==="null" ? '' : path.state.data.mission_statement}
                       onChange={(e)=> setMissionStatement(e.target.value)}
                     />
                   </div>
@@ -253,7 +253,7 @@ export default function EditNgo() {
                       placeholder="Helpline No"
                       id="helpline_number"
                       name="helpline_number"
-                      defaultValue={path.state.data.helpline_number || ""}
+                      defaultValue={path.state.data.helpline_number==="null" ? '' : path.state.data.helpline_number}
                       onChange={(e)=> setHelplineNumber(e.target.value)}
                     />
                   </div>
@@ -271,7 +271,7 @@ export default function EditNgo() {
                       placeholder="Alternate Helpline No"
                       id="alternate_helpline_number"
                       name="alternate_helpline_number"
-                      defaultValue={path.state.data.alternate_helpline_number || ""}
+                      defaultValue={path.state.data.alternate_helpline_number==="null" ? '' : path.state.data.alternate_helpline_number}
                       onChange={(e)=> setAlternateHelplineNumber(e.target.value)}
                     />
                   </div>
@@ -290,7 +290,7 @@ export default function EditNgo() {
                       placeholder="Facebook Page"
                       id="facebook_page"
                       name="facebook_page"
-                      defaultValue={path.state.data.facebook_page || ""}
+                      defaultValue={path.state.data.facebook_page==="null" ? '' : path.state.data.facebook_page}
                       onChange={(e)=> setFacebookPage(e.target.value)}
                     />
                   </div>
@@ -308,7 +308,7 @@ export default function EditNgo() {
                       placeholder="Linkdin Page"
                       id="linkedin_page"
                       name="linkedin_page"
-                      defaultValue={path.state.data.linkedin_page || ""}
+                      defaultValue={path.state.data.linkedin_page==="null" ? '' : path.state.data.linkedin_page}
                       onChange={(e)=> setLinkedinPage(e.target.value)}
                     />
                   </div>
@@ -326,7 +326,7 @@ export default function EditNgo() {
                       placeholder="Instagram Page"
                       id="instagram_page"
                       name="instagram_page"
-                      defaultValue={path.state.data.instagram_page || ""}
+                      defaultValue={path.state.data.instagram_page==="null" ? '' : path.state.data.instagram_page}
                       onChange={(e)=> setInstagramPage(e.target.value)}
                     />
                   </div>
@@ -345,7 +345,7 @@ export default function EditNgo() {
                       placeholder="Twitter Page"
                       id="twitter_page"
                       name="twitter_page"
-                      defaultValue={path.state.data.twitter_page || ""}
+                      defaultValue={path.state.data.twitter_page==="null" ? '' : path.state.data.twitter_page}
                       onChange={(e)=> setTwitterPage(e.target.value)}
                     />
                   </div>
@@ -363,7 +363,7 @@ export default function EditNgo() {
                       placeholder="NGO Email"
                       id="ngo_email"
                       name="ngo_email"
-                      defaultValue={path.state.data.ngo_email || ""}
+                      defaultValue={path.state.data.ngo_email==="null" ? '' : path.state.data.ngo_email}
                       onChange={(e)=> setNgoEmail(e.target.value)}
                     />
                   </div>
@@ -381,7 +381,7 @@ export default function EditNgo() {
                       placeholder="NGO Website"
                       id="ngo_website"
                       name="ngo_website"
-                      defaultValue={path.state.data.ngo_website || ""}
+                      defaultValue={path.state.data.ngo_website==="null" ? '' : path.state.data.ngo_website}
                       onChange={(e)=> setNgoWebsite(e.target.value)}
                     />
                   </div>
