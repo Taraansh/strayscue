@@ -3,7 +3,6 @@ import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
-import { Link } from 'react-router-dom'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -48,7 +47,7 @@ const AddUser = () => {
         email: email,
         password: password,
         ngo_linked_with_this_user: ngo_linked_with_this_user_value,          
-          type_of_user_in_ngo: type_of_user_in_ngo ? type_of_user_in_ngo : null,
+        type_of_user_in_ngo: type_of_user_in_ngo ? type_of_user_in_ngo : null,
       };
 
       console.log(data)
@@ -228,7 +227,7 @@ const AddUser = () => {
                   </select>
                 </div>
 
-                {isSuperUser === "true" && (<div className="col-md-6">
+                {isSuperUser === "true" ? (<div className="col-md-6">
                   <label
                     htmlFor="ngo_linked_with_this_user"
                     style={{ fontWeight: "bold" }}
@@ -243,13 +242,11 @@ const AddUser = () => {
                     <option value="">Choose</option>
                     {
                       allNgos.map((data, index)=> {
-                        return <option key={index} value={data.ngo_name}>{data.ngo_name}</option>
+                        return <option key={index} value={data.id}>{data.ngo_name}</option>
                       })
                     }
                   </select>
-                </div>)}
-
-                        {(stored_type_of_user_in_ngo ==="Founder" || stored_type_of_user_in_ngo ==="Manager") && 
+                </div>) : ((stored_type_of_user_in_ngo ==="Founder" || stored_type_of_user_in_ngo ==="Manager") && 
                         (<div className="col-md-6">
                   <label
                     htmlFor="ngo_linked_with_this_user"
@@ -265,7 +262,7 @@ const AddUser = () => {
                   readOnly
                   >
                   </input>
-                </div>)}
+                </div>))}
 
                 <div className="col-12">
                   <button
