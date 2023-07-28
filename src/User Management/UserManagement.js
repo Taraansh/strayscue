@@ -93,7 +93,7 @@ const UserManagement = () => {
             }}
             className="container"
           >
-            <h4 className="heading1">User List</h4>
+            <h4 className="heading1">Users List</h4>
             <div className="case-lists mx-auto">
               <div className="menu1">
                 <Link
