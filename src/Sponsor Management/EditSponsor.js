@@ -136,7 +136,7 @@ export default function EditSponsor() {
                     style={{ fontWeight: "bold" }}
                     className="form-label"
                   >
-                    Animal Fit for Surgery
+                    Animal Fit for Surgery <span style={{ color: "red" }}>*</span>
                   </label>
                   <select
                     id="animal_fit_for_surgery"
