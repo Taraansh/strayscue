@@ -1491,13 +1491,6 @@ export default function EditCase() {
                       </div>
                       <div>
                       <button
-                        type="submit"
-                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
-                        className="btn"
-                      >
-                        Save
-                      </button>
-                      <button
                         type="button"
                         style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
                         className="btn mx-2"
@@ -1514,7 +1507,8 @@ export default function EditCase() {
                       </button>
                       <button
                         type="submit"
-                        className="btn btn-primary "
+                        className="btn"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
                       >
                         Save
                       </button>
@@ -1798,7 +1792,8 @@ export default function EditCase() {
                       </button>
                      <button
                         type="submit"
-                        className="btn btn-primary "
+                        className="btn"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
                       >
                         Save
                       </button>
@@ -2096,7 +2091,8 @@ export default function EditCase() {
                       </button>
                       <button
                         type="submit"
-                        className="btn btn-primary "
+                        className="btn"
+                        style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
                       >
                         Save
                       </button>
