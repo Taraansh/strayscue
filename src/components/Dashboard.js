@@ -483,6 +483,8 @@ const Dashboard = () => {
           }}
         >
           <span>
+            <Link to="/Settings"
+            style={{textDecoration:"none"}}>
             <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
               {localStorage.getItem("username")}
             </label>
@@ -492,6 +494,8 @@ const Dashboard = () => {
               src={logo}
               alt="Logo"
             ></img>
+            </Link>
+
             <i
               style={{ cursor: "pointer" }}
               className="fa-solid fa-right-from-bracket"
