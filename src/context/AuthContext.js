@@ -9,7 +9,6 @@ export default AuthContext;
 export const AuthProvider = ({ children }) => {
   const websiteUrl = "http://127.0.0.1:8000";
   const [case_id, setCaseID] = useState("");
-  const [profileData, setProfileData] = useState(null);
 
   const [allCases, setAllCases] = useState([]);
   const [allSponsors, setAllSponsors] = useState([]);
@@ -81,7 +80,7 @@ export const AuthProvider = ({ children }) => {
         console.log(data)
         localStorage.setItem("ngo_linked_with_this_user", data.ngo_linked_with_this_user)
         localStorage.setItem("ngo_name", data.ngo_name)
-        setProfileData(data)
+        localStorage.setItem("profilePhoto", data.profilePhoto)
     } catch (error) {
         console.error("Error fetching Profile:", error);
     }
@@ -94,6 +93,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("email");
       localStorage.removeItem("id");
       localStorage.removeItem("username");
+      localStorage.removeItem("profilePhoto");
       localStorage.removeItem("is_superuser");
       localStorage.removeItem("type_of_user_in_ngo");
       localStorage.removeItem("ngo_linked_with_this_user");
@@ -279,7 +279,6 @@ export const AuthProvider = ({ children }) => {
     allReporters: allReporters,
     allNgos: allNgos,
     allUsersLinkedWithNgo: allUsersLinkedWithNgo,
-    profileData:profileData,
     allCasesLinkedWithNGO: allCasesLinkedWithNGO,
 
     authTokens: authTokens,
