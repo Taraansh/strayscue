@@ -127,7 +127,7 @@ const AddReporter = () => {
                     Phone No <span style={{ color: "red" }}>*</span>
                   </label>
                   <input
-                    type="Number"
+                    type="tel"
                     className="form-control"
                     id="phone_number"
                     name="phone_number"
@@ -162,7 +162,7 @@ const AddReporter = () => {
                     Alternate Phone No
                   </label>
                   <input
-                    type="Number"
+                    type="tel"
                     className="form-control"
                     id="alternate_phone_number"
                     name="alternate_phone_number"
