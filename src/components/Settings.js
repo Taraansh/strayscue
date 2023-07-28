@@ -431,7 +431,7 @@ const Settings = () => {
       </>
       <div
         style={{
-          position: "absolute",
+          position: "fixed",
           boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
           right: "0.1rem",
           display: "flex",
