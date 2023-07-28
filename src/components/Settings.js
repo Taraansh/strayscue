@@ -8,7 +8,7 @@ import logo from "../assets/profile.png";
 import axios from "axios";
 
 const Settings = () => {
-  const { user, logoutUser, websiteUrl, profileData } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl } = useContext(AuthContext);
 
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -64,14 +64,14 @@ const Settings = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("username", username ? username : profileData.username)
+    formData.append("username", username ? username : localStorage.getItem("username"))
     
     if (profilePhoto) {
         formData.append("profilePhoto", profilePhoto ? profilePhoto : null);
       } else if (isProfilePhotoDeleted) {
         formData.append("profilePhoto", "null");
       } else {
-        formData.append("profilePhoto", profileData.username);
+        formData.append("profilePhoto", localStorage.getItem("profilePhoto"));
       }
 
     try {
@@ -84,7 +84,7 @@ const Settings = () => {
         )
         if (response.status === 200){
             console.log("Success", response.data)
-            alert("Updated Succesfully")
+            alert("Updated Succesfully. Please login again to view changes.")
         }
     } catch (error) {
         console.error("Error:", error);
@@ -171,7 +171,7 @@ const Settings = () => {
                   style={{ width: "auto" }}
                   className="form-control"
                   id="username"
-                  defaultValue={profileData.username || ''}
+                  defaultValue={localStorage.getItem("username")}
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
@@ -197,11 +197,11 @@ const Settings = () => {
                   {
                   !isProfilePhotoDeleted ? 
                   (
-                    profileData.profilePhoto ? (
+                    localStorage.getItem("profilePhoto") ? (
                       <div>
                         <h6>Preview:</h6>
                         <img
-                          src={`http://localhost:8000${profileData.profilePhoto}`}
+                          src={`http://localhost:8000${localStorage.getItem("profilePhoto")}`}
                           alt="Preview"
                           height="100px"
                         />
