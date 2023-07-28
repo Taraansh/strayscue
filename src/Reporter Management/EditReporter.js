@@ -103,7 +103,7 @@ export default function EditReporter() {
           }}
           className="container"
         >
-          <h4 className="heading1">Add Reporter</h4>
+          <h4 className="heading1">Edit Reporter</h4>
           <div className="case-lists mx-auto">
             <h4 className="heading1">Reporter Details:</h4>
             <div style={{ padding: "1rem" }}>
@@ -136,7 +136,7 @@ export default function EditReporter() {
                     Phone No <span style={{ color: "red" }}>*</span>
                   </label>
                   <input
-                    type="Number"
+                    type="tel"
                     className="form-control"
                     id="phone_number"
                     name="phone_number"
@@ -172,7 +172,7 @@ export default function EditReporter() {
                     Alternate Phone No
                   </label>
                   <input
-                    type="Number"
+                    type="tel"
                     className="form-control"
                     id="alternate_phone_number"
                     name="alternate_phone_number"
