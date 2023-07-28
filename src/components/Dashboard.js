@@ -174,7 +174,7 @@ const Dashboard = () => {
           }}
           className="container"
         >
-          <hr />
+       
           <h4 className="heading1">Dashboard</h4>
 
             {/* <h4 className="heading1">Dashboard</h4>
@@ -316,7 +316,7 @@ const Dashboard = () => {
                                 Edit
                               </button>
                               <div
-                                className="btn btn-primary mx-1"
+                                className="btn  mx-1"
                                 onClick={() => {
                                   handleCaseDeleteButton(data.case_id);
                                 }}
@@ -455,8 +455,8 @@ const Dashboard = () => {
         >
           <span>
             <Link to="/Settings"
-            style={{textDecoration:"none"}}>
-            <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
+            style={{textDecoration:"none", color:"black"}}>
+            <label style={{ padding: "0.5rem", fontWeight: "bold", cursor:"pointer" }}>
               {localStorage.getItem("username")}
             </label>
             <img
