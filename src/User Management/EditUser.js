@@ -206,8 +206,7 @@ export default function EditUser() {
                   </select>
                 </div>)} */}
 
-                  {/* {(stored_type_of_user_in_ngo ==="Founder" || stored_type_of_user_in_ngo ==="Manager") && 
-                        (<div className="col-md-6">
+               <div className="col-md-6">
                   <label
                     htmlFor="ngo_linked_with_this_user"
                     style={{ fontWeight: "bold" }}
@@ -218,11 +217,11 @@ export default function EditUser() {
                   <input id="ngo_linked_with_this_user" 
                   name="ngo_linked_with_this_user" 
                   className="form-control"
-                  value={ngo_name}
+                  value={path.state.data.ngo_name}
                   readOnly
                   >
                   </input>
-                </div>)} */}
+                </div>
 
                   <div className="col-12">
                     <button
