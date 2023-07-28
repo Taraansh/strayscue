@@ -103,7 +103,7 @@ export default function EditVet() {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:${websiteUrl}8000/vets/update/${path.state.data.id}/`,
+        `${websiteUrl}/vets/update/${path.state.data.id}/`,
         formData,
         {
           headers: {

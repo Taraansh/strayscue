@@ -82,7 +82,7 @@ const AddSponsor = () => {
           }}
           className="container"
         >
-          <h4 className="heading1">Add Sponsor </h4>
+          <h4 className="heading1">Sponsors List</h4>
           <div className="case-lists mx-auto">
             <div className="menu1">
               <Link

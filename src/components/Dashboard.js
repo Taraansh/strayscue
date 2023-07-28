@@ -52,73 +52,43 @@ const Dashboard = () => {
     }
   };
 
-  // Filtering logic for filteredCases
+
+  // Updated filtering logic for filteredCases and filteredNGOCases
   const filteredCases = allCases.filter((data) => {
     const lowerCaseSearchQuery = searchQuery.toLowerCase();
-    if (activeButton === 0) {
-      // Show all cases when activeButton is 0 (All button clicked)
-      return (
-        data.reportingdetail?.location
-          .toLowerCase()
-          .includes(lowerCaseSearchQuery) ||
-        // data.status_of_case.toLowerCase().includes(lowerCaseSearchQuery) ||
-        data.reportingdetail?.reporterName
-          .toLowerCase()
-          .includes(lowerCaseSearchQuery) ||
-        data.reportingdetail?.landmark
-          .toLowerCase()
-          .includes(lowerCaseSearchQuery)
-      );
+    const isEmptyLocation = !data.reportingdetail?.location;
+    const isEmptyReporterName = !data.reportingdetail?.reporterName;
+    const isEmptyLandmark = !data.reportingdetail?.landmark;
+
+    if (searchQuery.trim() === "") {
+      // Show all cases when there is no search query (blank search)
+      return activeButton === 0 || data.type_of_case === getCaseType(activeButton);
     } else {
-      // Show cases based on the type of case when other buttons are clicked
+      // Show cases matching the search query, excluding blank cases, and matching the active button type
       return (
-        data.type_of_case === getCaseType(activeButton) &&
-        (data.reportingdetail?.location
-          .toLowerCase()
-          .includes(lowerCaseSearchQuery) ||
-          // data.status_of_case.toLowerCase().includes(lowerCaseSearchQuery) ||
-          data.reportingdetail?.reporterName
-            .toLowerCase()
-            .includes(lowerCaseSearchQuery) ||
-          data.reportingdetail?.landmark
-            .toLowerCase()
-            .includes(lowerCaseSearchQuery))
-      );
+        (!isEmptyLocation && data.reportingdetail.location.toLowerCase().includes(lowerCaseSearchQuery)) ||
+        (!isEmptyReporterName && data.reportingdetail.reporterName.toLowerCase().includes(lowerCaseSearchQuery)) ||
+        (!isEmptyLandmark && data.reportingdetail.landmark.toLowerCase().includes(lowerCaseSearchQuery))
+      ) && (activeButton === 0 || data.type_of_case === getCaseType(activeButton));
     }
   });
 
-  // Filtering logic for filteredNGOCases
   const filteredNGOCases = allCasesLinkedWithNGO.filter((data) => {
     const lowerCaseSearchQuery = searchQuery.toLowerCase();
-    if (activeButton === 0) {
-      // Show all cases when activeButton is 0 (All button clicked)
-      return (
-        data.reportingdetail?.location
-          .toLowerCase()
-          .includes(lowerCaseSearchQuery) ||
-        // data.status_of_case.toLowerCase().includes(lowerCaseSearchQuery) ||
-        data.reportingdetail?.reporterName
-          .toLowerCase()
-          .includes(lowerCaseSearchQuery) ||
-        data.reportingdetail?.landmark
-          .toLowerCase()
-          .includes(lowerCaseSearchQuery)
-      );
+    const isEmptyLocation = !data.reportingdetail?.location;
+    const isEmptyReporterName = !data.reportingdetail?.reporterName;
+    const isEmptyLandmark = !data.reportingdetail?.landmark;
+
+    if (searchQuery.trim() === "") {
+      // Show all cases when there is no search query (blank search)
+      return activeButton === 0 || data.type_of_case === getCaseType(activeButton);
     } else {
-      // Show cases based on the type of case when other buttons are clicked
+      // Show cases matching the search query, excluding blank cases, and matching the active button type
       return (
-        data.type_of_case === getCaseType(activeButton) &&
-        (data.reportingdetail?.location
-          .toLowerCase()
-          .includes(lowerCaseSearchQuery) ||
-          // data.status_of_case.toLowerCase().includes(lowerCaseSearchQuery) ||
-          data.reportingdetail?.reporterName
-            .toLowerCase()
-            .includes(lowerCaseSearchQuery) ||
-          data.reportingdetail?.landmark
-            .toLowerCase()
-            .includes(lowerCaseSearchQuery))
-      );
+        (!isEmptyLocation && data.reportingdetail.location.toLowerCase().includes(lowerCaseSearchQuery)) ||
+        (!isEmptyReporterName && data.reportingdetail.reporterName.toLowerCase().includes(lowerCaseSearchQuery)) ||
+        (!isEmptyLandmark && data.reportingdetail.landmark.toLowerCase().includes(lowerCaseSearchQuery))
+      ) && (activeButton === 0 || data.type_of_case === getCaseType(activeButton));
     }
   });
 
@@ -169,6 +139,7 @@ const Dashboard = () => {
         if (response.ok) {
           // Order successfully deleted, perform any necessary actions (e.g., refresh the order list)
           getAllCases(); // Refresh the case list after deletion
+          getAllCasesLinkedWithNgo(); // Refresh the case list after deletion
         } else {
           // Handle the case when the delete request fails
           console.log("Failed to delete Case:", case_id);

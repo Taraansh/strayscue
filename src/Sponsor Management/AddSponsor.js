@@ -127,12 +127,13 @@ const AddSponsor = () => {
                     style={{ fontWeight: "bold" }}
                     className="form-label"
                   >
-                    Animal Fit for Surgery
+                    Animal Fit for Surgery <span style={{ color: "red" }}>*</span>
                   </label>
                   <select
                     id="animal_fit_for_surgery"
                     className="form-select"
                     name="animal_fit_for_surgery"
+                    required
                     onChange={(e) => setAnimalFitForSurgery(e.target.value)}
                   >
                     <option value="">Choose</option>

@@ -85,7 +85,7 @@ const ReporterManagement = () => {
           }}
           className="container"
         >
-          <h4 className="heading1">Reporter List</h4>
+          <h4 className="heading1">Reporters List</h4>
           <div className="case-lists mx-auto">
             <div className="menu1">
               <Link
