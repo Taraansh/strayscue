@@ -151,7 +151,7 @@ export default function EditReporter() {
                     style={{ fontWeight: "bold" }}
                     className="form-label"
                   >
-                    E-mail
+                    E-mail <span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="email"
@@ -159,6 +159,7 @@ export default function EditReporter() {
                     id="email_id"
                     name="email_id"
                     placeholder="E-mail"
+                    required
                     defaultValue={path.state.data.email_id || ""}
                     onChange={(e) => setEmailId(e.target.value)}
                   />

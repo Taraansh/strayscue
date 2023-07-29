@@ -142,7 +142,7 @@ const AddReporter = () => {
                     style={{ fontWeight: "bold" }}
                     className="form-label"
                   >
-                    E-mail
+                    E-mail <span style={{ color: "red" }}>*</span>
                   </label>
                   <input
                     type="email"
@@ -150,6 +150,7 @@ const AddReporter = () => {
                     id="email_id"
                     name="email_id"
                     placeholder="E-mail"
+                    required
                     onChange={(e) => setEmailId(e.target.value)}
                   />
                 </div>
