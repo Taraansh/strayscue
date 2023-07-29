@@ -157,9 +157,9 @@ const Dashboard = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: "0",
+          paddingBottom:"2.3rem",
           margin: "0",
-          height: "100vh",
+          
         }}
       >
 
@@ -174,7 +174,7 @@ const Dashboard = () => {
           }}
           className="container"
         >
-          <hr />
+       
           <h4 className="heading1">Dashboard</h4>
 
             {/* <h4 className="heading1">Dashboard</h4>
@@ -455,7 +455,9 @@ const Dashboard = () => {
           }}
         >
           <span>
-            <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
+            <Link to="/Settings"
+            style={{textDecoration:"none", color:"black"}}>
+            <label style={{ padding: "0.5rem", fontWeight: "bold", cursor:"pointer" }}>
               {localStorage.getItem("username")}
             </label>
             <img
@@ -464,6 +466,8 @@ const Dashboard = () => {
               src={logo}
               alt="Logo"
             ></img>
+            </Link>
+
             <i
               style={{ cursor: "pointer" }}
               className="fa-solid fa-right-from-bracket"

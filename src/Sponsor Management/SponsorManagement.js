@@ -67,9 +67,9 @@ const AddSponsor = () => {
       style={{
         display: "flex",
         flexDirection: "row",
-        padding: "0",
+        paddingBottom: "2rem",
         margin: "0",
-        height: "100vh",
+      
       }}
     >
       <NavBar />
@@ -161,7 +161,7 @@ const AddSponsor = () => {
       </>
       <div
         style={{
-          position: "absolute",
+          position: "fixed",
           boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
           right: "0.1rem",
           display: "flex",

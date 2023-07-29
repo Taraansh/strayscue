@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import NavBar from "../components/NavBar";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import axios from "axios";
@@ -65,29 +64,29 @@ const Settings = () => {
 
     const formData = new FormData();
     formData.append("username", username ? username : localStorage.getItem("username"))
-    
+
     if (profilePhoto) {
-        formData.append("profilePhoto", profilePhoto ? profilePhoto : null);
-      } else if (isProfilePhotoDeleted) {
-        formData.append("profilePhoto", "null");
-      } else {
-        formData.append("profilePhoto", localStorage.getItem("profilePhoto"));
-      }
+      formData.append("profilePhoto", profilePhoto ? profilePhoto : null);
+    } else if (isProfilePhotoDeleted) {
+      formData.append("profilePhoto", "null");
+    } else {
+      formData.append("profilePhoto", localStorage.getItem("profilePhoto"));
+    }
 
     try {
-        const response = await axios.put(
-            `${websiteUrl}/authorize/update/${localStorage.getItem("email")}/`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                }
-            }
-        )
-        if (response.status === 200){
-            console.log("Success", response.data)
-            alert("Updated Succesfully. Please login again to view changes.")
+      const response = await axios.put(
+        `${websiteUrl}/authorize/update/${localStorage.getItem("email")}/`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
         }
+      }
+      )
+      if (response.status === 200) {
+        console.log("Success", response.data)
+        alert("Updated Succesfully. Please login again to view changes.")
+      }
     } catch (error) {
-        console.error("Error:", error);
+      console.error("Error:", error);
     }
   }
 
@@ -136,9 +135,9 @@ const Settings = () => {
       style={{
         display: "flex",
         flexDirection: "row",
-        padding: "0",
+        paddingBottom: "2.3rem",
         margin: "0",
-        height: "100vh",
+        
       }}
     >
       <NavBar />
@@ -157,112 +156,149 @@ const Settings = () => {
               className="container-fluid"
               style={{ overflow: "scroll", paddingBottom: "2rem" }}
             >
-                <form onSubmit={handleModifyProfile}>
-              <div className="mb-3">
-                <label
-                  style={{ fontWeight: "bold" }}
-                  htmlFor="username"
-                  className="form-label"
-                >
-                  Username:
-                </label>
-                <input
-                  type="text"
-                  style={{ width: "auto" }}
-                  className="form-control"
-                  id="username"
-                  defaultValue={localStorage.getItem("username")}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-              <div className="form-1" style={{ display: "flex" }}>
-                <div className="mb-3" style={{ marginRight: "2rem" }}>
+              <form onSubmit={handleModifyProfile}>
+                <div className="mb-3">
                   <label
                     style={{ fontWeight: "bold" }}
-                    htmlFor="profilePhoto"
+                    htmlFor="username"
                     className="form-label"
                   >
-                    Profile Photo:
+                    Username:
                   </label>
-                  <div className="custom-file">
-                    <input
-                      className="form-control custom-file-imput"
-                      type="file"
-                      id="profilePhoto"
-                      name="profilePhoto"
-                      accept="image/*"
-                      onChange={handleProfilePhotoChange}
-                    />
-                  </div>
-                  {
-                  !isProfilePhotoDeleted ? 
-                  (
-                    localStorage.getItem("profilePhoto") ? (
-                      <div>
-                        <h6>Preview:</h6>
-                        <img
-                          src={`http://localhost:8000${localStorage.getItem("profilePhoto")}`}
-                          alt="Preview"
-                          height="100px"
-                        />
-                        <button onClick={handleDeleteSavedProfilePhoto}>
-                          Delete
-                        </button>
-                      </div>
-                    ) : (
-                      profilePhotoPreview && (
-                        <div>
-                          <h6>Preview:</h6>
-                          <img
-                            src={profilePhotoPreview}
-                            alt="Preview"
-                            height="100px"
-                          />
-                          <button onClick={handleDeleteProfilePhoto}>
-                            Delete
-                          </button>
-                        </div>
-                      )
-                    )
-                  ) : 
-                  (
-                    profilePhotoPreview && (
-                      <div>
-                        <h6>Preview:</h6>
-                        <img
-                          src={profilePhotoPreview}
-                          alt="Preview"
-                          height="100px"
-                        />
-                        <button onClick={handleDeleteProfilePhoto}>
-                          Delete
-                        </button>
-                      </div>
-                    )
-                  )}
+                  <input
+                    type="text"
+                    style={{ width: "auto" }}
+                    className="form-control"
+                    id="username"
+                    defaultValue={localStorage.getItem("username")}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
                 </div>
-                <div></div>
-              </div>
+                <div className="form-1" style={{ display: "flex" }}>
+                  <div className="mb-3" style={{ marginRight: "2rem" }}>
+                    <label
+                      style={{ fontWeight: "bold" }}
+                      htmlFor="profilePhoto"
+                      className="form-label"
+                    >
+                      Profile Photo:
+                    </label>
+                    <div className="custom-file">
+                      <input
+                        className="form-control custom-file-imput"
+                        type="file"
+                        id="profilePhoto"
+                        name="profilePhoto"
+                        accept="image/*"
+                        onChange={handleProfilePhotoChange}
+                      />
+                    </div>
+                    {
+                      !isProfilePhotoDeleted ?
+                        (
+                          localStorage.getItem("profilePhoto") ? (
+                            <div className="mt-4">
+                              <div>
+                                <h6>Preview:</h6>
+                                <div className="mt-4 mx-3" style={{ border: "1px solid black", borderRadius: "0.2rem", position: "relative", width: "max-content" }}>
+                                  <img
+                                    src={`http://localhost:8000${localStorage.getItem("profilePhoto")}`}
+                                    alt="Preview"
+                                    height="100px"
+                                  />
+                                  <button style={{ position: "absolute", top: "0", right: "0", padding: "0", background: "#ffffff" }} className="btn" onClick={handleDeleteSavedProfilePhoto}>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="25"
+                                      height="25"
+                                      fill="red"
 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  paddingRight: "1rem",
-                }}
-              >
-                <button
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z" id="_icons" fill="red" className="fill-000000"></path>
+                                    </svg>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          ) : (
+                            profilePhotoPreview && (
+                              <div className="mt-4">
+                                <h6>Preview:</h6>
+                                <div className="mt-4 mx-3" style={{ border: "1px solid black", borderRadius: "0.2rem", position: "relative", width: "max-content" }}>
+                                  <img
+                                    src={profilePhotoPreview}
+                                    alt="Preview"
+                                    height="100px"
+                                  />
+                                  <button style={{ position: "absolute", top: "0", right: "0", padding: "0", background: "#ffffff" }} className="btn" onClick={handleDeleteProfilePhoto}>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="25"
+                                      height="25"
+                                      fill="red"
+
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z" id="_icons" fill="red" className="fill-000000"></path>
+                                    </svg>
+                                  </button>
+                                </div>
+                              </div>
+                            )
+                          )
+                        ) :
+                        (
+                          profilePhotoPreview && (
+                            <div className="mt-4">
+                              <h6>Preview:</h6>
+                              <div className="mt-4 mx-3" style={{ border: "1px solid black", borderRadius: "0.2rem", position: "relative", width: "max-content" }}>
+                                <img
+
+                                  src={profilePhotoPreview}
+                                  alt="Preview"
+                                  height="100px"
+                                />
+                                <button style={{ position: "absolute", top: "0", right: "0", padding: "0", background: "#ffffff" }} className="btn" onClick={handleDeleteProfilePhoto}>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="25"
+                                    height="25"
+                                    fill="red"
+
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z" id="_icons" fill="red" className="fill-000000"></path>
+                                  </svg>
+                                </button>
+
+                              </div>
+                            </div>
+                          )
+                        )}
+                  </div>
+                  <div></div>
+                </div>
+
+                <div
                   style={{
-                    background: "rgb(245, 145, 32)",
-                    color: "#ffffff",
-                    cursor: "pointer",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    paddingRight: "1rem",
                   }}
-                  className="btn"
-                  type="submit"
                 >
-                  Submit
-                </button>
-              </div>
+                  <button
+                    style={{
+                      background: "rgb(245, 145, 32)",
+                      color: "#ffffff",
+                      cursor: "pointer",
+                    }}
+                    className="btn"
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </div>
               </form>
             </div>
           </div>
@@ -395,7 +431,7 @@ const Settings = () => {
       </>
       <div
         style={{
-          position: "absolute",
+          position: "fixed",
           boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
           right: "0.1rem",
           display: "flex",

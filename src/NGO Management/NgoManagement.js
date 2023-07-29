@@ -67,9 +67,9 @@ const NGOManagement = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: "0",
+          paddingBottom: "2rem",
           margin: "0",
-          height: "100vh",
+         
         }}
       >
         <NavBar />
@@ -129,15 +129,19 @@ const NGOManagement = () => {
                               height="30px"
                             />
                           </td>
-                          <td>
-                            <button
-                              className="btn btn-primary"
-                              onClick={() => handleEditNgoButton(data)}
-                            >
-                              Edit
-                            </button>
+                          <td style={{display:"flex", flexDirection:"row"}}>
+                          <button
+                                className="btn btn-primary"
+                                style={{ background: "rgb(245, 145, 32)", border:"none"}}
+                                onClick={() => {
+                                  handleEditNgoButton(data);
+                                }}
+                              >
+                                Edit
+                              </button>
                             <div
-                              className="btn btn-primary mx-1"
+                              className="btn  mx-1"
+                              style={{background:"#ffffff", color:"red"}}
                               onClick={() => {
                                 handleNgoDeleteButton(data.id);
                               }}

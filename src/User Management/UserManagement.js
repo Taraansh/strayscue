@@ -53,9 +53,9 @@ const UserManagement = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: "0",
+          paddingBottom: "2rem",
           margin: "0",
-          height: "100vh",
+          
         }}
       >
         <NavBar />
@@ -70,6 +70,7 @@ const UserManagement = () => {
           >
             <h4 className="heading1">Users List</h4>
             <div className="case-lists mx-auto">
+            <h5 className="heading1">Add User in NGO</h5>
               <div className="menu1">
                 <Link
                   to="/UserManagement/AddUser"
@@ -80,7 +81,7 @@ const UserManagement = () => {
                   }}
                   className="btn "
                 >
-                  Add User in NGO
+                  Add 
                 </Link>
                 <input
                   type="text"
