@@ -157,9 +157,9 @@ const Dashboard = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: "0",
+          paddingBottom:"2.3rem",
           margin: "0",
-          height: "100vh",
+          
         }}
       >
 

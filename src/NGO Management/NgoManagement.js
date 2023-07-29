@@ -67,9 +67,9 @@ const NGOManagement = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          padding: "0",
+          paddingBottom: "2rem",
           margin: "0",
-          height: "100vh",
+         
         }}
       >
         <NavBar />
