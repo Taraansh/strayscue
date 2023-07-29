@@ -207,7 +207,7 @@ const Dashboard = () => {
           </div> */}
 
             <div className="case-lists mx-auto">
-              <h4 style={{ marginLeft: "1rem" }}>Case Lists</h4>
+              <h4 style={{ marginLeft: "1rem" }}>Case List</h4>
               <hr />
 
               <div className="menu1">
@@ -308,8 +308,8 @@ const Dashboard = () => {
                             <th scope="row" style={{display: "flex", justifyContent: "space-evenly"}}>
                               {/* {index + 1} */}
                               <button
-                                className="btn btn-primary"
-                                style={{ background: "rgb(245, 145, 32)", border:"none"}}
+                                className="btn"
+                                style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
                                 onClick={() => {
                                   handleEditCaseButton(data);
                                 }}
@@ -317,7 +317,7 @@ const Dashboard = () => {
                                 Edit
                               </button>
                               <div
-                                className="btn  mx-1"
+                                className="btn mx-1"
                                 onClick={() => {
                                   handleCaseDeleteButton(data.case_id);
                                 }}

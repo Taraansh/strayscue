@@ -11,7 +11,6 @@ const UserManagement = () => {
     logoutUser,
     getAllUsersLinkedWithNgo,
     allUsersLinkedWithNgo,
-    websiteUrl,
   } = useContext(AuthContext);
   const isSuperUser = localStorage.getItem("is_superuser");
   const type_of_user_in_ngo = localStorage.getItem("type_of_user_in_ngo");
@@ -43,30 +42,6 @@ const UserManagement = () => {
 
   const handleEditUserLinkedWithNgo = (data) => {
     navigate("/UserManagement/EditUser", { state: { data: data } });
-  };
-
-  const handleDeleteUserLinkedWithNgoButton = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this User?"
-    );
-    if (confirmDelete) {
-      try {
-        // Delete the specific User by making an API call
-        const response = await fetch(`${websiteUrl}/authorize/deleteuser/${id}/`, {
-          method: "DELETE",
-        });
-        if (response.ok) {
-          // User successfully deleted, perform any necessary actions (e.g., refresh the User list)
-          getAllUsersLinkedWithNgo(); // Refresh the User list after deletion
-        } else {
-          // Handle the case when the delete request fails
-          console.log("Failed to Delete User:", id);
-        }
-      } catch (error) {
-        // Handle any errors that occur during the delete operation
-        console.error("Error Deleting User:", error);
-      }
-    }
   };
 
   return (
@@ -125,6 +100,7 @@ const UserManagement = () => {
                       <th scope="col">E-mail</th>
                       <th scope="col">Contact</th>
                       <th scope="col">Type</th>
+                      <th scope="col">Active</th>
                       <th scope="col">Edit</th>
                     </tr>
                   </thead>
@@ -137,6 +113,7 @@ const UserManagement = () => {
                           <td>{data.email}</td>
                           <td>{data.user_contact}</td>
                           <td>{data.type_of_user_in_ngo}</td>
+                          <td>{data.is_active}</td>
                           <td>
                             <button
                               className="btn btn-primary"
@@ -144,23 +121,6 @@ const UserManagement = () => {
                             >
                               Edit
                             </button>
-                            <div
-                              className="btn btn-primary mx-1"
-                              onClick={() => {
-                                handleDeleteUserLinkedWithNgoButton(data.id);
-                              }}
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                fill="currentColor"
-                                className="bi bi-trash-fill"
-                                viewBox="0 0 16 16"
-                              >
-                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                              </svg>
-                            </div>
                           </td>
                         </tr>
                       );
