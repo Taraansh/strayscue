@@ -116,7 +116,8 @@ const UserManagement = () => {
                           <td>{data.is_active}</td>
                           <td>
                             <button
-                              className="btn btn-primary"
+                              className="btn"
+                              style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
                               onClick={() => handleEditUserLinkedWithNgo(data)}
                             >
                               Edit
