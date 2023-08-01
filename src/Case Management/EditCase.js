@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import NavBar from '../components/NavBar'
 import logo from "../assets/profile.png";
@@ -9,10 +9,7 @@ export default function EditCase() {
     const path = useLocation()
     const navigate = useNavigate()
     const [activeButton, setActiveButton] = useState(0);
-    const {
-        user,
-        logoutUser, websiteUrl
-      } = useContext(AuthContext);
+    const {user, logoutUser, websiteUrl, allReporters, getAllReporters, allVets, getAllVets} = useContext(AuthContext);
 
   // Reporting Details State
   const [frontImageFile, setFrontImageFile] = useState(null);
@@ -49,10 +46,10 @@ export default function EditCase() {
   const [animalCatchable, setAnimalCatchable] = useState(null);
   const [animalWeight, setAnimalWeight] = useState(null);
   const [admissionReason, setAdmissionReason] = useState(null);
-  const [animalPictures, setAnimalPictures] = useState(null);
-  const [animalPicturesPreview, setAnimalPicturesPreview] = useState("");
-
-  const [isAnimalPictureDeleted, setIsAnimalPictureDeleted] = useState(false);
+  const [animalPictures, setAnimalPictures] = useState([]);
+  const [animalPicturesPreview, setAnimalPicturesPreview] = useState([]);
+  
+  // const [isAnimalPictureDeleted, setIsAnimalPictureDeleted] = useState(false);
 
   // Medical Details State
   const [medicalHistory, setMedicalHistory] = useState(null);
@@ -102,6 +99,12 @@ export default function EditCase() {
 
   const [isPopPicturesDeleted, setIsPopPicturesDeleted] = useState(false);
   const [isReleasePicturesDeleted, setIsReleasePicturesDeleted] = useState(false);
+
+useEffect(() => {
+  getAllReporters();
+  getAllVets();
+}, [getAllReporters, getAllVets])
+
 
   const buttonStyle = {
     border: "1px solid black",
@@ -189,28 +192,31 @@ export default function EditCase() {
 
   // Animal Details Image Management
   const handleAnimalPictursChange = (event) => {
-    const file = event.target.files[0];
-    setAnimalPictures(file);
+    const files = event.target.files;
+    const imageFiles = Array.from(files);
+  
+    setAnimalPictures(imageFiles);
+  
+    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file));
+    setAnimalPicturesPreview(imagePreviews);
+  };
+  
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAnimalPicturesPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setAnimalPicturesPreview("");
-    }
+  const handleDeleteAnimalPicture = (e,index) => {
+    e.preventDefault()
+    const updatedPictures = [...animalPictures];
+    const updatedPreviews = [...animalPicturesPreview];
+  
+    updatedPictures.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+  
+    setAnimalPictures(updatedPictures);
+    setAnimalPicturesPreview(updatedPreviews);
   };
 
-  const handleDeleteAnimalPicture = () => {
-    setAnimalPictures(null);
-    setAnimalPicturesPreview('');
-  };
-
-  const handleDeleteSavedAnimalPicture = () => {
-    setIsAnimalPictureDeleted(true);
-  }
+  // const handleDeleteSavedAnimalPicture = () => {
+  //   setIsAnimalPictureDeleted(true);
+  // }
 
   // Medical Details Image Management
   const handleFeedingRecordImage = (event) => {
@@ -450,46 +456,59 @@ export default function EditCase() {
   const handleUpdateAnimalDetails = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("animalSpecies", animalSpecies ? animalSpecies : path.state.data.animaldetail?.animalSpecies);
-    formData.append("animalBreed", animalBreed ? animalBreed : path.state.data.animaldetail?.animalBreed);
-    formData.append("animalAge", animalAge ? animalAge : path.state.data.animaldetail?.animalAge);
-    formData.append("animalTemperament",animalAge ? animalTemperament : path.state.data.animaldetail?.animalAge);
-    formData.append("animalGender", animalGender ? animalGender : path.state.data.animaldetail?.animalGender);
-    formData.append("animalPregnant", animalPregnant ? animalPregnant : path.state.data.animaldetail?.animalPregnant);
-    formData.append("animalMarking", animalMarking ? animalMarking : path.state.data.animaldetail?.animalMarking);
-    formData.append("animalColor", animalColor ? animalColor : path.state.data.animaldetail?.animalColor);
-    formData.append("animalCatchable", animalCatchable ? animalCatchable : path.state.data.animaldetail?.animalCatchable);
-    formData.append("animalWeight", animalWeight ? animalWeight : path.state.data.animaldetail?.animalWeight);
-    formData.append("admissionReason", admissionReason ? admissionReason : path.state.data.animaldetail?.admissionReason);
-
-    if (animalPictures) {
-      formData.append('animalPictures', animalPictures ? animalPictures : null);
-    } else if (isAnimalPictureDeleted){
-      formData.append('animalPictures', "null");
-    } else{
-      formData.append('animalPictures', path.state.data.animaldetail?.animalPictures);
-    }
-
-    try {
-      const response = await axios.put(
-        `${websiteUrl}/cases/updateanimal/${path.state.data.animaldetail?.id}/`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      if (response) {
-        console.log("Success:", response.data);
-        alert("Animal Details Updated Successfully");
-        setActiveButton(2);
-        // Handle success or display a success message.
+    if (reporterName && path.state.data.reportingdetail?.reporterName && reporterContact && path.state.data.reportingdetail?.reporterContact && location &&
+      path.state.data.reportingdetail?.location && pincode && path.state.data.reportingdetail?.pincode && location && path.state.data.reportingdetail?.landmark) {
+        const formData = new FormData();
+        formData.append("animalSpecies", animalSpecies ? animalSpecies : path.state.data.animaldetail?.animalSpecies);
+        formData.append("animalBreed", animalBreed ? animalBreed : path.state.data.animaldetail?.animalBreed);
+        formData.append("animalAge", animalAge ? animalAge : path.state.data.animaldetail?.animalAge);
+        formData.append("animalTemperament",animalAge ? animalTemperament : path.state.data.animaldetail?.animalAge);
+        formData.append("animalGender", animalGender ? animalGender : path.state.data.animaldetail?.animalGender);
+        formData.append("animalPregnant", animalPregnant ? animalPregnant : path.state.data.animaldetail?.animalPregnant);
+        formData.append("animalMarking", animalMarking ? animalMarking : path.state.data.animaldetail?.animalMarking);
+        formData.append("animalColor", animalColor ? animalColor : path.state.data.animaldetail?.animalColor);
+        formData.append("animalCatchable", animalCatchable ? animalCatchable : path.state.data.animaldetail?.animalCatchable);
+        formData.append("animalWeight", animalWeight ? animalWeight : path.state.data.animaldetail?.animalWeight);
+        formData.append("admissionReason", admissionReason ? admissionReason : path.state.data.animaldetail?.admissionReason);
+    
+        // if (animalPictures) {
+        //   formData.append('animalPictures', animalPictures ? animalPictures : null);
+        // } else if (isAnimalPictureDeleted){
+        //   formData.append('animalPictures', "null");
+        // } else{
+        //   formData.append('animalPictures', path.state.data.animaldetail?.animalPictures);
+        // }
+    
+      // Append the selected images to the formData
+      for (let i = 0; i < animalPictures.length; i++) {
+        formData.append('animalPictures', animalPictures[i]);
       }
-    } catch (error) {
-      console.error("Error:", error);
-      // Handle error or display an error message.
+    
+    console.log(animalPictures)
+    
+        // try {
+        //   const response = await axios.put(
+        //     `${websiteUrl}/cases/updateanimal/${path.state.data.animaldetail?.id}/`,
+        //     formData,
+        //     {
+        //       headers: {
+        //         "Content-Type": "multipart/form-data",
+        //       },
+        //     }
+        //   );
+        //   if (response) {
+        //     console.log("Success:", response.data);
+        //     alert("Animal Details Updated Successfully");
+        //     setActiveButton(2);
+        //     // Handle success or display a success message.
+        //   }
+        // } catch (error) {
+        //   console.error("Error:", error);
+        //   // Handle error or display an error message.
+        // }
+    } else {
+      alert("Please fill Reporter Details First")
+      setActiveButton(0)
     }
   };
 
@@ -497,7 +516,9 @@ export default function EditCase() {
   const handleUpdateMedicalDetails = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
+    if (reporterName && path.state.data.reportingdetail?.reporterName && reporterContact && path.state.data.reportingdetail?.reporterContact && location &&
+      path.state.data.reportingdetail?.location && pincode && path.state.data.reportingdetail?.pincode && location && path.state.data.reportingdetail?.landmark) {
+        const formData = new FormData();
 
     if (bloodReportImage) {
       formData.append('bloodReportImage', bloodReportImage ? bloodReportImage : null);
@@ -542,117 +563,171 @@ export default function EditCase() {
       console.error("Error:", error);
       // Handle error or display an error message.
     }
+      }
+      else {
+        alert("Please fill Reporter Details First")
+      setActiveButton(0)
+      }
   };
 
   // Handling Operation Details
   const handleUpdateOperationDetails = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
+    if (reporterName && path.state.data.reportingdetail?.reporterName && reporterContact && path.state.data.reportingdetail?.reporterContact && location &&
+      path.state.data.reportingdetail?.location && pincode && path.state.data.reportingdetail?.pincode && location && path.state.data.reportingdetail?.landmark) {
+        const formData = new FormData();
 
-    if (medicalPrescriptionImage) {
-      formData.append('medicalPrescriptionImage', medicalPrescriptionImage ? medicalPrescriptionImage : null);
-    } else if (isMedicalPrescriptionImageDeleted){
-      formData.append('medicalPrescriptionImage', "null");
-    } else{
-      formData.append('medicalPrescriptionImage', path.state.data.operationdetail?.medicalPrescriptionImage);
-    }
-
-    if (treatmentRecordImage) {
-      formData.append('treatmentRecordImage', treatmentRecordImage ? treatmentRecordImage : null);
-    } else if (isTreatmentRecordImageDeleted){
-      formData.append('treatmentRecordImage', "null");
-    } else{
-      formData.append('treatmentRecordImage', path.state.data.operationdetail?.treatmentRecordImage);
-    }
-
-    if (organImage) {
-      formData.append('organImage', organImage ? organImage : null);
-    } else if (isOrganImageDeleted){
-      formData.append('organImage', "null");
-    } else{
-      formData.append('organImage', path.state.data.operationdetail?.organImage);
-    }
-
-    formData.append("vetName", vetName ? vetName : "");
-    formData.append("operationDate",operationDate ? operationDate : "1111-11-11");
-    formData.append("operationStartTime",operationStartTime ? operationStartTime : "11:11:11");
-    formData.append("operationEndTime",operationEndTime ? operationEndTime : "11:11:11");
-    formData.append("operationOutcome",operationOutcome ? operationOutcome : "");
-
-
-    try {
-      const response = await axios.put(
-        `${websiteUrl}/cases/updateoperational/${path.state.data.operationdetail?.id}/`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+        if (medicalPrescriptionImage) {
+          formData.append('medicalPrescriptionImage', medicalPrescriptionImage ? medicalPrescriptionImage : null);
+        } else if (isMedicalPrescriptionImageDeleted){
+          formData.append('medicalPrescriptionImage', "null");
+        } else{
+          formData.append('medicalPrescriptionImage', path.state.data.operationdetail?.medicalPrescriptionImage);
         }
-      );
-      if (response) {
-        console.log("Success:", response.data);
-        alert("Operation Details Updated Successfully");
-        setActiveButton(4);
-        // Handle success or display a success message.
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      // Handle error or display an error message.
+    
+        if (treatmentRecordImage) {
+          formData.append('treatmentRecordImage', treatmentRecordImage ? treatmentRecordImage : null);
+        } else if (isTreatmentRecordImageDeleted){
+          formData.append('treatmentRecordImage', "null");
+        } else{
+          formData.append('treatmentRecordImage', path.state.data.operationdetail?.treatmentRecordImage);
+        }
+    
+        if (organImage) {
+          formData.append('organImage', organImage ? organImage : null);
+        } else if (isOrganImageDeleted){
+          formData.append('organImage', "null");
+        } else{
+          formData.append('organImage', path.state.data.operationdetail?.organImage);
+        }
+    
+        formData.append("vetName", vetName ? vetName : "");
+        formData.append("operationDate",operationDate ? operationDate : "1111-11-11");
+        formData.append("operationStartTime",operationStartTime ? operationStartTime : "11:11:11");
+        formData.append("operationEndTime",operationEndTime ? operationEndTime : "11:11:11");
+        formData.append("operationOutcome",operationOutcome ? operationOutcome : "");
+    
+        try {
+          const response = await axios.put(
+            `${websiteUrl}/cases/updateoperational/${path.state.data.operationdetail?.id}/`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          if (response) {
+            console.log("Success:", response.data);
+            alert("Operation Details Updated Successfully");
+            setActiveButton(4);
+            // Handle success or display a success message.
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          // Handle error or display an error message.
+        }
+    } else {
+      alert("Please fill Reporter Details First")
+      setActiveButton(0)
     }
   };
 
   // Handling Post Operation Details
   const handleUpdatePostOperationDetails = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    if (popPictures) {
-      formData.append('popPictures', popPictures ? popPictures : null);
-    } else if (isPopPicturesDeleted){
-      formData.append('popPictures', "null");
-    } else{
-      formData.append('popPictures', path.state.data.postoperationdetail?.popPictures);
-    }
 
-    if (releasePictures) {
-      formData.append('releasePictures', releasePictures ? releasePictures : null);
-    } else if (isReleasePicturesDeleted){
-      formData.append('releasePictures', "null");
-    } else{
-      formData.append('releasePictures', path.state.data.postoperationdetail?.releasePictures);
-    }
+    if (reporterName && path.state.data.reportingdetail?.reporterName && reporterContact && path.state.data.reportingdetail?.reporterContact && location &&
+      path.state.data.reportingdetail?.location && pincode && path.state.data.reportingdetail?.pincode && location && path.state.data.reportingdetail?.landmark) {
 
-    formData.append("popComment", popComment ? popComment : path.state.data.postoperationdetail?.popComment);
-    formData.append("popFacility", popFacility ? popFacility : path.state.data.postoperationdetail?.popFacility);
-    formData.append("popExpectedDays", popExpectedDays ? popExpectedDays : path.state.data.postoperationdetail?.popExpectedDays);
-    formData.append("popStartDate", popStartDate ? (popStartDate ? popStartDate : "1111-11-11") : (path.state.data.postoperationdetail?.popStartDate ? path.state.data.postoperationdetail?.popStartDate : "1111-11-11"));
-    formData.append("popEndDate", popEndDate ? (popEndDate ? popEndDate : "1111-11-11") : (path.state.data.postoperationdetail?.popEndDate ? path.state.data.postoperationdetail?.popEndDate : "1111-11-11"));
-    formData.append("releaseDate", releaseDate ? (releaseDate ? releaseDate : "1111-11-11") : (path.state.data.postoperationdetail?.releaseDate ? path.state.data.postoperationdetail?.releaseDate : "1111-11-11"));
-    formData.append("euthanized", euthanized ? euthanized : path.state.data.postoperationdetail?.euthanized);
-    formData.append("comments", comments ? comments : path.state.data.postoperationdetail?.comments);
-
-    try {
-      const response = await axios.put(
-        `${websiteUrl}/cases/updatepostoperational/${path.state.data.postoperationdetail?.id}/`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      if (response) {
-        console.log("Success:", response.data);
-        alert("Post Operation Details Updated Successfully");
-        navigate("/Dashboard");
-        // Handle success or display a success message.
+      const formData = new FormData();
+      if (popPictures) {
+        formData.append('popPictures', popPictures ? popPictures : null);
+      } else if (isPopPicturesDeleted){
+        formData.append('popPictures', "null");
+      } else{
+        formData.append('popPictures', path.state.data.postoperationdetail?.popPictures);
       }
-    } catch (error) {
-      console.error("Error:", error);
-      // Handle error or display an error message.
+  
+      if (releasePictures) {
+        formData.append('releasePictures', releasePictures ? releasePictures : null);
+      } else if (isReleasePicturesDeleted){
+        formData.append('releasePictures', "null");
+      } else{
+        formData.append('releasePictures', path.state.data.postoperationdetail?.releasePictures);
+      }
+  
+      formData.append("popComment", popComment ? popComment : path.state.data.postoperationdetail?.popComment);
+      formData.append("popFacility", popFacility ? popFacility : path.state.data.postoperationdetail?.popFacility);
+      formData.append("popExpectedDays", popExpectedDays ? popExpectedDays : path.state.data.postoperationdetail?.popExpectedDays);
+      formData.append("popStartDate", popStartDate ? (popStartDate ? popStartDate : "1111-11-11") : (path.state.data.postoperationdetail?.popStartDate ? path.state.data.postoperationdetail?.popStartDate : "1111-11-11"));
+      formData.append("popEndDate", popEndDate ? (popEndDate ? popEndDate : "1111-11-11") : (path.state.data.postoperationdetail?.popEndDate ? path.state.data.postoperationdetail?.popEndDate : "1111-11-11"));
+      formData.append("releaseDate", releaseDate ? (releaseDate ? releaseDate : "1111-11-11") : (path.state.data.postoperationdetail?.releaseDate ? path.state.data.postoperationdetail?.releaseDate : "1111-11-11"));
+      formData.append("euthanized", euthanized ? euthanized : path.state.data.postoperationdetail?.euthanized);
+      formData.append("comments", comments ? comments : path.state.data.postoperationdetail?.comments);
+  
+      try {
+        const response = await axios.put(
+          `${websiteUrl}/cases/updatepostoperational/${path.state.data.postoperationdetail?.id}/`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        if (response) {
+          console.log("Success:", response.data);
+          alert("Post Operation Details Updated Successfully");
+          navigate("/Dashboard");
+          // Handle success or display a success message.
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        // Handle error or display an error message.
+      }
+    } else {
+      alert("Please fill Reporter Details First")
+      setActiveButton(0)
     }
   };
+
+// Handle Select Reporter 
+const handleReporterSelection = (e) => {
+  const selectedReporterName = e.target.value;
+
+  // Find the selected reporter from the array based on the name
+  const selectedReporter = allReporters.find((reporter) => reporter.reported_name === selectedReporterName);
+
+  if (selectedReporter) {
+    // Update the state with the selected reporter's information
+    setReporterName(selectedReporter.reported_name);
+    setReporterContact(selectedReporter.phone_number);
+    setReporterEmail(selectedReporter.email_id);
+  } else {
+    // If the reporter is not found, reset the state
+    setReporterName('');
+    setReporterContact('');
+    setReporterEmail('');
+  }
+};
+
+// Handle Select Vet 
+const handleVetSelection = (e) => {
+  const selectedVetName = e.target.value;
+
+  // Find the selected vet from the array based on the name
+  const selectedVet = allVets.find((vet) => vet.vet_name === selectedVetName);
+
+  if (selectedVet) {
+    // Update the state with the selected vet's information
+    setVetName(selectedVet.vet_name);
+  } else {
+    // If the vet is not found, reset the state
+    setVetName('');
+  }
+};
 
   return ( user &&
 <>
@@ -795,6 +870,29 @@ export default function EditCase() {
               <>
                 <div className="my-3">
                   <h2>Reporter Details:</h2>
+
+                {!path.state.data.reportingdetail?.reporterName && 
+                  (<div className="mb-3">
+                  <label htmlFor="selectReporter" className="form-label">
+                    Select from saved Reporter
+                  </label>
+                  <select
+                    id="selectReporter"
+                    className="form-select"
+                    name="selectReporter"
+                    onChange={handleReporterSelection}
+                    defaultValue={reporterName} // To ensure the selected option is the same as the reporterName state}
+                    >
+                    <option value="">Choose Reporter</option>
+                    {allReporters.map((data, index)=>{
+                        return (
+                          <option key={index} value={data.reported_name}>{data.reported_name}</option>
+                        )
+                      })
+                    }
+                  </select>
+                </div>)}
+
                   <form onSubmit={handleUpdateReportingDetails}>
                     <div className="row form-1">
                       <div className="col">
@@ -810,7 +908,7 @@ export default function EditCase() {
                             name="reporterName"
                             placeholder="Name"
                             required
-                            defaultValue={(path.state.data.reportingdetail?.reporterName === "null") ? '' : path.state.data.reportingdetail?.reporterName}
+                            defaultValue={reporterName || (path.state.data.reportingdetail?.reporterName === "null" ? '' : path.state.data.reportingdetail?.reporterName)}
                             onChange={(e) => setReporterName(e.target.value)}
                             autoComplete="name"
                           />
@@ -829,7 +927,7 @@ export default function EditCase() {
                             name="reporterContact"
                             placeholder="Phone Number"
                             required
-                            defaultValue={path.state.data.reportingdetail?.reporterContact || ''}
+                            defaultValue={reporterContact || (path.state.data.reportingdetail?.reporterContact === "null" ? '' : path.state.data.reportingdetail?.reporterContact)}
                             onChange={(e) => setReporterContact(e.target.value)}
                             autoComplete="tel"
                           />
@@ -867,7 +965,7 @@ export default function EditCase() {
                             aria-describedby="emailHelp"
                             name="reporterEmail"
                             placeholder="Email ID"
-                            defaultValue={path.state.data.reportingdetail?.reporterEmail==="null" ? '' : path.state.data.reportingdetail?.reporterEmail}
+                            defaultValue={reporterEmail || (path.state.data.reportingdetail?.reporterEmail === "null" ? '' : path.state.data.reportingdetail?.reporterEmail)}
                             onChange={(e) => setReporterEmail(e.target.value)}
                             autoComplete="email"
                           />
@@ -1417,7 +1515,7 @@ export default function EditCase() {
                       </div>
                     </div>
 
-                    <div className="row form-1">
+                    {/* <div className="row form-1">
                       <div className="form-group mb-3">
                         <label
                           className="form-label h5"
@@ -1463,7 +1561,32 @@ export default function EditCase() {
                             />
                           <button onClick={handleDeleteAnimalPicture}>Delete</button>
                         </div>))}
+                    </div> */}
+                    <div className="form-group mb-3">
+                      <label className="form-label h5" htmlFor="animalPictures">
+                        Animal Pictures -
+                      </label>
+                      <div className="custom-file">
+                        <input
+                          type="file"
+                          className="btn custom-file-input"
+                          id="animalPictures"
+                          name="animalPictures"
+                          accept="image/*"
+                          multiple
+                          onChange={handleAnimalPictursChange}
+                        />
+                      </div>
                     </div>
+                      {animalPicturesPreview.map((preview, index) => (
+                      <div key={index}>
+                        <h6>Preview:</h6>
+                        <img src={preview} alt="Animal Pictures Preview" height="100px" />
+                        <button onClick={(e) => handleDeleteAnimalPicture(e, index)}>
+                          Delete
+                        </button>
+                      </div>
+                    ))}
 
                     <div className="my-2">
                       <div className="form-buttons">
@@ -1808,6 +1931,29 @@ export default function EditCase() {
               <>
                 <div className="my-3">
                   <h2>Operation Details :</h2>
+
+                  {!path.state.data.operationdetail?.vetName && 
+                  (<div className="mb-3">
+                  <label htmlFor="selectVet" className="form-label">
+                    Select from saved Vet
+                  </label>
+                  <select
+                    id="selectVet"
+                    className="form-select"
+                    name="selectVet"
+                    onChange={handleVetSelection}
+                    defaultValue={vetName} // To ensure the selected option is the same as the vetName state}
+                    >
+                    <option value="">Choose Vet</option>
+                    {allVets.map((data, index)=>{
+                        return (
+                          <option key={index} value={data.vet_name}>{data.vet_name}</option>
+                        )
+                      })
+                    }
+                  </select>
+                </div>)}
+
                   <form onSubmit={handleUpdateOperationDetails}>
                     <div className="row form-1">
                       <div className="col">
@@ -1819,7 +1965,7 @@ export default function EditCase() {
                             type="text"
                             className="form-control"
                             id="vetName"
-                            defaultValue={path.state.data.operationdetail?.vetName==="null" ? '' : path.state.data.operationdetail?.vetName}
+                            defaultValue={vetName || (path.state.data.operationdetail?.vetName==="null" ? '' : path.state.data.operationdetail?.vetName)}
                             name="vetName"
                             placeholder="Vet Name"
                             onChange={(e) => setVetName(e.target.value)}
