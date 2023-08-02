@@ -8,16 +8,16 @@ import logo from "../assets/profile.png";
 
 
 const Dashboard = () => {
-  const { user, logoutUser, allCases, getAllCases, allCasesLinkedWithNGO, getAllCasesLinkedWithNgo, websiteUrl } =
-    useContext(AuthContext);
+  const { user, logoutUser, allCases, getAllCases, allCasesLinkedWithNGO, getAllCasesLinkedWithNgo, websiteUrl } = useContext(AuthContext);
   const [modalShow, setModalShow] = React.useState(false);
   const [activeButton, setActiveButton] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
 
+  const [filteredCases, setFilteredCases] = useState([]);
+  const [filteredNGOCases, setFilteredNGOCases] = useState([]);
   const stored_ngo_linked_with_this_user = localStorage.getItem("ngo_linked_with_this_user");
 
   const navigate = useNavigate();
-
-  const [searchQuery, setSearchQuery] = useState("");
 
   const buttonStyle = {
     border: "1px solid black",
@@ -37,22 +37,7 @@ const Dashboard = () => {
     getAllCasesLinkedWithNgo();
   }, [getAllCases, getAllCasesLinkedWithNgo]);
 
-  const getCaseType = (index) => {
-    switch (index) {
-      case 1:
-        return "Sterilization";
-      case 2:
-        return "OPD";
-      case 3:
-        return "IPD";
-      case 4:
-        return "Vaccination";
-      default:
-        return "";
-    }
-  };
-
-
+  useEffect(() => {
   // Updated filtering logic for filteredCases and filteredNGOCases
   const filteredCases = allCases.filter((data) => {
     const lowerCaseSearchQuery = searchQuery.toLowerCase();
@@ -91,6 +76,25 @@ const Dashboard = () => {
       ) && (activeButton === 0 || data.type_of_case === getCaseType(activeButton));
     }
   });
+
+    setFilteredCases(filteredCases);
+    setFilteredNGOCases(filteredNGOCases);
+  }, [allCases, allCasesLinkedWithNGO, activeButton, searchQuery]);
+
+  const getCaseType = (index) => {
+    switch (index) {
+      case 1:
+        return "Sterilization";
+      case 2:
+        return "OPD";
+      case 3:
+        return "IPD";
+      case 4:
+        return "Vaccination";
+      default:
+        return "";
+    }
+  };
 
   const handleEditCaseButton = (data) => {
     navigate("/Editcase", { state: { data: data } });
@@ -228,6 +232,7 @@ const Dashboard = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
+                <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn mx-2" onClick={(e) => {setSearchQuery("")}}>Clear</button>
               </div>
               {/* Displaying Case Data */}
               <div>
@@ -345,7 +350,7 @@ const Dashboard = () => {
                                 className="form-select my-1"
                                 aria-label="Status of case"
                                 name="status_of_case"
-                                defaultValue={data.status_of_case}
+                                value={data.status_of_case}
                                 onChange={(e) => {
                                   const newStatus = e.target.value;
                                   handleStatusChange(data.case_id, newStatus);
@@ -355,9 +360,7 @@ const Dashboard = () => {
                                 <option value="Admitted">Admitted</option>
                                 <option value="Blood Test">Blood Test</option>
                                 <option value="Operation">Operation</option>
-                                <option value="Post Operation">
-                                  Post Operation
-                                </option>
+                                <option value="Post Operation">Post Operation</option>
                                 <option value="Released">Released</option>
                               </select>
                             </td>
