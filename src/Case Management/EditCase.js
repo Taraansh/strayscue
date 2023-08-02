@@ -456,8 +456,8 @@ useEffect(() => {
   const handleUpdateAnimalDetails = async (e) => {
     e.preventDefault();
 
-    if (reporterName && path.state.data.reportingdetail?.reporterName && reporterContact && path.state.data.reportingdetail?.reporterContact && location &&
-      path.state.data.reportingdetail?.location && pincode && path.state.data.reportingdetail?.pincode && location && path.state.data.reportingdetail?.landmark) {
+    if ((reporterName || path.state.data.reportingdetail?.reporterName) && (reporterContact || path.state.data.reportingdetail?.reporterContact) && (location ||
+      path.state.data.reportingdetail?.location) && (pincode || path.state.data.reportingdetail?.pincode) && (location || path.state.data.reportingdetail?.landmark)) {
         const formData = new FormData();
         formData.append("animalSpecies", animalSpecies ? animalSpecies : path.state.data.animaldetail?.animalSpecies);
         formData.append("animalBreed", animalBreed ? animalBreed : path.state.data.animaldetail?.animalBreed);
@@ -516,8 +516,8 @@ useEffect(() => {
   const handleUpdateMedicalDetails = async (e) => {
     e.preventDefault();
 
-    if (reporterName && path.state.data.reportingdetail?.reporterName && reporterContact && path.state.data.reportingdetail?.reporterContact && location &&
-      path.state.data.reportingdetail?.location && pincode && path.state.data.reportingdetail?.pincode && location && path.state.data.reportingdetail?.landmark) {
+    if ((reporterName || path.state.data.reportingdetail?.reporterName) && (reporterContact || path.state.data.reportingdetail?.reporterContact) && (location ||
+      path.state.data.reportingdetail?.location) && (pincode || path.state.data.reportingdetail?.pincode) && (location || path.state.data.reportingdetail?.landmark)) {
         const formData = new FormData();
 
     if (bloodReportImage) {
@@ -574,8 +574,8 @@ useEffect(() => {
   const handleUpdateOperationDetails = async (e) => {
     e.preventDefault();
 
-    if (reporterName && path.state.data.reportingdetail?.reporterName && reporterContact && path.state.data.reportingdetail?.reporterContact && location &&
-      path.state.data.reportingdetail?.location && pincode && path.state.data.reportingdetail?.pincode && location && path.state.data.reportingdetail?.landmark) {
+    if ((reporterName || path.state.data.reportingdetail?.reporterName) && (reporterContact || path.state.data.reportingdetail?.reporterContact) && (location ||
+      path.state.data.reportingdetail?.location) && (pincode || path.state.data.reportingdetail?.pincode) && (location || path.state.data.reportingdetail?.landmark)) {
         const formData = new FormData();
 
         if (medicalPrescriptionImage) {
@@ -638,8 +638,8 @@ useEffect(() => {
   const handleUpdatePostOperationDetails = async (e) => {
     e.preventDefault();
 
-    if (reporterName && path.state.data.reportingdetail?.reporterName && reporterContact && path.state.data.reportingdetail?.reporterContact && location &&
-      path.state.data.reportingdetail?.location && pincode && path.state.data.reportingdetail?.pincode && location && path.state.data.reportingdetail?.landmark) {
+    if ((reporterName || path.state.data.reportingdetail?.reporterName) && (reporterContact || path.state.data.reportingdetail?.reporterContact) && (location ||
+      path.state.data.reportingdetail?.location) && (pincode || path.state.data.reportingdetail?.pincode) && (location || path.state.data.reportingdetail?.landmark)) {
 
       const formData = new FormData();
       if (popPictures) {
