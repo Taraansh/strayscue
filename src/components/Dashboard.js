@@ -58,6 +58,16 @@ const Dashboard = () => {
     }
   });
 
+  const sortedCases = filteredCases.sort((a, b) => {
+    // Convert the date strings to Date objects for comparison
+    const dateA = new Date(a.date_when_created);
+    const dateB = new Date(b.date_when_created);
+
+    // Sort in descending order (newest first)
+    return dateB - dateA;
+  });
+
+
   const filteredNGOCases = allCasesLinkedWithNGO.filter((data) => {
     const lowerCaseSearchQuery = searchQuery.toLowerCase();
     const isEmptyLocation = !data.reportingdetail?.location;
@@ -77,8 +87,17 @@ const Dashboard = () => {
     }
   });
 
-    setFilteredCases(filteredCases);
-    setFilteredNGOCases(filteredNGOCases);
+  const sortedNGOCases = filteredNGOCases.sort((a, b) => {
+    // Convert the date strings to Date objects for comparison
+    const dateA = new Date(a.date_when_created);
+    const dateB = new Date(b.date_when_created);
+
+    // Sort in descending order (newest first)
+    return dateB - dateA;
+  });
+
+    setFilteredCases(sortedCases);
+    setFilteredNGOCases(sortedNGOCases);
   }, [allCases, allCasesLinkedWithNGO, activeButton, searchQuery]);
 
   const getCaseType = (index) => {
@@ -95,6 +114,15 @@ const Dashboard = () => {
         return "";
     }
   };
+
+    // Determine which set of cases to display based on user's NGO link
+    const casesToShow = stored_ngo_linked_with_this_user ? filteredNGOCases : filteredCases;
+
+    // Calculate the counts for each status
+    const totalCasesCount = casesToShow.length;
+    const reportedCount = casesToShow.filter((data) => data.status_of_case === "Reported").length;
+    const admittedCount = casesToShow.filter((data) => data.status_of_case === "Admitted").length;
+    const releasedCount = casesToShow.filter((data) => data.status_of_case === "Released").length;
 
   const handleEditCaseButton = (data) => {
     navigate("/Editcase", { state: { data: data } });
@@ -181,34 +209,31 @@ const Dashboard = () => {
        
           <h4 className="heading1">Dashboard</h4>
 
-            {/* <h4 className="heading1">Dashboard</h4>
           <div className="cases mx-auto">
             <div className="case-set1">
             <div className="case-card">
-              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>1</h3>
+              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>{totalCasesCount}</h3>
               <p>Total Cases</p>
             </div>
 
             <div className="case-card">
-              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>1</h3>
+              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>{reportedCount}</h3>
               <p>Reported</p>
             </div>
-
             </div>
            
             <div className="case-set1">
             <div className="case-card">
-              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>0</h3>
+              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>{admittedCount}</h3>
               <p>Admitted</p>
             </div>
 
             <div className="case-card">
-              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>0</h3>
+              <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>{releasedCount}</h3>
               <p>Released</p>
             </div>
-            
           </div>
-          </div> */}
+          </div>
 
             <div className="case-lists mx-auto">
               <h4 style={{ marginLeft: "1rem" }}>Case List</h4>
