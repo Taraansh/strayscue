@@ -58,12 +58,14 @@ const Settings = () => {
     setShowPassword3(!showPassword3);
   };
 
-
   const handleModifyProfile = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("username", username ? username : localStorage.getItem("username"))
+    formData.append(
+      "username",
+      username ? username : localStorage.getItem("username")
+    );
 
     if (profilePhoto) {
       formData.append("profilePhoto", profilePhoto ? profilePhoto : null);
@@ -75,20 +77,22 @@ const Settings = () => {
 
     try {
       const response = await axios.put(
-        `${websiteUrl}/authorize/update/${localStorage.getItem("email")}/`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+        `${websiteUrl}/authorize/update/${localStorage.getItem("email")}/`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      }
-      )
+      );
       if (response.status === 200) {
-        console.log("Success", response.data)
-        alert("Updated Succesfully. Please login again to view changes.")
+        console.log("Success", response.data);
+        alert("Updated Succesfully. Please login again to view changes.");
       }
     } catch (error) {
       console.error("Error:", error);
     }
-  }
+  };
 
   const handleModifyPassword = async (e) => {
     e.preventDefault();
@@ -137,7 +141,6 @@ const Settings = () => {
         flexDirection: "row",
         paddingBottom: "2.3rem",
         margin: "0",
-        
       }}
     >
       <NavBar />
@@ -193,93 +196,134 @@ const Settings = () => {
                         onChange={handleProfilePhotoChange}
                       />
                     </div>
-                    {
-                      !isProfilePhotoDeleted ?
-                        (
-                          localStorage.getItem("profilePhoto") ? (
-                            <div className="mt-4">
-                              <div>
-                                <h6>Preview:</h6>
-                                <div className="mt-4 mx-3" style={{ border: "1px solid black", borderRadius: "0.2rem", position: "relative", width: "max-content" }}>
-                                  <img
-                                    src={`http://localhost:8000${localStorage.getItem("profilePhoto")}`}
-                                    alt="Preview"
-                                    height="100px"
-                                  />
-                                  <button style={{ position: "absolute", top: "0", right: "0", padding: "0", background: "#ffffff" }} className="btn" onClick={handleDeleteSavedProfilePhoto}>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="25"
-                                      height="25"
-                                      fill="red"
-
-                                      viewBox="0 0 24 24"
-                                    >
-                                      <path d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z" id="_icons" fill="red" className="fill-000000"></path>
-                                    </svg>
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          ) : (
-                            profilePhotoPreview && (
-                              <div className="mt-4">
-                                <h6>Preview:</h6>
-                                <div className="mt-4 mx-3" style={{ border: "1px solid black", borderRadius: "0.2rem", position: "relative", width: "max-content" }}>
-                                  <img
-                                    src={profilePhotoPreview}
-                                    alt="Preview"
-                                    height="100px"
-                                  />
-                                  <button style={{ position: "absolute", top: "0", right: "0", padding: "0", background: "#ffffff" }} className="btn" onClick={handleDeleteProfilePhoto}>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="25"
-                                      height="25"
-                                      fill="red"
-
-                                      viewBox="0 0 24 24"
-                                    >
-                                      <path d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z" id="_icons" fill="red" className="fill-000000"></path>
-                                    </svg>
-                                  </button>
-                                </div>
-                              </div>
-                            )
-                          )
-                        ) :
-                        (
-                          profilePhotoPreview && (
-                            <div className="mt-4">
-                              <h6>Preview:</h6>
-                              <div className="mt-4 mx-3" style={{ border: "1px solid black", borderRadius: "0.2rem", position: "relative", width: "max-content" }}>
-                                <img
-
-                                  src={profilePhotoPreview}
-                                  alt="Preview"
-                                  height="100px"
-                                />
-                                <button style={{ position: "absolute", top: "0", right: "0", padding: "0", background: "#ffffff" }} className="btn" onClick={handleDeleteProfilePhoto}>
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="25"
-                                    height="25"
+                    {!isProfilePhotoDeleted ? ((localStorage.getItem("profilePhoto") !=="null") ? (
+                        <div className="mt-4">
+                          <div>
+                            <h6>Profile Image:</h6>
+                            <div className="mt-4 mx-3"
+                              style={{border: "1px solid black", borderRadius: "0.2rem", position: "relative", width: "max-content"}}
+                            >
+                              <img
+                                src={`http://localhost:8000${localStorage.getItem("profilePhoto")}`}
+                                alt="Profile" height="100px"
+                              />
+                              <button
+                                style={{position: "absolute",top: "0",right: "0",padding: "0",background: "#ffffff"}}
+                                className="btn"
+                                onClick={handleDeleteSavedProfilePhoto}
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="red" viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z"
+                                    id="_icons"
                                     fill="red"
-
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z" id="_icons" fill="red" className="fill-000000"></path>
-                                  </svg>
-                                </button>
-
-                              </div>
+                                    className="fill-000000"
+                                  ></path>
+                                </svg>
+                              </button>
                             </div>
-                          )
-                        )}
+                          </div>
+                        </div>
+                      ) : (
+                        profilePhotoPreview && (
+                          <div className="mt-4">
+                            <h6>Preview:</h6>
+                            <div
+                              className="mt-4 mx-3"
+                              style={{
+                                border: "1px solid black",
+                                borderRadius: "0.2rem",
+                                position: "relative",
+                                width: "max-content",
+                              }}
+                            >
+                              <img
+                                src={profilePhotoPreview}
+                                alt="Preview"
+                                height="100px"
+                              />
+                              <button
+                                style={{
+                                  position: "absolute",
+                                  top: "0",
+                                  right: "0",
+                                  padding: "0",
+                                  background: "#ffffff",
+                                }}
+                                className="btn"
+                                onClick={handleDeleteProfilePhoto}
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="25"
+                                  height="25"
+                                  fill="red"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z"
+                                    id="_icons"
+                                    fill="red"
+                                    className="fill-000000"
+                                  ></path>
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+                        )
+                      )
+                    ) : (
+                      profilePhotoPreview && (
+                        <div className="mt-4">
+                          <h6>Preview:</h6>
+                          <div
+                            className="mt-4 mx-3"
+                            style={{
+                              border: "1px solid black",
+                              borderRadius: "0.2rem",
+                              position: "relative",
+                              width: "max-content",
+                            }}
+                          >
+                            <img
+                              src={profilePhotoPreview}
+                              alt="Preview"
+                              height="100px"
+                            />
+                            <button
+                              style={{
+                                position: "absolute",
+                                top: "0",
+                                right: "0",
+                                padding: "0",
+                                background: "#ffffff",
+                              }}
+                              className="btn"
+                              onClick={handleDeleteProfilePhoto}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="25"
+                                height="25"
+                                fill="red"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z"
+                                  id="_icons"
+                                  fill="red"
+                                  className="fill-000000"
+                                ></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      )
+                    )}
                   </div>
                   <div></div>
                 </div>
-
                 <div
                   style={{
                     display: "flex",
