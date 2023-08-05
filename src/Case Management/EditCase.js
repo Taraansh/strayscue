@@ -1660,7 +1660,7 @@ export default function EditCase() {
                     } */}
                       {animalPicturesPreview.length > 0 && (
                         <div>
-                          <h4>Preview</h4>
+                          <h6>Preview:</h6>
                           <div className='my-2' style={{
                             display: "grid",
                             gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
@@ -1699,6 +1699,8 @@ export default function EditCase() {
                       )}
 
                       {path.state.data.animaldetail?.animalPictures.length > 0 && (
+                        <div>
+                          <h6>Preview of Saved Images:</h6>
                         <div className='my-2' style={{
                           display: "grid",
                           gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
@@ -1707,7 +1709,7 @@ export default function EditCase() {
                           maxWidth: "1200px",
                           margin: "0 auto",
                         }}>
-                          {/* <h6>Preview of Saved Images:</h6> */}
+                         
                           {path.state.data.animaldetail.animalPictures.map((data, index) => (
                             // Check if the image ID is not in the deletedImageIds array
                             // If not, display the image and the delete button
@@ -1767,6 +1769,7 @@ export default function EditCase() {
                                 </div>
                               </div>
                             )))}
+                        </div>
                         </div>
                       )}
 
