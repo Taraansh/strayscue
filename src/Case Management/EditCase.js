@@ -48,9 +48,9 @@ export default function EditCase() {
   const [admissionReason, setAdmissionReason] = useState(null);
   const [animalPictures, setAnimalPictures] = useState([]);
   const [animalPicturesPreview, setAnimalPicturesPreview] = useState([]);
-  
-  // const [isAnimalPictureDeleted, setIsAnimalPictureDeleted] = useState(false);
 
+  const [deletedImageIds, setDeletedImageIds] = useState([]);
+  
   // Medical Details State
   const [medicalHistory, setMedicalHistory] = useState(null);
   const [vaccinationStatus, setVaccinationStatus] = useState(null);
@@ -214,9 +214,69 @@ useEffect(() => {
     setAnimalPicturesPreview(updatedPreviews);
   };
 
-  // const handleDeleteSavedAnimalPicture = () => {
-  //   setIsAnimalPictureDeleted(true);
-  // }
+  const handleDeleteSavedAnimalPicture = (e, id) => {
+    e.preventDefault()
+    setDeletedImageIds([...deletedImageIds, id]);
+    handleAnimalPictureDeleteButton(e, id)
+  };
+  
+
+  const handleAnimalPictureDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Animal Picture by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deleteanimalpicture/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if(response.status === 404) {
+          // Handle the Animal Picture when the delete request fails
+          alert("Image is already Deleted")
+      } else {
+          // Handle the Animal Picture when the delete request fails
+          console.log("Failed to delete Animal Picture:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Animal Picture:", error);
+      }
+    }
+  };
+
+  const handleOpenImage = (e, imageUrl) => {
+    e.preventDefault();
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.setAttribute('target', '_blank'); // Open the link in a new tab
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleDownloadImage = async (e, imageUrl) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+  
+      // Create a temporary anchor element to trigger the download
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = 'animal_picture.jpg'; // You can set a desired file name for the downloaded image
+      downloadLink.click();
+    } catch (error) {
+      console.error('Error downloading image:', error);
+    }
+  };
 
   // Medical Details Image Management
   const handleFeedingRecordImage = (event) => {
@@ -470,6 +530,10 @@ useEffect(() => {
         formData.append("animalCatchable", animalCatchable ? animalCatchable : path.state.data.animaldetail?.animalCatchable);
         formData.append("animalWeight", animalWeight ? animalWeight : path.state.data.animaldetail?.animalWeight);
         formData.append("admissionReason", admissionReason ? admissionReason : path.state.data.animaldetail?.admissionReason);
+              // Append the selected images to the formData
+      for (let i = 0; i < animalPictures.length; i++) {
+        formData.append('animalPictures', animalPictures[i]);
+      }
     
         // if (animalPictures) {
         //   formData.append('animalPictures', animalPictures ? animalPictures : null);
@@ -479,33 +543,38 @@ useEffect(() => {
         //   formData.append('animalPictures', path.state.data.animaldetail?.animalPictures);
         // }
     
-      // Append the selected images to the formData
-      for (let i = 0; i < animalPictures.length; i++) {
-        formData.append('animalPictures', animalPictures[i]);
-      }
-    
+    console.log(animalSpecies)
+    console.log(animalBreed)
+    console.log(animalAge)
+    console.log(animalTemperament)
+    console.log(animalGender)
+    console.log(animalMarking)
+    console.log(animalColor)
+    console.log(animalCatchable)
+    console.log(animalWeight)
+    console.log(admissionReason)
     console.log(animalPictures)
     
-        // try {
-        //   const response = await axios.put(
-        //     `${websiteUrl}/cases/updateanimal/${path.state.data.animaldetail?.id}/`,
-        //     formData,
-        //     {
-        //       headers: {
-        //         "Content-Type": "multipart/form-data",
-        //       },
-        //     }
-        //   );
-        //   if (response) {
-        //     console.log("Success:", response.data);
-        //     alert("Animal Details Updated Successfully");
-        //     setActiveButton(2);
-        //     // Handle success or display a success message.
-        //   }
-        // } catch (error) {
-        //   console.error("Error:", error);
-        //   // Handle error or display an error message.
-        // }
+        try {
+          const response = await axios.put(
+            `${websiteUrl}/cases/updateanimal/${path.state.data.animaldetail?.id}/`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          if (response) {
+            console.log("Success:", response.data);
+            alert("Animal Details Updated Successfully");
+            setActiveButton(2);
+            // Handle success or display a success message.
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          // Handle error or display an error message.
+        }
     } else {
       alert("Please fill Reporter Details First")
       setActiveButton(0)
@@ -1578,15 +1647,74 @@ const handleVetSelection = (e) => {
                         />
                       </div>
                     </div>
+                    {/* {path.state.data.animaldetail?.animalPictures ? (path.state.data.animaldetail?.animalPictures.map((data, index)=>(
+                        <div key={index}>
+                          <h6>Preview:</h6>
+                          <img src={`http://localhost:8000${path.state.data.animaldetail?.animalPictures[index]?.animalPictures}`} alt="Animal Pictures Preview" height="100px" />
+                          <button>Delete</button>
+                        </div>
+                      ))) : (animalPicturesPreview.map((preview, index) => (
+                        <div key={index}>
+                          <h6>Preview:</h6>
+                          <img src={preview} alt="Animal Pictures Preview" height="100px" />
+                          <button onClick={(e) => handleDeleteAnimalPicture(e, index)}>
+                            Delete
+                          </button>
+                        </div>
+                      )))
+                    } */}
+                    {animalPicturesPreview.length > 0 && (
+                    <div className='my-2'>
+                      <h6>Preview of Selected Images:</h6>
                       {animalPicturesPreview.map((preview, index) => (
-                      <div key={index}>
-                        <h6>Preview:</h6>
-                        <img src={preview} alt="Animal Pictures Preview" height="100px" />
-                        <button onClick={(e) => handleDeleteAnimalPicture(e, index)}>
-                          Delete
-                        </button>
+                        <div key={index} className='my-1'>
+                          <img src={preview} alt="Animal Pictures Preview" height="100px" />
+                          <button onClick={(e) => handleDeleteAnimalPicture(e, index)}>
+                            Delete
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                    {path.state.data.animaldetail?.animalPictures.length > 0 && (
+                      <div className='my-2'>
+                        <h6>Preview of Saved Images:</h6>
+                        {path.state.data.animaldetail.animalPictures.map((data, index) => (
+                          // Check if the image ID is not in the deletedImageIds array
+                          // If not, display the image and the delete button
+                          !deletedImageIds.includes(data.id) && (
+                            <div key={index} className='my-1'>
+                              <p>Image {index+1}:</p>
+                              <img
+                                src={`http://localhost:8000${data.animalPictures}`}
+                                alt="Animal Pictures Preview"
+                                height="100px"
+                              />
+                              <button onClick={(e) => handleDeleteSavedAnimalPicture(e, data.id)}>Delete</button>
+                              <button onClick={(e) => handleOpenImage(e, `http://localhost:8000${data.animalPictures}`)}>Open</button>
+                              <button onClick={(e) => handleDownloadImage(e, `http://localhost:8000${data.animalPictures}`)}>Download</button>
+
+
+                              <div className="mb-3">
+                              <label className="form-label" htmlFor="admissionDate">
+                                Upload Date
+                              </label>
+                              <input
+                                className="form-control"
+                                id="animal_picture_upload_date"
+                                name="animal_picture_upload_date"
+                                type="date"
+                                readOnly
+                                disabled
+                                value={data.animal_picture_upload_date}
+                              />
+                            </div>
+                            </div>
+                        )))}
                       </div>
-                    ))}
+                    )}
+
 
                     <div className="my-2">
                       <div className="form-buttons">
