@@ -9,7 +9,7 @@ export default function EditCase() {
   const path = useLocation()
   const navigate = useNavigate()
   const [activeButton, setActiveButton] = useState(0);
-  const { user, logoutUser, websiteUrl, allReporters, getAllReporters, allVets, getAllVets } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl, allReporters, getAllReporters, allVets, getAllVets, handleOpenImage, handleDownloadImage } = useContext(AuthContext);
 
   // Reporting Details State
   const [frontImageFile, setFrontImageFile] = useState(null);
@@ -49,7 +49,7 @@ export default function EditCase() {
   const [animalPictures, setAnimalPictures] = useState([]);
   const [animalPicturesPreview, setAnimalPicturesPreview] = useState([]);
 
-  const [deletedImageIds, setDeletedImageIds] = useState([]);
+  const [deletedAnimalPictureIds, setDeletedAnimalPictureIds] = useState([]);
 
   // Medical Details State
   const [medicalHistory, setMedicalHistory] = useState(null);
@@ -58,12 +58,12 @@ export default function EditCase() {
   const [fitForSurgery, setFitForSurgery] = useState(null);
   const [otherDetails, setOtherDetails] = useState(null);
   const [admissionDate, setAdmissionDate] = useState(null);
-  const [feedingRecordImage, setFeedingRecordImage] = useState(null);
-  const [feedingRecordImagePreview, setFeedingRecordImagePreview] = useState("");
+  const [feedingRecordImage, setFeedingRecordImage] = useState([]);
+  const [feedingRecordImagePreview, setFeedingRecordImagePreview] = useState([]);
   const [bloodReportImage, setBloodReportImage] = useState(null);
   const [bloodReportImagePreview, setBloodReportImagePreview] = useState("");
 
-  const [isFeedingRecordImageDeleted, setIsFeedingRecordImageDeleted] = useState(false);
+  const [deletedFeedingRecordImageIds, setDeletedFeedingRecordImageIds] = useState([]);
   const [isBloodReportImageDeleted, setIsBloodReportImageDeleted] = useState(false);
 
   // Operation Details State
@@ -74,14 +74,15 @@ export default function EditCase() {
   const [operationOutcome, setOperationOutcome] = useState(null);
   const [medicalPrescriptionImage, setMedicalPrescriptionImage] = useState(null);
   const [medicalPrescriptionImagePreview, setMedicalPrescriptionImagePreview] = useState(null);
-  const [treatmentRecordImage, setTreatmentRecordImage] = useState(null);
-  const [treatmentRecordImagePreview, setTreatmentRecordImagePreview] = useState(null);
-  const [organImage, setOrganImage] = useState(null);
-  const [organImagePreview, setOrganImagePreview] = useState(null);
+  const [treatmentRecordImage, setTreatmentRecordImage] = useState([]);
+  const [treatmentRecordImagePreview, setTreatmentRecordImagePreview] = useState([]);
+  const [organImage, setOrganImage] = useState([]);
+  const [organImagePreview, setOrganImagePreview] = useState([]);
 
   const [isMedicalPrescriptionImageDeleted, setIsMedicalPrescriptionImageDeleted] = useState(false);
-  const [isTreatmentRecordImageDeleted, setIsTreatmentRecordImageDeleted] = useState(false);
-  const [isOrganImageDeleted, setIsOrganImageDeleted] = useState(false);
+
+  const [deletedTreatmentRecordImageIds, setDeletedTreatmentRecordImageIds] = useState([]);
+  const [deletedOrganImageIds, setDeletedOrganImageIds] = useState([]);
 
   // Post Operation Details State
   const [popComment, setPopComment] = useState(null);
@@ -92,19 +93,18 @@ export default function EditCase() {
   const [releaseDate, setReleaseDate] = useState(null);
   const [euthanized, setEuthanized] = useState(null);
   const [comments, setComments] = useState(null);
-  const [popPictures, setPopPictures] = useState(null);
-  const [popPicturesPreview, setPopPicturesPreview] = useState(null);
-  const [releasePictures, setReleasePictures] = useState(null);
-  const [releasePicturesPreview, setReleasePicturesPreview] = useState(null);
+  const [popPictures, setPopPictures] = useState([]);
+  const [popPicturesPreview, setPopPicturesPreview] = useState([]);
+  const [releasePictures, setReleasePictures] = useState([]);
+  const [releasePicturesPreview, setReleasePicturesPreview] = useState([]);
 
-  const [isPopPicturesDeleted, setIsPopPicturesDeleted] = useState(false);
-  const [isReleasePicturesDeleted, setIsReleasePicturesDeleted] = useState(false);
+  const [deletedPopPicturesIds, setDeletedPopPicturesIds] = useState([]);
+  const [deletedReleasePicturesIds, setDeletedReleasePicturesIds] = useState([]);
 
   useEffect(() => {
     getAllReporters();
     getAllVets();
   }, [getAllReporters, getAllVets])
-
 
   const buttonStyle = {
     border: "1px solid black",
@@ -201,7 +201,6 @@ export default function EditCase() {
     setAnimalPicturesPreview(imagePreviews);
   };
 
-
   const handleDeleteAnimalPicture = (e, index) => {
     e.preventDefault()
     const updatedPictures = [...animalPictures];
@@ -216,10 +215,9 @@ export default function EditCase() {
 
   const handleDeleteSavedAnimalPicture = (e, id) => {
     e.preventDefault()
-    setDeletedImageIds([...deletedImageIds, id]);
+    setDeletedAnimalPictureIds([...deletedAnimalPictureIds, id]);
     handleAnimalPictureDeleteButton(e, id)
   };
-
 
   const handleAnimalPictureDeleteButton = async (e, id) => {
     e.preventDefault()
@@ -238,7 +236,7 @@ export default function EditCase() {
         if (response.status === 204) {
           console.log("Image deleted successfully")
         } else if (response.status === 404) {
-          // Handle the Animal Picture when the delete request fails
+          // Handle the Animal Picture when the image was already deleted
           alert("Image is already Deleted")
         } else {
           // Handle the Animal Picture when the delete request fails
@@ -251,57 +249,62 @@ export default function EditCase() {
     }
   };
 
-  const handleOpenImage = (e, imageUrl) => {
-    e.preventDefault();
-    // Create a temporary link element
-    const link = document.createElement('a');
-    link.href = imageUrl;
-    link.setAttribute('target', '_blank'); // Open the link in a new tab
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const handleDownloadImage = async (e, imageUrl) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-
-      // Create a temporary anchor element to trigger the download
-      const downloadLink = document.createElement('a');
-      downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.download = 'animal_picture.jpg'; // You can set a desired file name for the downloaded image
-      downloadLink.click();
-    } catch (error) {
-      console.error('Error downloading image:', error);
-    }
-  };
-
   // Medical Details Image Management
   const handleFeedingRecordImage = (event) => {
-    const file = event.target.files[0];
-    setFeedingRecordImage(file);
+    const files = event.target.files;
+    const imageFiles = Array.from(files);
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFeedingRecordImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setFeedingRecordImagePreview("");
+    setFeedingRecordImage(imageFiles)
+    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file));
+    setFeedingRecordImagePreview(imagePreviews)
+  };
+
+  const handleDeleteFeedingRecordImage = (e, index) => {
+    e.preventDefault()
+    const updatedPictures = [...animalPictures];
+    const updatedPreviews = [...animalPicturesPreview];
+
+    updatedPictures.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+    setFeedingRecordImage(updatedPictures);
+    setFeedingRecordImagePreview(updatedPreviews);
+  };
+
+  const handleDeleteSavedFeedingRecordImage = (e, id) => {
+    e.preventDefault()
+    setDeletedFeedingRecordImageIds([...deletedFeedingRecordImageIds, id])
+    handleFeedingRecordImageDeleteButton(e, id)
+  }
+
+  const handleFeedingRecordImageDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Feeding Record Image by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deletefeedingrecord/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Feeding Record Image when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Feeding Record Image when the delete request fails
+          console.log("Failed to delete Feeding Record Image:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Feeding Record Image:", error);
+      }
     }
   };
-
-  const handleDeleteFeedingRecordImage = () => {
-    setFeedingRecordImage(null);
-    setFeedingRecordImagePreview('');
-  };
-
-  const handleDeleteSavedFeedingRecordImage = () => {
-    setIsFeedingRecordImageDeleted(true);
-  }
 
   const handleBloodReportImage = (event) => {
     const file = event.target.files[0];
@@ -353,101 +356,235 @@ export default function EditCase() {
   }
 
   const handleTreatmentRecordImage = (event) => {
-    const file = event.target.files[0];
-    setTreatmentRecordImage(file);
+    const files = event.target.files;
+    const imageFiles = Array.from(files);
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setTreatmentRecordImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setTreatmentRecordImagePreview("");
+    setTreatmentRecordImage(imageFiles);
+
+    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file));
+    setTreatmentRecordImagePreview(imagePreviews)
+  };
+
+  const handleDeleteTreatmentRecordImage = (e, index) => {
+    e.preventDefault()
+    const updatedPictures = [...treatmentRecordImage];
+    const updatedPreviews = [...treatmentRecordImagePreview];
+
+    updatedPictures.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+
+    setTreatmentRecordImage(updatedPictures);
+    setTreatmentRecordImagePreview(updatedPreviews);
+  };
+
+  const handleDeleteSavedTreatmentRecordImage = (e, id) => {
+    e.preventDefault()
+    setDeletedTreatmentRecordImageIds([...deletedTreatmentRecordImageIds, id]);
+    handleTreatmentRecordImageDeleteButton(e, id)
+  }
+
+  const handleTreatmentRecordImageDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Treatment Record by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deletetreatmentrecord/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Treatment Record when the when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Treatment Record when the delete request fails
+          console.log("Failed to delete Treatment Record:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Treatment Record:", error);
+      }
     }
   };
-
-  const handleDeleteTreatmentRecordImage = () => {
-    setTreatmentRecordImage(null);
-    setTreatmentRecordImagePreview('');
-  };
-
-  const handleDeleteSavedTreatmentRecordImage = () => {
-    setIsTreatmentRecordImageDeleted(true);
-  }
 
   const handleOrganImage = (event) => {
-    const file = event.target.files[0];
-    setOrganImage(file);
+    const files = event.target.files;
+    const imageFiles = Array.from(files);
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setOrganImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setOrganImagePreview("");
+    setOrganImage(imageFiles);
+
+    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file));
+    setOrganImagePreview(imagePreviews);
+  };
+
+  const handleDeleteOrganImage = (e, index) => {
+    e.preventDefault()
+    const updatedPictures = [...organImage];
+    const updatedPreviews = [...organImagePreview];
+
+    updatedPictures.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+
+    setOrganImage(updatedPictures);
+    setOrganImagePreview(updatedPreviews);
+  };
+
+  const handleDeleteSavedOrganImage = (e, id) => {
+    e.preventDefault()
+    setDeletedOrganImageIds([...deletedOrganImageIds, id]);
+    handleOrganImageDeleteButton(e, id)
+  }
+
+  const handleOrganImageDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Organ Image by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deleteorganimage/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Organ Image when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Organ Image when the delete request fails
+          console.log("Failed to delete Organ Image:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Organ Image:", error);
+      }
     }
   };
-
-  const handleDeleteOrganImage = () => {
-    setOrganImage(null);
-    setOrganImagePreview('');
-  };
-
-  const handleDeleteSavedOrganImage = () => {
-    setIsOrganImageDeleted(true);
-  }
 
   // Post Operation Details Image Management
   const handlePopPictures = (event) => {
-    const file = event.target.files[0];
-    setPopPictures(file);
+    const files = event.target.files;
+    const imageFiles = Array.from(files);
+    
+    setPopPictures(imageFiles);
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPopPicturesPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setPopPicturesPreview("");
+    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file));
+    setPopPicturesPreview(imagePreviews)
+  };
+
+  const handleDeletePopPictures = (e, index) => {
+    e.preventDefault()
+    const updatedPictures = [...popPictures];
+    const updatedPreviews = [...popPicturesPreview];
+
+    updatedPictures.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+    setPopPictures(updatedPictures);
+    setPopPicturesPreview(updatedPreviews);
+  };
+
+  const handleDeleteSavedPopPictures = (e, id) => {
+    e.preventDefault()
+    setDeletedPopPicturesIds([...deletedPopPicturesIds, id])
+    handlePopPicturesDeleteButton(e, id)
+  }
+
+  const handlePopPicturesDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Post Operation Pictures by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deletepostoperationpicture/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Post Operation Pictures when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Post Operation Pictures when the delete request fails
+          console.log("Failed to delete Post Operation Pictures:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Post Operation Pictures:", error);
+      }
     }
   };
-
-  const handleDeletePopPictures = () => {
-    setPopPictures(null);
-    setPopPicturesPreview('');
-  };
-
-  const handleDeleteSavedPopPictures = () => {
-    setIsPopPicturesDeleted(true);
-  }
 
   const handleReleasePictures = (event) => {
-    const file = event.target.files[0];
-    setReleasePictures(file);
+    const files = event.target.files;
+    const imageFiles = Array.from(files);
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setReleasePicturesPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setReleasePicturesPreview("");
+    setReleasePictures(imageFiles);
+
+    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file));
+    setReleasePicturesPreview(imagePreviews)
+  };
+
+  const handleDeleteReleasePictures = (e, index) => {
+    e.preventDefault()
+    const updatedPictures = [...releasePictures];
+    const updatedPreviews = [...releasePicturesPreview];
+
+    updatedPictures.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+    setReleasePictures(updatedPictures);
+    setReleasePicturesPreview(updatedPreviews);
+  };
+
+  const handleDeleteSavedReleasePictures = (e, id) => {
+    e.preventDefault()
+    setDeletedReleasePicturesIds([...deletedReleasePicturesIds, id]);
+    handleReleasePicturesDeleteButton(e, id)
+  }
+
+  const handleReleasePicturesDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Release Picture by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deletereleasepicture/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Release Picture when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Release Picture when the delete request fails
+          console.log("Failed to delete Release Picture:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Release Picture:", error);
+      }
     }
   };
-
-  const handleDeleteReleasePictures = () => {
-    setReleasePictures(null);
-    setReleasePicturesPreview('');
-  };
-
-  const handleDeleteSavedReleasePictures = () => {
-    setIsReleasePicturesDeleted(true);
-  }
 
   // Handling Reporting Details
   const handleUpdateReportingDetails = async (e) => {
@@ -535,14 +672,6 @@ export default function EditCase() {
         formData.append('animalPictures', animalPictures[i]);
       }
 
-      // if (animalPictures) {
-      //   formData.append('animalPictures', animalPictures ? animalPictures : null);
-      // } else if (isAnimalPictureDeleted){
-      //   formData.append('animalPictures', "null");
-      // } else{
-      //   formData.append('animalPictures', path.state.data.animaldetail?.animalPictures);
-      // }
-
       console.log(animalSpecies)
       console.log(animalBreed)
       console.log(animalAge)
@@ -597,12 +726,8 @@ export default function EditCase() {
         formData.append('bloodReportImage', path.state.data.medicaldetail?.bloodReportImage);
       }
 
-      if (feedingRecordImage) {
-        formData.append('feedingRecordImage', feedingRecordImage ? feedingRecordImage : null);
-      } else if (isFeedingRecordImageDeleted) {
-        formData.append('feedingRecordImage', "null");
-      } else {
-        formData.append('feedingRecordImage', path.state.data.medicaldetail?.feedingRecordImage);
+      for (let i = 0; i < feedingRecordImage.length; i++) {
+        formData.append('feedingRecordImage', feedingRecordImage[i]);
       }
 
       formData.append("medicalHistory", medicalHistory ? medicalHistory : path.state.data.medicaldetail?.medicalHistory);
@@ -655,20 +780,12 @@ export default function EditCase() {
         formData.append('medicalPrescriptionImage', path.state.data.operationdetail?.medicalPrescriptionImage);
       }
 
-      if (treatmentRecordImage) {
-        formData.append('treatmentRecordImage', treatmentRecordImage ? treatmentRecordImage : null);
-      } else if (isTreatmentRecordImageDeleted) {
-        formData.append('treatmentRecordImage', "null");
-      } else {
-        formData.append('treatmentRecordImage', path.state.data.operationdetail?.treatmentRecordImage);
+      for (let i = 0; i < treatmentRecordImage.length; i++) {
+        formData.append('treatmentRecordImage', treatmentRecordImage[i]);
       }
 
-      if (organImage) {
-        formData.append('organImage', organImage ? organImage : null);
-      } else if (isOrganImageDeleted) {
-        formData.append('organImage', "null");
-      } else {
-        formData.append('organImage', path.state.data.operationdetail?.organImage);
+      for (let i = 0; i < organImage.length; i++) {
+        formData.append('organImage', organImage[i]);
       }
 
       formData.append("vetName", vetName ? vetName : "");
@@ -711,20 +828,12 @@ export default function EditCase() {
       path.state.data.reportingdetail?.location) && (pincode || path.state.data.reportingdetail?.pincode) && (location || path.state.data.reportingdetail?.landmark)) {
 
       const formData = new FormData();
-      if (popPictures) {
-        formData.append('popPictures', popPictures ? popPictures : null);
-      } else if (isPopPicturesDeleted) {
-        formData.append('popPictures', "null");
-      } else {
-        formData.append('popPictures', path.state.data.postoperationdetail?.popPictures);
+      for (let i = 0; i < popPictures.length; i++) {
+        formData.append('popPictures', popPictures[i]);
       }
 
-      if (releasePictures) {
-        formData.append('releasePictures', releasePictures ? releasePictures : null);
-      } else if (isReleasePicturesDeleted) {
-        formData.append('releasePictures', "null");
-      } else {
-        formData.append('releasePictures', path.state.data.postoperationdetail?.releasePictures);
+      for (let i = 0; i < releasePictures.length; i++) {
+        formData.append('releasePictures', releasePictures[i]);
       }
 
       formData.append("popComment", popComment ? popComment : path.state.data.postoperationdetail?.popComment);
@@ -1154,7 +1263,7 @@ export default function EditCase() {
                       <div className="row">
                         <div className="col">
                           <div className="form-group">
-                            <label className="form-label" htmlFor="frontImage">
+                            <label className="form-label h5" htmlFor="frontImage">
                               Front Photo:
                             </label>
                             <div className="custom-file">
@@ -1172,11 +1281,17 @@ export default function EditCase() {
                             ? ((path.state.data.reportingdetail?.frontImage) ? (<div>
                               <h6>Preview:</h6>
                               <img
-                                src={`http://localhost:8000${path.state.data.reportingdetail?.frontImage}`}
+                                src={`${websiteUrl}${path.state.data.reportingdetail?.frontImage}`}
                                 alt="Consent Form Preview"
                                 height="100px"
                               />
                               <button onClick={handleDeleteSavedFrontImage}>Delete</button>
+                              <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.frontImage}`)}>Open</button>
+                              <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.frontImage}`)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg></button>
                             </div>) : (frontImagePreview && (
                               <div>
                                 <h6>Preview:</h6>
@@ -1201,7 +1316,7 @@ export default function EditCase() {
                         </div>
                         <div className="col">
                           <div className="form-group">
-                            <label className="form-label" htmlFor="backImage">
+                            <label className="form-label h5" htmlFor="backImage">
                               Back Photo:
                             </label>
                             <div className="custom-file">
@@ -1218,11 +1333,17 @@ export default function EditCase() {
                           {(!isBackImageDeleted) ? ((path.state.data.reportingdetail?.backImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
-                              src={`http://localhost:8000${path.state.data.reportingdetail?.backImage}`}
+                              src={`${websiteUrl}${path.state.data.reportingdetail?.backImage}`}
                               alt="Consent Form Preview"
                               height="100px"
                             />
                             <button onClick={handleDeleteSavedBackImage}>Delete</button>
+                            <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.backImage}`)}>Open</button>
+                            <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.backImage}`)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg></button>
                           </div>) : (backImagePreview && (
                             <div>
                               <h6>Preview:</h6>
@@ -1249,7 +1370,7 @@ export default function EditCase() {
                       <div className="row form-1">
                         <div className="form-group">
                           <label
-                            className="form-label"
+                            className="form-label h5"
                             htmlFor="consentFormImage"
                           >
                             Consent Form
@@ -1268,11 +1389,17 @@ export default function EditCase() {
                         {(!isConsentFormImageDeleted) ? ((path.state.data.reportingdetail?.consentFormImage) ? (<div>
                           <h6>Preview:</h6>
                           <img
-                            src={`http://localhost:8000${path.state.data.reportingdetail?.consentFormImage}`}
+                            src={`${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`}
                             alt="Consent Form Preview"
                             height="100px"
                           />
                           <button onClick={handleDeleteSavedConsentFormImage}>Delete</button>
+                          <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`)}>Open</button>
+                          <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg></button>
                         </div>) : (consentFormImagePreview && (
                           <div>
                             <h6>Preview:</h6>
@@ -1579,53 +1706,6 @@ export default function EditCase() {
                         </div>
                       </div>
 
-                      {/* <div className="row form-1">
-                      <div className="form-group mb-3">
-                        <label
-                          className="form-label h5"
-                          htmlFor="animalPictures"
-                        >
-                          Animal Pictures -
-                        </label>
-                        <div className="custom-file">
-                          <input
-                            type="file"
-                            className="btn custom-file-input"
-                            id="animalPictures"
-                            name="animalPictures"
-                            accept="image/*"
-                            onChange={handleAnimalPictursChange}
-                          />
-                        </div>
-                      </div>
-                      {(!isAnimalPictureDeleted)?((path.state.data.animaldetail?.animalPictures) ? (<div>
-                            <h6>Preview:</h6>
-                            <img
-                            src={`http://localhost:8000${path.state.data.animaldetail?.animalPictures}`}
-                            alt="Animal Pictures Preview"
-                            height="100px"
-                            />
-                            <button onClick={handleDeleteSavedAnimalPicture}>Delete</button>
-                        </div>) : (animalPicturesPreview && (
-                        <div>
-                          <h6>Preview:</h6>
-                            <img
-                              src={animalPicturesPreview}
-                              alt="Animal Pictures Preview"
-                              height="100px"
-                            />
-                          <button onClick={handleDeleteAnimalPicture}>Delete</button>
-                        </div>))):(animalPicturesPreview && (
-                        <div>
-                          <h6>Preview:</h6>
-                            <img
-                              src={animalPicturesPreview}
-                              alt="Animal Pictures Preview"
-                              height="100px"
-                            />
-                          <button onClick={handleDeleteAnimalPicture}>Delete</button>
-                        </div>))}
-                    </div> */}
                       <div className="form-group mb-3">
                         <label className="form-label h5" htmlFor="animalPictures">
                           Animal Pictures -
@@ -1642,137 +1722,48 @@ export default function EditCase() {
                           />
                         </div>
                       </div>
-                      {/* {path.state.data.animaldetail?.animalPictures ? (path.state.data.animaldetail?.animalPictures.map((data, index)=>(
-                        <div key={index}>
-                          <h6>Preview:</h6>
-                          <img src={`http://localhost:8000${path.state.data.animaldetail?.animalPictures[index]?.animalPictures}`} alt="Animal Pictures Preview" height="100px" />
-                          <button>Delete</button>
-                        </div>
-                      ))) : (animalPicturesPreview.map((preview, index) => (
-                        <div key={index}>
-                          <h6>Preview:</h6>
-                          <img src={preview} alt="Animal Pictures Preview" height="100px" />
-                          <button onClick={(e) => handleDeleteAnimalPicture(e, index)}>
-                            Delete
-                          </button>
-                        </div>
-                      )))
-                    } */}
+
                       {animalPicturesPreview.length > 0 && (
                         <div>
                           <h6>Preview:</h6>
-                          <div className='my-2' style={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-                            gridGap: "10px",
-                            padding: "20px",
-                            maxWidth: "1200px",
-                            margin: "0 auto",
-                          }}>
-
+                          <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto",}}>
                             {animalPicturesPreview.map((preview, index) => (
                               <div key={index} className='my-1'>
-                                <img src={preview} alt="Animal Pictures Preview" height="100px" />
-                                <div>
-                                <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}  onClick={(e) => handleDeleteAnimalPicture(e, index)}>
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  fill="currentColor"
-                                  className="bi bi-trash-fill"
-                                  viewBox="0 0 16 16"
-                                  style={{
-                                    background: "transparent",
-                                    color: "red",
-                                    // border: "none",
-                                  }}
-                                >
+                                <img src={preview} alt="Animal Pictures Preview" height="100px" width="100px"/>
+                                <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteAnimalPicture(e, index)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
+                                }}>
                                   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                </svg>
-                                </button>
-                                </div>
-                               </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
+                                </svg></button></div></div>))}</div></div>)}
 
                       {path.state.data.animaldetail?.animalPictures.length > 0 && (
-                        <div>
-                          <h6>Preview of Saved Images:</h6>
-                        <div className='my-2' style={{
-                          display: "grid",
-                          gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-                          gridGap: "10px",
-                          padding: "20px",
-                          maxWidth: "1200px",
-                          margin: "0 auto",
-                        }}>
-                         
-                          {path.state.data.animaldetail.animalPictures.map((data, index) => (
-                            // Check if the image ID is not in the deletedImageIds array
+                        <div><h6>Preview of Saved Images:</h6>
+                        <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto"}}>
+                         {path.state.data.animaldetail.animalPictures.map((data, index) => (
+                            // Check if the image ID is not in the deletedAnimalPictureIds array
                             // If not, display the image and the delete button
-                            !deletedImageIds.includes(data.id) && (
+                            !deletedAnimalPictureIds.includes(data.id) && (
                               <div key={index} className='my-1'>
                                 <p>Image {index + 1}:</p>
-                                <img
-                                  src={`http://localhost:8000${data.animalPictures}`}
-                                  alt="Animal Pictures Preview"
-                                  height="100px"
-                                  width="100px"
-                                />
+                                <img src={`${websiteUrl}${data.animalPictures}`} alt="Animal Pictures Preview" height="100px" width="100px"/>
                                 <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
                                   <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedAnimalPicture(e, data.id)}>
-                                  <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  fill="currentColor"
-                                  className="bi bi-trash-fill"
-                                  viewBox="0 0 16 16"
-                                  style={{
-                                    background: "transparent",
-                                    color: "red",
-                                    // border: "none",
-                                  }}
-                                >
-                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                </svg>
-                                  </button>
-                                  <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `http://localhost:8000${data.animalPictures}`)}>
-                                    Open
-                                  </button>
-                                  <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `http://localhost:8000${data.animalPictures}`)}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                  style={{background: "transparent", color: "red", // border: "none",
+                                  }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg></button>
+                                  <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.animalPictures}`)}>Open</button>
+                                  <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.animalPictures}`)}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                       <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                                       <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                    </svg> </button>
-
-
-                                </div>
+                                    </svg></button></div>
 
                                 <div className=" my-3">
-                                  <label className="form-label" htmlFor="admissionDate">
+                                  <label className="form-label" htmlFor="animal_picture_upload_date">
                                     Upload Date:
                                   </label>
-                                  <input
-
-                                    className="my-0 form-control"
-                                    id="animal_picture_upload_date"
-                                    name="animal_picture_upload_date"
-                                    type="date"
-                                    readOnly
-                                    disabled
-                                    value={data.animal_picture_upload_date}
-                                  />
-                                </div>
-                              </div>
-                            )))}
-                        </div>
-                        </div>
-                      )}
-
+                                  <input className="my-0 form-control" id="animal_picture_upload_date" name="animal_picture_upload_date" type="date" readOnly disabled value={data.animal_picture_upload_date}/></div></div>)))}</div></div>)}
 
                       <div className="my-2">
                         <div className="form-buttons">
@@ -1962,7 +1953,7 @@ export default function EditCase() {
                         <div className="col">
                           <div className="form-group mb-3">
                             <label
-                              className="form-label"
+                              className="form-label h5"
                               htmlFor="bloodReportImage"
                             >
                               Blood Report Pictures -
@@ -1981,7 +1972,7 @@ export default function EditCase() {
                           {(!isBloodReportImageDeleted) ? ((path.state.data.medicaldetail?.bloodReportImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
-                              src={`http://localhost:8000${path.state.data.medicaldetail?.bloodReportImage}`}
+                              src={`${websiteUrl}${path.state.data.medicaldetail?.bloodReportImage}`}
                               alt="Consent Form Preview"
                               height="100px"
                             />
@@ -2008,11 +1999,9 @@ export default function EditCase() {
                         </div>
                       </div>
 
-                      <div className="row">
-                        <div className="col">
                           <div className="form-group mb-3">
                             <label
-                              className="form-label"
+                              className="form-label h5"
                               htmlFor="feedingRecordImage"
                             >
                               Feeding Record Pictures -
@@ -2024,39 +2013,53 @@ export default function EditCase() {
                                 id="feedingRecordImage"
                                 accept="image/*"
                                 name="feedingRecordImage"
+                                multiple
                                 onChange={handleFeedingRecordImage}
                               />
                             </div>
                           </div>
-                          {(!isFeedingRecordImageDeleted) ? ((path.state.data.medicaldetail?.feedingRecordImage) ? (<div>
-                            <h6>Preview:</h6>
-                            <img
-                              src={`http://localhost:8000${path.state.data.medicaldetail?.feedingRecordImage}`}
-                              alt="Feeding Record Preview"
-                              height="100px"
-                            />
-                            <button onClick={handleDeleteSavedFeedingRecordImage}>Delete</button>
-                          </div>) : (feedingRecordImagePreview && (
-                            <div>
-                              <h6>Preview:</h6>
-                              <img
-                                src={feedingRecordImagePreview}
-                                alt="Feeding Record Preview"
-                                height="100px"
-                              />
-                              <button onClick={handleDeleteFeedingRecordImage}>Delete</button>
-                            </div>))) : (feedingRecordImagePreview && (
-                              <div>
-                                <h6>Preview:</h6>
-                                <img
-                                  src={feedingRecordImagePreview}
-                                  alt="Feeding Record Preview"
-                                  height="100px"
-                                />
-                                <button onClick={handleDeleteFeedingRecordImage}>Delete</button>
-                              </div>))}
-                        </div>
-                      </div>
+
+                              {feedingRecordImagePreview.length > 0 && (
+                                <div><h6>Preview:</h6>
+                                  <div className="my-2" style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto",}}>
+                                {feedingRecordImagePreview.map((preview, index)=>(
+                                  <div key={index} className='my-1'>
+                                    <img src={preview} alt="Feeding Record Preview" height="100px" width="100px"/>
+                                    <div>
+                                      <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e)=>{handleDeleteFeedingRecordImage(e, index)}}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
+                                      }}>
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                      </svg></button></div></div>))}</div></div>)}
+
+                                      {path.state.data.medicaldetail?.feedingRecordImage.length > 0 && (
+                                      <div><h6>Preview of Saved Images:</h6>
+                                      <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto"}}>
+                                      {path.state.data.medicaldetail?.feedingRecordImage.map((data, index) => (
+                                        // Check if the image ID is not in the deletedFeedingRecordImageIds array
+                                        // If not, display the image and the delete button
+                                        !deletedFeedingRecordImageIds.includes(data.id) && (
+                                          <div key={index} className='my-1'>
+                                            <p>Image {index + 1}:</p>
+                                            <img src={`${websiteUrl}${data.feedingRecordImage}`} alt="Feeding Record Preview" height="100px" width="100px" />
+                                            <div className='my-2' style={{ display: "flex", alignItems: "center" }} >
+                                              <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedFeedingRecordImage(e, data.id)}>
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
+                                      }}>
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                      </svg></button>
+                                              <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.feedingRecordImage}`)}>Open</button>
+                                              <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.feedingRecordImage}`)}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                </svg></button></div>
+
+                                            <div className=" my-3">
+                                              <label className="form-label" htmlFor="feeding_record_image_upload_date">
+                                                Upload Date:
+                                              </label>
+                                              <input className="my-0 form-control" id="feeding_record_image_upload_date" name="feeding_record_image_upload_date" type="date" readOnly disabled value={data.feeding_record_image_upload_date}/></div></div>)))}</div></div>)}
 
                       <div className="my-1">
                         <div className="form-buttons">
@@ -2081,7 +2084,6 @@ export default function EditCase() {
                             >
                               Next
                             </button>
-
                           </div>
                           <div>
                             <button
@@ -2243,10 +2245,10 @@ export default function EditCase() {
                         <div className="col">
                           <div className="form-group mb-2">
                             <label
-                              className="form-label"
+                              className="form-label h5"
                               htmlFor="medicalPrescriptionImage"
                             >
-                              Medication Prescription -
+                              Medical Prescription -
                             </label>
                             <div className="custom-file">
                               <input
@@ -2262,7 +2264,7 @@ export default function EditCase() {
                           {(!isMedicalPrescriptionImageDeleted) ? ((path.state.data.operationdetail?.medicalPrescriptionImage) ? (<div>
                             <h6>Preview:</h6>
                             <img
-                              src={`http://localhost:8000${path.state.data.operationdetail?.medicalPrescriptionImage}`}
+                              src={`${websiteUrl}${path.state.data.operationdetail?.medicalPrescriptionImage}`}
                               alt="Medical Prescription Preview"
                               height="100px"
                             />
@@ -2287,11 +2289,9 @@ export default function EditCase() {
                         </div>
                       </div>
 
-                      <div className="row form-1">
-                        <div className="col">
-                          <div className="form-group mb-2">
+                          <div className="form-group mb-3">
                             <label
-                              className="form-label"
+                              className="form-label h5"
                               htmlFor="treatmentRecordImage"
                             >
                               Treatment Records -
@@ -2303,42 +2303,65 @@ export default function EditCase() {
                                 id="treatmentRecordImage"
                                 accept="image/*"
                                 name="treatmentRecordImage"
+                                multiple
                                 onChange={handleTreatmentRecordImage}
                               />
                             </div>
                           </div>
-                          {(!isTreatmentRecordImageDeleted) ? ((path.state.data.operationdetail?.treatmentRecordImage) ? (<div>
+                        {treatmentRecordImagePreview.length > 0 && (
+                          <div>
                             <h6>Preview:</h6>
-                            <img
-                              src={`http://localhost:8000${path.state.data.operationdetail?.treatmentRecordImage}`}
-                              alt="Treatment Records Preview"
-                              height="100px"
-                            />
-                            <button onClick={handleDeleteSavedTreatmentRecordImage}>Delete</button>
-                          </div>) : (treatmentRecordImagePreview && (
-                            <div>
-                              <h6>Preview:</h6>
-                              <img
-                                src={treatmentRecordImagePreview}
-                                alt="Treatment Records Preview"
-                                height="100px"
-                              /><button onClick={handleDeleteTreatmentRecordImage}>Delete</button>
-                            </div>))) : (treatmentRecordImagePreview && (
-                              <div>
-                                <h6>Preview:</h6>
-                                <img
-                                  src={treatmentRecordImagePreview}
-                                  alt="Treatment Records Preview"
-                                  height="100px"
-                                /><button onClick={handleDeleteTreatmentRecordImage}>Delete</button>
-                              </div>))}
-                        </div>
-                      </div>
+                            <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto",}}>
+                          {treatmentRecordImagePreview.map((preview, index)=>{
+                            return (<div key={index} className='my-1'>
+                              <img src={preview} alt="Treatment Record Preview" height="100px" width="100px"/>
+                              <div><button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e)=> handleDeleteTreatmentRecordImage(e, index)}>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
+                                }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg></button></div></div>)
+                          })}</div></div>)}
 
-                      <div className="row form-1">
-                        <div className="col">
+                          {path.state.data.operationdetail?.treatmentRecordImage.length > 0 && (
+                           <div>
+                          <h6>Preview of Saved Images:</h6>
+                        <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto"}}>
+                            {path.state.data.operationdetail.treatmentRecordImage.map((data, index)=> {
+                              // Check if the image ID is not in the deletedTreatmentRecordImageIds array
+                            // If not, display the image and the delete button
+                            return (!deletedTreatmentRecordImageIds.includes(data.id) && (
+                              <div key={index} className='my-1'>
+                                <p>Image {index + 1}:</p>
+                                <img src={`${websiteUrl}${data.treatmentRecordImage}`} alt="Treatment Record Preview" height="100px" width="100px"/>
+                                <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
+                                  <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e)=>handleDeleteSavedTreatmentRecordImage(e, data.id)}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{background: "transparent", color: "red", // border: "none",
+                                  }}>
+                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg></button>
+                                <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.treatmentRecordImage}`)}>Open</button>
+                                <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.treatmentRecordImage}`)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg></button></div>
+                                    <div className=" my-3">
+                                  <label className="form-label" htmlFor="treatment_record_image_upload_date">
+                                    Upload Date:
+                                  </label>
+                                  <input
+                                    className="my-0 form-control"
+                                    id="treatment_record_image_upload_date"
+                                    name="treatment_record_image_upload_date"
+                                    type="date"
+                                    readOnly
+                                    disabled
+                                    value={data.treatment_record_image_upload_date}
+                                  />
+                                </div></div>))})}</div></div>)}
+
+
                           <div className="form-group mb-2">
-                            <label className="form-label" htmlFor="organImage">
+                            <label className="form-label h5" htmlFor="organImage">
                               Organ Pictures -
                             </label>
                             <div className="custom-file">
@@ -2348,37 +2371,65 @@ export default function EditCase() {
                                 id="organImage"
                                 accept="image/*"
                                 name="organImage"
+                                multiple
                                 onChange={handleOrganImage}
                               />
                             </div>
                           </div>
-                          {(!isOrganImageDeleted) ? ((path.state.data.operationdetail?.organImage) ? (<div>
-                            <h6>Preview:</h6>
-                            <img
-                              src={`http://localhost:8000${path.state.data.operationdetail?.organImage}`}
-                              alt="Organ Pictures Preview"
-                              height="100px"
-                            />
-                            <button onClick={handleDeleteSavedOrganImage}>Delete</button>
-                          </div>) : (organImagePreview && (
+
+                          {organImagePreview.length > 0 && (
                             <div>
                               <h6>Preview:</h6>
-                              <img
-                                src={organImagePreview}
-                                alt="Organ Pictures Preview"
-                                height="100px"
-                              /><button onClick={handleDeleteOrganImage}>Delete</button>
-                            </div>))) : (organImagePreview && (
-                              <div>
-                                <h6>Preview:</h6>
-                                <img
-                                  src={organImagePreview}
-                                  alt="Organ Pictures Preview"
-                                  height="100px"
-                                /><button onClick={handleDeleteOrganImage}>Delete</button>
-                              </div>))}
-                        </div>
-                      </div>
+                              <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto",}}>
+                              {organImagePreview.map((preview, index)=>{
+                              return (<div key={index} className='my-1'>
+                               <img src={preview} alt="Organ Pictures Preview" height="100px" width="100px"/>
+                               <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteOrganImage(e, index)}>
+                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
+                                }}>
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg></button></div></div>)})}</div></div>)}
+
+                          {path.state.data.operationdetail?.organImage.length > 0 && (
+                          <div>
+                            <h6>Preview of Saved Images:</h6>
+                            <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto"}}>
+
+                            {path.state.data.operationdetail?.organImage.map((data, index)=>{
+                              // Check if the image ID is not in the deletedOrganImageIds array
+                            // If not, display the image and the delete button
+                            return (!deletedOrganImageIds.includes(data.id) && (
+                              <div key={index} className='my-1'>
+                                <p>Image {index + 1}:</p>
+                                <img src={`${websiteUrl}${data.organImage}`} alt="Animal Pictures Preview" height="100px" width="100px"/>
+
+                                <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
+                                  <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedOrganImage(e, data.id)}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                  style={{background: "transparent", color: "red", // border: "none",
+                                  }}>
+                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg></button>
+                                  <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.organImage}`)}>Open</button>
+                                  <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.organImage}`)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg></button></div>
+                                    <div className=" my-3">
+                                  <label className="form-label" htmlFor="organ_image_upload_date">
+                                    Upload Date:
+                                  </label>
+                                  <input
+                                    className="my-0 form-control"
+                                    id="organ_image_upload_date"
+                                    name="organ_image_upload_date"
+                                    type="date"
+                                    readOnly
+                                    disabled
+                                    value={data.organ_image_upload_date}
+                                  />
+                                </div></div>))})}</div></div>)}
 
                       <div className="my-1">
                         <div className="form-buttons">
@@ -2581,10 +2632,8 @@ export default function EditCase() {
                         </div>
                       </div>
 
-                      <div className="row form-1">
-                        <div className="col">
-                          <div className="form-group mb-2">
-                            <label className="form-label" htmlFor="popPictures">
+                          <div className="form-group mb-3">
+                            <label className="form-label h5" htmlFor="popPictures">
                               Post-Operation Pictures -
                             </label>
                             <div className="custom-file">
@@ -2594,45 +2643,68 @@ export default function EditCase() {
                                 id="popPictures"
                                 accept="image/*"
                                 name="popPictures"
+                                multiple
                                 onChange={handlePopPictures}
                               />
                             </div>
                           </div>
-                          {(!isPopPicturesDeleted) ? ((path.state.data.postoperationdetail?.popPictures) ? (<div>
-                            <h6>Preview:</h6>
-                            <img
-                              src={`http://localhost:8000${path.state.data.postoperationdetail?.popPictures}`}
-                              alt="Animal Pictures Preview"
-                              height="100px"
-                            />
-                            <button onClick={handleDeleteSavedPopPictures}>Delete</button>
-                          </div>) : (popPicturesPreview && (
-                            <div>
-                              <h6>Preview:</h6>
-                              <img
-                                src={popPicturesPreview}
-                                alt="Post Operation Pictures Preview"
-                                height="100px"
-                              /><button onClick={handleDeletePopPictures}>Delete</button>
-                            </div>))) : (popPicturesPreview && (
-                              <div>
-                                <h6>Preview:</h6>
-                                <img
-                                  src={popPicturesPreview}
-                                  alt="Post Operation Pictures Preview"
-                                  height="100px"
-                                /><button onClick={handleDeletePopPictures}>Delete</button>
-                              </div>))}
-                        </div>
-                      </div>
+                          
+                          {popPicturesPreview.length > 0 && (
+                        <div>
+                          <h6>Preview:</h6>
+                          <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto",}}>
+                            {popPicturesPreview.map((preview, index) => (
+                              <div key={index} className='my-1'>
+                                <img src={preview} alt="Post Operation Pictures Preview" height="100px" width="100px"/>
+                                <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeletePopPictures(e, index)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
+                                }}>
+                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg></button></div></div>))}</div></div>)}
+                          
+                                {path.state.data.postoperationdetail?.popPictures.length > 0 && (
+                        <div>
+                          <h6>Preview of Saved Images:</h6>
+                        <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto"}}>
+                         
+                          {path.state.data.postoperationdetail.popPictures.map((data, index) => (
+                            // Check if the image ID is not in the deletedPopPicturesIds array
+                            // If not, display the image and the delete button
+                            !deletedPopPicturesIds.includes(data.id) && (
+                              <div key={index} className='my-1'>
+                                <p>Image {index + 1}:</p>
+                                <img src={`${websiteUrl}${data.popPictures}`} alt="Post Operation Pictures Preview" height="100px" width="100px"/>
+                                <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
+                                  <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedPopPictures(e, data.id)}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                  style={{background: "transparent", color: "red", // border: "none",
+                                  }}>
+                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg></button>
+                                  <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.popPictures}`)}>Open</button>
+                                  <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.popPictures}`)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg></button></div>
 
-                      <div className="row form-1">
-                        <div className="col">
-                          <div className="form-group mb-2">
-                            <label
-                              className="form-label"
-                              htmlFor="releasePictures"
-                            >
+                                <div className=" my-3">
+                                  <label className="form-label" htmlFor="pop_pictures_upload_date">
+                                    Upload Date:
+                                  </label>
+                                  <input
+                                    className="my-0 form-control"
+                                    id="pop_pictures_upload_date"
+                                    name="pop_pictures_upload_date"
+                                    type="date"
+                                    readOnly
+                                    disabled
+                                    value={data.pop_pictures_upload_date}
+                                  />
+                                </div></div>)))}</div></div>)}
+
+                          <div className="form-group mb-3">
+                            <label className="form-label h5" htmlFor="releasePictures" >
                               Release Pictures -
                             </label>
                             <div className="custom-file">
@@ -2642,37 +2714,65 @@ export default function EditCase() {
                                 id="releasePictures"
                                 accept="image/*"
                                 name="releasePictures"
+                                multiple
                                 onChange={handleReleasePictures}
                               />
                             </div>
                           </div>
-                          {(!isReleasePicturesDeleted) ? ((path.state.data.postoperationdetail?.releasePictures) ? (<div>
-                            <h6>Preview:</h6>
-                            <img
-                              src={`http://localhost:8000${path.state.data.postoperationdetail?.releasePictures}`}
-                              alt="Release Pictures Preview"
-                              height="100px"
-                            />
-                            <button onClick={handleDeleteSavedReleasePictures}>Delete</button>
-                          </div>) : (releasePicturesPreview && (
-                            <div>
-                              <h6>Preview:</h6>
-                              <img
-                                src={releasePicturesPreview}
-                                alt="Release Pictures Preview"
-                                height="100px"
-                              /><button onClick={handleDeleteReleasePictures}>Delete</button>
-                            </div>))) : (releasePicturesPreview && (
-                              <div>
-                                <h6>Preview:</h6>
-                                <img
-                                  src={releasePicturesPreview}
-                                  alt="Release Pictures Preview"
-                                  height="100px"
-                                /><button onClick={handleDeleteReleasePictures}>Delete</button>
-                              </div>))}
-                        </div>
-                      </div>
+
+                          {releasePicturesPreview.length > 0 && (
+                        <div>
+                          <h6>Preview:</h6>
+                          <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto",}}>
+                            {releasePicturesPreview.map((preview, index) => (
+                              <div key={index} className='my-1'>
+                                <img src={preview} alt="Release Pictures Preview" height="100px" width="100px"/>
+                                <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteReleasePictures(e, index)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
+                                }}>
+                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg></button></div></div>))}</div></div>)}
+
+                                {path.state.data.postoperationdetail?.releasePictures.length > 0 && (
+                        <div>
+                          <h6>Preview of Saved Images:</h6>
+                        <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto"}}>
+                         
+                          {path.state.data.postoperationdetail.releasePictures.map((data, index) => (
+                            // Check if the image ID is not in the deletedReleasePicturesIds array
+                            // If not, display the image and the delete button
+                            !deletedReleasePicturesIds.includes(data.id) && (
+                              <div key={index} className='my-1'>
+                                <p>Image {index + 1}:</p>
+                                <img src={`${websiteUrl}${data.releasePictures}`} alt="Release Pictures Preview" height="100px" width="100px"/>
+                                <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
+                                  <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedReleasePictures(e, data.id)}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                  style={{background: "transparent", color: "red", // border: "none",
+                                  }}>
+                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg></button>
+                                  <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.releasePictures}`)}>Open</button>
+                                  <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.releasePictures}`)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg></button></div>
+
+                                <div className=" my-3">
+                                  <label className="form-label" htmlFor="release_pictures_upload_date">
+                                    Upload Date:
+                                  </label>
+                                  <input
+                                    className="my-0 form-control"
+                                    id="release_pictures_upload_date"
+                                    name="release_pictures_upload_date"
+                                    type="date"
+                                    readOnly
+                                    disabled
+                                    value={data.release_pictures_upload_date}
+                                  />
+                                </div></div>)))}</div></div>)}
 
                       <div className="my-1">
                         <button
@@ -2733,17 +2833,8 @@ export default function EditCase() {
             <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
               {localStorage.getItem("username")}
             </label>
-            <img
-              width="17%"
-              style={{ marginRight: "1.5rem", cursor: "pointer" }}
-              src={logo}
-              alt="Logo"
-            ></img>
-            <i
-              style={{ cursor: "pointer" }}
-              className="fa-solid fa-right-from-bracket"
-              onClick={logoutUser}
-            ></i>
+            <img width="17%" style={{ marginRight: "1.5rem", cursor: "pointer" }} src={logo} alt="Logo"/>
+            <i style={{ cursor: "pointer" }} className="fa-solid fa-right-from-bracket" onClick={logoutUser}></i>
           </span>
         </div>
       </div>
