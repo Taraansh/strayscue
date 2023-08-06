@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function EditVet() {
   const path = useLocation();
-  const { user, logoutUser, websiteUrl } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl, handleOpenImage, handleDownloadImage } = useContext(AuthContext);
   const [vet_name, setVetName] = useState(null);
   const [registration_id, setRegistrationId] = useState(null);
   const [vet_certification, setVetCertification] = useState(null);
@@ -213,13 +213,17 @@ export default function EditVet() {
                       <div>
                         <h6>Preview:</h6>
                         <img
-                          src={`http://localhost:8000${path.state.data.vet_certification}`}
+                          src={`${websiteUrl}${path.state.data.vet_certification}`}
                           alt="Vet Certification Preview"
                           height="100px"
                         />
-                        <button onClick={handleDeleteSavedVetCertification}>
-                          Delete
-                        </button>
+                        <button onClick={handleDeleteSavedVetCertification}>Delete</button>
+                        <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.vet_certification}`)}>Open</button>
+                          <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.vet_certification}`)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg></button>
                       </div>
                     ) : (
                       vetCertificationPreview && (
@@ -279,13 +283,17 @@ export default function EditVet() {
                       <div>
                         <h6>Preview:</h6>
                         <img
-                          src={`http://localhost:8000${path.state.data.verification_id}`}
+                          src={`${websiteUrl}${path.state.data.verification_id}`}
                           alt="Verification Id Preview"
                           height="100px"
                         />
-                        <button onClick={handleDeleteSavedVerificationId}>
-                          Delete
-                        </button>
+                        <button onClick={handleDeleteSavedVerificationId}>Delete</button>
+                        <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.verification_id}`)}>Open</button>
+                          <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.verification_id}`)}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg></button>
                       </div>
                     ) : (
                       verificationIdPreview && (
