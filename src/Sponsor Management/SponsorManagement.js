@@ -124,7 +124,7 @@ const AddSponsor = () => {
                         <td>{data.animal_fit_for_surgery}</td>
                         <td>
                           <img
-                            src={`http://localhost:8000${data.sponsor_logo}`}
+                            src={`${websiteUrl}${data.sponsor_logo}`}
                             alt="Sponsor Logo"
                             height="30px"
                           />

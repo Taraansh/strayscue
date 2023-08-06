@@ -124,7 +124,7 @@ const NGOManagement = () => {
                           <td>{data.darpan_id}</td>
                           <td>
                             <img
-                              src={`http://localhost:8000${data.ngo_logo}`}
+                              src={`${websiteUrl}${data.ngo_logo}`}
                               alt="NGO Logo"
                               height="30px"
                             />
