@@ -7,6 +7,7 @@ const AuthContext = createContext();
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
+  // Change this link here with the backend link
   const websiteUrl = "http://127.0.0.1:8000";
   const [case_id, setCaseID] = useState("");
 
@@ -240,6 +241,33 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
+  const handleOpenImage = (e, imageUrl) => {
+    e.preventDefault();
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = imageUrl;
+    link.setAttribute('target', '_blank'); // Open the link in a new tab
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleDownloadImage = async (e, imageUrl) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+
+      // Create a temporary anchor element to trigger the download
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = 'image.jpg'; // You can set a desired file name for the downloaded image
+      downloadLink.click();
+    } catch (error) {
+      console.error('Error downloading image:', error);
+    }
+  };
+
   const updateToken = useCallback(async () => {
     const response = await fetch(
       `${websiteUrl}/authorize/token/refresh/`,
@@ -292,6 +320,8 @@ export const AuthProvider = ({ children }) => {
     getAllNgos: getAllNgos,
     getAllUsersLinkedWithNgo: getAllUsersLinkedWithNgo,
     getAllCasesLinkedWithNgo: getAllCasesLinkedWithNgo,
+    handleOpenImage: handleOpenImage,
+    handleDownloadImage: handleDownloadImage,
   };
 
   useEffect(() => {
