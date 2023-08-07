@@ -60,11 +60,12 @@ export default function EditCase() {
   const [admissionDate, setAdmissionDate] = useState(null);
   const [feedingRecordImage, setFeedingRecordImage] = useState([]);
   const [feedingRecordImagePreview, setFeedingRecordImagePreview] = useState([]);
-  const [bloodReportImage, setBloodReportImage] = useState(null);
-  const [bloodReportImagePreview, setBloodReportImagePreview] = useState("");
+  const [bloodReportImage, setBloodReportImage] = useState([]);
+  const [bloodReportImagePreview, setBloodReportImagePreview] = useState([]);
+  const [bloodReportImageDate, setBloodReportImageDate] = useState([]);
 
   const [deletedFeedingRecordImageIds, setDeletedFeedingRecordImageIds] = useState([]);
-  const [isBloodReportImageDeleted, setIsBloodReportImageDeleted] = useState(false);
+  const [deletedBloodReportImageIds, setDeletedBloodReportImageIds] = useState([]);
 
   // Operation Details State
   const [vetName, setVetName] = useState(null);
@@ -307,28 +308,62 @@ export default function EditCase() {
   };
 
   const handleBloodReportImage = (event) => {
-    const file = event.target.files[0];
-    setBloodReportImage(file);
+    const files = event.target.files;
+    const imageFiles = Array.from(files);
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setBloodReportImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setBloodReportImagePreview("");
+    setBloodReportImage(imageFiles);
+
+    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file));
+    setBloodReportImagePreview(imagePreviews);
+    
+  };
+
+  const handleDeleteBloodReportImage = (e, index) => {
+    e.preventDefault()
+    const updatedPictures = [...bloodReportImage];
+    const updatedPreviews = [...bloodReportImagePreview];
+
+    updatedPictures.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+    setBloodReportImage(updatedPictures);
+    setBloodReportImagePreview(updatedPreviews);
+  };
+
+  const handleDeleteSavedBloodReportImage = (e, id) => {
+    e.preventDefault()
+    setDeletedBloodReportImageIds([...deletedBloodReportImageIds, id]);
+    handleBloodReportImageDeleteButton(e, id)
+  };
+
+  const handleBloodReportImageDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Blood Report by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deletebloodrecord/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Blood Report when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Blood Report when the delete request fails
+          console.log("Failed to delete Blood Report:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Blood Report:", error);
+      }
     }
   };
-
-  const handleDeleteBloodReportImage = () => {
-    setBloodReportImage(null);
-    setBloodReportImagePreview('');
-  };
-
-  const handleDeleteSavedBloodReportImage = () => {
-    setIsBloodReportImageDeleted(true);
-  }
 
   // Operation Details Image Management
   const handleMedicalPrescriptionImage = (event) => {
@@ -718,12 +753,8 @@ export default function EditCase() {
       path.state.data.reportingdetail?.location) && (pincode || path.state.data.reportingdetail?.pincode) && (location || path.state.data.reportingdetail?.landmark)) {
       const formData = new FormData();
 
-      if (bloodReportImage) {
-        formData.append('bloodReportImage', bloodReportImage ? bloodReportImage : null);
-      } else if (isBloodReportImageDeleted) {
-        formData.append('bloodReportImage', "null");
-      } else {
-        formData.append('bloodReportImage', path.state.data.medicaldetail?.bloodReportImage);
+      for (let i = 0; i < bloodReportImage.length; i++) {
+        formData.append('bloodReportImage', bloodReportImage[i]);
       }
 
       for (let i = 0; i < feedingRecordImage.length; i++) {
@@ -736,7 +767,8 @@ export default function EditCase() {
       formData.append("fitForSurgery", fitForSurgery ? fitForSurgery : path.state.data.medicaldetail?.fitForSurgery);
       formData.append("otherDetails", otherDetails ? otherDetails : path.state.data.medicaldetail?.otherDetails);
       formData.append("admissionDate", admissionDate ? (admissionDate ? admissionDate : "1111-11-11") : (path.state.data.medicaldetail?.admissionDate ? path.state.data.medicaldetail?.admissionDate : "1111-11-11"));
-
+      
+      formData.append("bloodReportImageDate", bloodReportImageDate ? bloodReportImageDate : "1111-11-11");
       try {
         const response = await axios.put(
           `${websiteUrl}/cases/updatemedical/${path.state.data.medicaldetail?.id}/`,
@@ -906,6 +938,19 @@ export default function EditCase() {
       setVetName('');
     }
   };
+
+  function groupImagesByDate(images) {
+    const groupedImages = {};
+    images.forEach((image) => {
+      const date = image.blood_report_date;
+      if (!groupedImages[date]) {
+        groupedImages[date] = [];
+      }
+      groupedImages[date].push(image);
+    });
+    return groupedImages;
+  }
+
 
   return (user &&
     <>
@@ -1951,101 +1996,101 @@ export default function EditCase() {
                         </div>
                       </div>
 
-                      <div className="row form-1">
-                        <div className="col">
-                          <div className="form-group mb-3">
-                            <label
-                              className="form-label h5"
-                              htmlFor="bloodReportImage"
-                            >
-                              Blood Report Pictures -
-                            </label>
-                            <div className="custom-file">
-                              <input
-                                type="file"
-                                className="btn custom-file-input"
-                                id="bloodReportImage"
-                                accept="image/*"
-                                name="bloodReportImage"
-                                onChange={handleBloodReportImage}
-                              />
-                            </div>
-                          </div>
-                          {(!isBloodReportImageDeleted) ? ((path.state.data.medicaldetail?.bloodReportImage) ? (<div>
-                            <h6>Preview:</h6>
-                            <img
-                              src={`${websiteUrl}${path.state.data.medicaldetail?.bloodReportImage}`}
-                              alt="Consent Form Preview"
-                              height="100px"
-                            />
-                            <button onClick={handleDeleteSavedBloodReportImage}>Delete</button>
-                          </div>) : (bloodReportImagePreview && (
-                            <div>
-                              <h6>Preview:</h6>
-                              <img
-                                src={bloodReportImagePreview}
-                                alt="Blood Report Preview"
-                                height="100px"
-                              />
-                              <button onClick={handleDeleteBloodReportImage}>Delete</button>
-                            </div>))) : (bloodReportImagePreview && (
-                              <div>
-                                <h6>Preview:</h6>
-                                <img
-                                  src={bloodReportImagePreview}
-                                  alt="Blood Report Preview"
-                                  height="100px"
-                                />
-                                <button onClick={handleDeleteBloodReportImage}>Delete</button>
-                              </div>))}
+                          <h5>Blood Report Pictures</h5>
                           <table className="table table-bordered">
                             <thead>
                               <tr>
-                                <th scope="col">Image</th>
+                                <th scope="col">Images</th>
                                 <th scope="col">Date</th>
-                                <th scope="col">Follow Up</th>
                               </tr>
                             </thead>
                             <tbody>
-
-                              <tr>
-                                <td>
-                                <input
-                                type="file"
-                                className="btn custom-file-input"
-                                id="bloodReportImage"
-                                accept="image/*"
-                                name="bloodReportImage"
-                                
-                               />
-                                </td>
-                                <th>hello</th>
-
-                                <td style={{ display: "flex", flexDirection: "row" }}>
-                                  <button className="btn btn-primary" style={{ background: "rgb(245, 145, 32)", border: "none" }}>
-                                    Edit
-                                  </button>
-                                  <div
-                                    className="btn  mx-1"
-                                    style={{ background: "#ffffff", color: "red" }}>
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="16"
-                                      height="16"
-                                      fill="currentColor"
-                                      className="bi bi-trash-fill"
-                                      viewBox="0 0 16 16"
-                                    >
-                                      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                    </svg>
-                                  </div>
-                                </td>
-                              </tr>
-
+                            {path.state.data.medicaldetail?.bloodReportImage.length > 0 && (
+                            <>
+                              {Object.entries(groupImagesByDate(path.state.data.medicaldetail?.bloodReportImage)).map(([date, images], index) => (
+                                <React.Fragment key={index}>
+                                  {/* {!deletedBloodReportImageIds.includes(images[index].id) && ( // Check if the first image of the group has a deleted id */}
+                                    <tr>
+                                      <td>
+                                        {images.map((data, imageIndex) => (
+                                          !deletedBloodReportImageIds.includes(data.id) && ( // Check if the image id is not in the deleted ids array
+                                            <div key={imageIndex}>
+                                              <img src={`${websiteUrl}${data.bloodReportImage}`} alt="Blood Report Preview" height="100px" width="100px" />
+                                              <button onClick={(e) => handleDeleteSavedBloodReportImage(e, data.id)}>
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                                  background: "transparent", color: "red", // border: "none",
+                                                }}>
+                                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                                </svg>
+                                              </button>
+                                              <button
+                                                className='mx-2 btn btn-primary'
+                                                style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                                                onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.bloodReportImage}`)}
+                                              >
+                                                Open
+                                              </button>
+                                              <button
+                                                className='btn btn-primary'
+                                                style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }}
+                                                onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.bloodReportImage}`)}
+                                              >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                </svg>
+                                              </button>
+                                            </div>
+                                              )))}
+                                          </td>
+                                          <td>
+                                            <input
+                                              className="form-control"
+                                              type="date"
+                                              defaultValue={date === '1111-11-11' ? "" : date}
+                                            />
+                                              </td>
+                                            </tr>
+                                          {/* )} */}
+                                        </React.Fragment>
+                                      ))}</>)}
+                                        <tr>
+                                          <td>
+                                          <input
+                                          type="file"
+                                          className="btn custom-file-input"
+                                          id="bloodReportImage"
+                                          accept="image/*"
+                                          multiple
+                                          name="bloodReportImage"
+                                          onChange={handleBloodReportImage}
+                                        />
+                                        {bloodReportImagePreview.length > 0 && bloodReportImagePreview.map((preview, index)=>(
+                                            <div key={index}>
+                                          <div className="my-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                                          <img src={preview} alt="Blood Report Preview" height="100px" width="100px" />
+                                          <div>
+                                            <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteBloodReportImage(e, index) }}>
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                                background: "transparent", color: "red", // border: "none",
+                                              }}>
+                                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                              </svg></button></div></div>
+                                          </div>
+                                        ))}
+                                          </td>
+                                          <td>
+                                          <input
+                                              className="form-control"
+                                              id="blood_report_date"
+                                              name="blood_report_date"
+                                              type="date"
+                                              required
+                                              onChange={(e) => setBloodReportImageDate(e.target.value)}
+                                            /></td>
+                                        </tr>
                             </tbody>
-                          </table>
-                        </div>
-                      </div>
+                            </table>
 
                       <div className="form-group mb-3">
                         <label
