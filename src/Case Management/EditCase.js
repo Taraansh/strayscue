@@ -475,7 +475,7 @@ export default function EditCase() {
   const handlePopPictures = (event) => {
     const files = event.target.files;
     const imageFiles = Array.from(files);
-    
+
     setPopPictures(imageFiles);
 
     const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file));
@@ -1287,11 +1287,11 @@ export default function EditCase() {
                               />
                               <button onClick={handleDeleteSavedFrontImage}>Delete</button>
                               <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.frontImage}`)}>Open</button>
-                              <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.frontImage}`)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                    </svg></button>
+                              <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.frontImage}`)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                </svg></button>
                             </div>) : (frontImagePreview && (
                               <div>
                                 <h6>Preview:</h6>
@@ -1339,11 +1339,11 @@ export default function EditCase() {
                             />
                             <button onClick={handleDeleteSavedBackImage}>Delete</button>
                             <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.backImage}`)}>Open</button>
-                            <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.backImage}`)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                    </svg></button>
+                            <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.backImage}`)}>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                              </svg></button>
                           </div>) : (backImagePreview && (
                             <div>
                               <h6>Preview:</h6>
@@ -1395,11 +1395,11 @@ export default function EditCase() {
                           />
                           <button onClick={handleDeleteSavedConsentFormImage}>Delete</button>
                           <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`)}>Open</button>
-                          <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                    </svg></button>
+                          <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`)}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                            </svg></button>
                         </div>) : (consentFormImagePreview && (
                           <div>
                             <h6>Preview:</h6>
@@ -1726,44 +1726,46 @@ export default function EditCase() {
                       {animalPicturesPreview.length > 0 && (
                         <div>
                           <h6>Preview:</h6>
-                          <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto",}}>
+                          <div className='my-2' style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
                             {animalPicturesPreview.map((preview, index) => (
                               <div key={index} className='my-1'>
-                                <img src={preview} alt="Animal Pictures Preview" height="100px" width="100px"/>
+                                <img src={preview} alt="Animal Pictures Preview" height="100px" width="100px" />
                                 <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteAnimalPicture(e, index)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
-                                }}>
-                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                </svg></button></div></div>))}</div></div>)}
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                    background: "transparent", color: "red", // border: "none",
+                                  }}>
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                  </svg></button></div></div>))}</div></div>)}
 
                       {path.state.data.animaldetail?.animalPictures.length > 0 && (
                         <div><h6>Preview of Saved Images:</h6>
-                        <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto"}}>
-                         {path.state.data.animaldetail.animalPictures.map((data, index) => (
-                            // Check if the image ID is not in the deletedAnimalPictureIds array
-                            // If not, display the image and the delete button
-                            !deletedAnimalPictureIds.includes(data.id) && (
-                              <div key={index} className='my-1'>
-                                <p>Image {index + 1}:</p>
-                                <img src={`${websiteUrl}${data.animalPictures}`} alt="Animal Pictures Preview" height="100px" width="100px"/>
-                                <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
-                                  <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedAnimalPicture(e, data.id)}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
-                                  style={{background: "transparent", color: "red", // border: "none",
-                                  }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                </svg></button>
-                                  <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.animalPictures}`)}>Open</button>
-                                  <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.animalPictures}`)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                    </svg></button></div>
+                          <div className='my-2' style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto" }}>
+                            {path.state.data.animaldetail.animalPictures.map((data, index) => (
+                              // Check if the image ID is not in the deletedAnimalPictureIds array
+                              // If not, display the image and the delete button
+                              !deletedAnimalPictureIds.includes(data.id) && (
+                                <div key={index} className='my-1'>
+                                  <p>Image {index + 1}:</p>
+                                  <img src={`${websiteUrl}${data.animalPictures}`} alt="Animal Pictures Preview" height="100px" width="100px" />
+                                  <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
+                                    <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedAnimalPicture(e, data.id)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                        style={{
+                                          background: "transparent", color: "red", // border: "none",
+                                        }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                      </svg></button>
+                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.animalPictures}`)}>Open</button>
+                                    <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.animalPictures}`)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                      </svg></button></div>
 
-                                <div className=" my-3">
-                                  <label className="form-label" htmlFor="animal_picture_upload_date">
-                                    Upload Date:
-                                  </label>
-                                  <input className="my-0 form-control" id="animal_picture_upload_date" name="animal_picture_upload_date" type="date" readOnly disabled value={data.animal_picture_upload_date}/></div></div>)))}</div></div>)}
+                                  <div className=" my-3">
+                                    <label className="form-label" htmlFor="animal_picture_upload_date">
+                                      Upload Date:
+                                    </label>
+                                    <input className="my-0 form-control" id="animal_picture_upload_date" name="animal_picture_upload_date" type="date" readOnly disabled value={data.animal_picture_upload_date} /></div></div>)))}</div></div>)}
 
                       <div className="my-2">
                         <div className="form-buttons">
@@ -1996,70 +1998,118 @@ export default function EditCase() {
                                 />
                                 <button onClick={handleDeleteBloodReportImage}>Delete</button>
                               </div>))}
+                          <table className="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th scope="col">Image</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Follow Up</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                              <tr>
+                                <td>
+                                <input
+                                type="file"
+                                className="btn custom-file-input"
+                                id="bloodReportImage"
+                                accept="image/*"
+                                name="bloodReportImage"
+                                
+                               />
+                                </td>
+                                <th>hello</th>
+
+                                <td style={{ display: "flex", flexDirection: "row" }}>
+                                  <button className="btn btn-primary" style={{ background: "rgb(245, 145, 32)", border: "none" }}>
+                                    Edit
+                                  </button>
+                                  <div
+                                    className="btn  mx-1"
+                                    style={{ background: "#ffffff", color: "red" }}>
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="16"
+                                      height="16"
+                                      fill="currentColor"
+                                      className="bi bi-trash-fill"
+                                      viewBox="0 0 16 16"
+                                    >
+                                      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                    </svg>
+                                  </div>
+                                </td>
+                              </tr>
+
+                            </tbody>
+                          </table>
                         </div>
                       </div>
 
-                          <div className="form-group mb-3">
-                            <label
-                              className="form-label h5"
-                              htmlFor="feedingRecordImage"
-                            >
-                              Feeding Record Pictures -
-                            </label>
-                            <div className="custom-file">
-                              <input
-                                type="file"
-                                className="btn custom-file-input"
-                                id="feedingRecordImage"
-                                accept="image/*"
-                                name="feedingRecordImage"
-                                multiple
-                                onChange={handleFeedingRecordImage}
-                              />
-                            </div>
-                          </div>
+                      <div className="form-group mb-3">
+                        <label
+                          className="form-label h5"
+                          htmlFor="feedingRecordImage"
+                        >
+                          Feeding Record Pictures -
+                        </label>
+                        <div className="custom-file">
+                          <input
+                            type="file"
+                            className="btn custom-file-input"
+                            id="feedingRecordImage"
+                            accept="image/*"
+                            name="feedingRecordImage"
+                            multiple
+                            onChange={handleFeedingRecordImage}
+                          />
+                        </div>
+                      </div>
 
-                              {feedingRecordImagePreview.length > 0 && (
-                                <div><h6>Preview:</h6>
-                                  <div className="my-2" style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto",}}>
-                                {feedingRecordImagePreview.map((preview, index)=>(
-                                  <div key={index} className='my-1'>
-                                    <img src={preview} alt="Feeding Record Preview" height="100px" width="100px"/>
-                                    <div>
-                                      <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e)=>{handleDeleteFeedingRecordImage(e, index)}}>
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
-                                      }}>
-                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                      </svg></button></div></div>))}</div></div>)}
+                      {feedingRecordImagePreview.length > 0 && (
+                        <div><h6>Preview:</h6>
+                          <div className="my-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                            {feedingRecordImagePreview.map((preview, index) => (
+                              <div key={index} className='my-1'>
+                                <img src={preview} alt="Feeding Record Preview" height="100px" width="100px" />
+                                <div>
+                                  <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteFeedingRecordImage(e, index) }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                      background: "transparent", color: "red", // border: "none",
+                                    }}>
+                                      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                    </svg></button></div></div>))}</div></div>)}
 
-                                      {path.state.data.medicaldetail?.feedingRecordImage.length > 0 && (
-                                      <div><h6>Preview of Saved Images:</h6>
-                                      <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto"}}>
-                                      {path.state.data.medicaldetail?.feedingRecordImage.map((data, index) => (
-                                        // Check if the image ID is not in the deletedFeedingRecordImageIds array
-                                        // If not, display the image and the delete button
-                                        !deletedFeedingRecordImageIds.includes(data.id) && (
-                                          <div key={index} className='my-1'>
-                                            <p>Image {index + 1}:</p>
-                                            <img src={`${websiteUrl}${data.feedingRecordImage}`} alt="Feeding Record Preview" height="100px" width="100px" />
-                                            <div className='my-2' style={{ display: "flex", alignItems: "center" }} >
-                                              <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedFeedingRecordImage(e, data.id)}>
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
+                      {path.state.data.medicaldetail?.feedingRecordImage.length > 0 && (
+                        <div><h6>Preview of Saved Images:</h6>
+                          <div className='my-2' style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto" }}>
+                            {path.state.data.medicaldetail?.feedingRecordImage.map((data, index) => (
+                              // Check if the image ID is not in the deletedFeedingRecordImageIds array
+                              // If not, display the image and the delete button
+                              !deletedFeedingRecordImageIds.includes(data.id) && (
+                                <div key={index} className='my-1'>
+                                  <p>Image {index + 1}:</p>
+                                  <img src={`${websiteUrl}${data.feedingRecordImage}`} alt="Feeding Record Preview" height="100px" width="100px" />
+                                  <div className='my-2' style={{ display: "flex", alignItems: "center" }} >
+                                    <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedFeedingRecordImage(e, data.id)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                        background: "transparent", color: "red", // border: "none",
                                       }}>
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                              <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.feedingRecordImage}`)}>Open</button>
-                                              <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.feedingRecordImage}`)}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                                </svg></button></div>
+                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.feedingRecordImage}`)}>Open</button>
+                                    <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.feedingRecordImage}`)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                      </svg></button></div>
 
-                                            <div className=" my-3">
-                                              <label className="form-label" htmlFor="feeding_record_image_upload_date">
-                                                Upload Date:
-                                              </label>
-                                              <input className="my-0 form-control" id="feeding_record_image_upload_date" name="feeding_record_image_upload_date" type="date" readOnly disabled value={data.feeding_record_image_upload_date}/></div></div>)))}</div></div>)}
+                                  <div className=" my-3">
+                                    <label className="form-label" htmlFor="feeding_record_image_upload_date">
+                                      Upload Date:
+                                    </label>
+                                    <input className="my-0 form-control" id="feeding_record_image_upload_date" name="feeding_record_image_upload_date" type="date" readOnly disabled value={data.feeding_record_image_upload_date} /></div></div>)))}</div></div>)}
 
                       <div className="my-1">
                         <div className="form-buttons">
@@ -2289,147 +2339,154 @@ export default function EditCase() {
                         </div>
                       </div>
 
-                          <div className="form-group mb-3">
-                            <label
-                              className="form-label h5"
-                              htmlFor="treatmentRecordImage"
-                            >
-                              Treatment Records -
-                            </label>
-                            <div className="custom-file">
-                              <input
-                                type="file"
-                                className="btn custom-file-input"
-                                id="treatmentRecordImage"
-                                accept="image/*"
-                                name="treatmentRecordImage"
-                                multiple
-                                onChange={handleTreatmentRecordImage}
-                              />
-                            </div>
-                          </div>
-                        {treatmentRecordImagePreview.length > 0 && (
-                          <div>
-                            <h6>Preview:</h6>
-                            <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto",}}>
-                          {treatmentRecordImagePreview.map((preview, index)=>{
-                            return (<div key={index} className='my-1'>
-                              <img src={preview} alt="Treatment Record Preview" height="100px" width="100px"/>
-                              <div><button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e)=> handleDeleteTreatmentRecordImage(e, index)}>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
-                                }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                </svg></button></div></div>)
-                          })}</div></div>)}
-
-                          {path.state.data.operationdetail?.treatmentRecordImage.length > 0 && (
-                           <div>
-                          <h6>Preview of Saved Images:</h6>
-                        <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto"}}>
-                            {path.state.data.operationdetail.treatmentRecordImage.map((data, index)=> {
-                              // Check if the image ID is not in the deletedTreatmentRecordImageIds array
-                            // If not, display the image and the delete button
-                            return (!deletedTreatmentRecordImageIds.includes(data.id) && (
-                              <div key={index} className='my-1'>
-                                <p>Image {index + 1}:</p>
-                                <img src={`${websiteUrl}${data.treatmentRecordImage}`} alt="Treatment Record Preview" height="100px" width="100px"/>
-                                <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
-                                  <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e)=>handleDeleteSavedTreatmentRecordImage(e, data.id)}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{background: "transparent", color: "red", // border: "none",
-                                  }}>
-                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                </svg></button>
-                                <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.treatmentRecordImage}`)}>Open</button>
-                                <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.treatmentRecordImage}`)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                    </svg></button></div>
-                                    <div className=" my-3">
-                                  <label className="form-label" htmlFor="treatment_record_image_upload_date">
-                                    Upload Date:
-                                  </label>
-                                  <input
-                                    className="my-0 form-control"
-                                    id="treatment_record_image_upload_date"
-                                    name="treatment_record_image_upload_date"
-                                    type="date"
-                                    readOnly
-                                    disabled
-                                    value={data.treatment_record_image_upload_date}
-                                  />
-                                </div></div>))})}</div></div>)}
-
-
-                          <div className="form-group mb-2">
-                            <label className="form-label h5" htmlFor="organImage">
-                              Organ Pictures -
-                            </label>
-                            <div className="custom-file">
-                              <input
-                                type="file"
-                                className="btn custom-file-input"
-                                id="organImage"
-                                accept="image/*"
-                                name="organImage"
-                                multiple
-                                onChange={handleOrganImage}
-                              />
-                            </div>
-                          </div>
-
-                          {organImagePreview.length > 0 && (
-                            <div>
-                              <h6>Preview:</h6>
-                              <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto",}}>
-                              {organImagePreview.map((preview, index)=>{
+                      <div className="form-group mb-3">
+                        <label
+                          className="form-label h5"
+                          htmlFor="treatmentRecordImage"
+                        >
+                          Treatment Records -
+                        </label>
+                        <div className="custom-file">
+                          <input
+                            type="file"
+                            className="btn custom-file-input"
+                            id="treatmentRecordImage"
+                            accept="image/*"
+                            name="treatmentRecordImage"
+                            multiple
+                            onChange={handleTreatmentRecordImage}
+                          />
+                        </div>
+                      </div>
+                      {treatmentRecordImagePreview.length > 0 && (
+                        <div>
+                          <h6>Preview:</h6>
+                          <div className='my-2' style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                            {treatmentRecordImagePreview.map((preview, index) => {
                               return (<div key={index} className='my-1'>
-                               <img src={preview} alt="Organ Pictures Preview" height="100px" width="100px"/>
-                               <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteOrganImage(e, index)}>
-                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
-                                }}>
-                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                </svg></button></div></div>)})}</div></div>)}
+                                <img src={preview} alt="Treatment Record Preview" height="100px" width="100px" />
+                                <div><button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteTreatmentRecordImage(e, index)}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                    background: "transparent", color: "red", // border: "none",
+                                  }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                  </svg></button></div></div>)
+                            })}</div></div>)}
 
-                          {path.state.data.operationdetail?.organImage.length > 0 && (
-                          <div>
-                            <h6>Preview of Saved Images:</h6>
-                            <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto"}}>
+                      {path.state.data.operationdetail?.treatmentRecordImage.length > 0 && (
+                        <div>
+                          <h6>Preview of Saved Images:</h6>
+                          <div className='my-2' style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto" }}>
+                            {path.state.data.operationdetail.treatmentRecordImage.map((data, index) => {
+                              // Check if the image ID is not in the deletedTreatmentRecordImageIds array
+                              // If not, display the image and the delete button
+                              return (!deletedTreatmentRecordImageIds.includes(data.id) && (
+                                <div key={index} className='my-1'>
+                                  <p>Image {index + 1}:</p>
+                                  <img src={`${websiteUrl}${data.treatmentRecordImage}`} alt="Treatment Record Preview" height="100px" width="100px" />
+                                  <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
+                                    <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedTreatmentRecordImage(e, data.id)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                        background: "transparent", color: "red", // border: "none",
+                                      }}>
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                      </svg></button>
+                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.treatmentRecordImage}`)}>Open</button>
+                                    <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.treatmentRecordImage}`)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                      </svg></button></div>
+                                  <div className=" my-3">
+                                    <label className="form-label" htmlFor="treatment_record_image_upload_date">
+                                      Upload Date:
+                                    </label>
+                                    <input
+                                      className="my-0 form-control"
+                                      id="treatment_record_image_upload_date"
+                                      name="treatment_record_image_upload_date"
+                                      type="date"
+                                      readOnly
+                                      disabled
+                                      value={data.treatment_record_image_upload_date}
+                                    />
+                                  </div></div>))
+                            })}</div></div>)}
 
-                            {path.state.data.operationdetail?.organImage.map((data, index)=>{
-                              // Check if the image ID is not in the deletedOrganImageIds array
-                            // If not, display the image and the delete button
-                            return (!deletedOrganImageIds.includes(data.id) && (
-                              <div key={index} className='my-1'>
-                                <p>Image {index + 1}:</p>
-                                <img src={`${websiteUrl}${data.organImage}`} alt="Animal Pictures Preview" height="100px" width="100px"/>
 
-                                <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
-                                  <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedOrganImage(e, data.id)}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
-                                  style={{background: "transparent", color: "red", // border: "none",
+                      <div className="form-group mb-2">
+                        <label className="form-label h5" htmlFor="organImage">
+                          Organ Pictures -
+                        </label>
+                        <div className="custom-file">
+                          <input
+                            type="file"
+                            className="btn custom-file-input"
+                            id="organImage"
+                            accept="image/*"
+                            name="organImage"
+                            multiple
+                            onChange={handleOrganImage}
+                          />
+                        </div>
+                      </div>
+
+                      {organImagePreview.length > 0 && (
+                        <div>
+                          <h6>Preview:</h6>
+                          <div className='my-2' style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                            {organImagePreview.map((preview, index) => {
+                              return (<div key={index} className='my-1'>
+                                <img src={preview} alt="Organ Pictures Preview" height="100px" width="100px" />
+                                <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteOrganImage(e, index)}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                    background: "transparent", color: "red", // border: "none",
                                   }}>
-                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                </svg></button>
-                                  <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.organImage}`)}>Open</button>
-                                  <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.organImage}`)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                    </svg></button></div>
-                                    <div className=" my-3">
-                                  <label className="form-label" htmlFor="organ_image_upload_date">
-                                    Upload Date:
-                                  </label>
-                                  <input
-                                    className="my-0 form-control"
-                                    id="organ_image_upload_date"
-                                    name="organ_image_upload_date"
-                                    type="date"
-                                    readOnly
-                                    disabled
-                                    value={data.organ_image_upload_date}
-                                  />
-                                </div></div>))})}</div></div>)}
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                  </svg></button></div></div>)
+                            })}</div></div>)}
+
+                      {path.state.data.operationdetail?.organImage.length > 0 && (
+                        <div>
+                          <h6>Preview of Saved Images:</h6>
+                          <div className='my-2' style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto" }}>
+
+                            {path.state.data.operationdetail?.organImage.map((data, index) => {
+                              // Check if the image ID is not in the deletedOrganImageIds array
+                              // If not, display the image and the delete button
+                              return (!deletedOrganImageIds.includes(data.id) && (
+                                <div key={index} className='my-1'>
+                                  <p>Image {index + 1}:</p>
+                                  <img src={`${websiteUrl}${data.organImage}`} alt="Animal Pictures Preview" height="100px" width="100px" />
+
+                                  <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
+                                    <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedOrganImage(e, data.id)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                        style={{
+                                          background: "transparent", color: "red", // border: "none",
+                                        }}>
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                      </svg></button>
+                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.organImage}`)}>Open</button>
+                                    <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.organImage}`)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                      </svg></button></div>
+                                  <div className=" my-3">
+                                    <label className="form-label" htmlFor="organ_image_upload_date">
+                                      Upload Date:
+                                    </label>
+                                    <input
+                                      className="my-0 form-control"
+                                      id="organ_image_upload_date"
+                                      name="organ_image_upload_date"
+                                      type="date"
+                                      readOnly
+                                      disabled
+                                      value={data.organ_image_upload_date}
+                                    />
+                                  </div></div>))
+                            })}</div></div>)}
 
                       <div className="my-1">
                         <div className="form-buttons">
@@ -2632,147 +2689,151 @@ export default function EditCase() {
                         </div>
                       </div>
 
-                          <div className="form-group mb-3">
-                            <label className="form-label h5" htmlFor="popPictures">
-                              Post-Operation Pictures -
-                            </label>
-                            <div className="custom-file">
-                              <input
-                                type="file"
-                                className="btn custom-file-input"
-                                id="popPictures"
-                                accept="image/*"
-                                name="popPictures"
-                                multiple
-                                onChange={handlePopPictures}
-                              />
-                            </div>
-                          </div>
-                          
-                          {popPicturesPreview.length > 0 && (
+                      <div className="form-group mb-3">
+                        <label className="form-label h5" htmlFor="popPictures">
+                          Post-Operation Pictures -
+                        </label>
+                        <div className="custom-file">
+                          <input
+                            type="file"
+                            className="btn custom-file-input"
+                            id="popPictures"
+                            accept="image/*"
+                            name="popPictures"
+                            multiple
+                            onChange={handlePopPictures}
+                          />
+                        </div>
+                      </div>
+
+                      {popPicturesPreview.length > 0 && (
                         <div>
                           <h6>Preview:</h6>
-                          <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto",}}>
+                          <div className='my-2' style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
                             {popPicturesPreview.map((preview, index) => (
                               <div key={index} className='my-1'>
-                                <img src={preview} alt="Post Operation Pictures Preview" height="100px" width="100px"/>
+                                <img src={preview} alt="Post Operation Pictures Preview" height="100px" width="100px" />
                                 <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeletePopPictures(e, index)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
-                                }}>
-                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                </svg></button></div></div>))}</div></div>)}
-                          
-                                {path.state.data.postoperationdetail?.popPictures.length > 0 && (
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                    background: "transparent", color: "red", // border: "none",
+                                  }}>
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                  </svg></button></div></div>))}</div></div>)}
+
+                      {path.state.data.postoperationdetail?.popPictures.length > 0 && (
                         <div>
                           <h6>Preview of Saved Images:</h6>
-                        <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto"}}>
-                         
-                          {path.state.data.postoperationdetail.popPictures.map((data, index) => (
-                            // Check if the image ID is not in the deletedPopPicturesIds array
-                            // If not, display the image and the delete button
-                            !deletedPopPicturesIds.includes(data.id) && (
-                              <div key={index} className='my-1'>
-                                <p>Image {index + 1}:</p>
-                                <img src={`${websiteUrl}${data.popPictures}`} alt="Post Operation Pictures Preview" height="100px" width="100px"/>
-                                <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
-                                  <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedPopPictures(e, data.id)}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
-                                  style={{background: "transparent", color: "red", // border: "none",
-                                  }}>
-                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                </svg></button>
-                                  <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.popPictures}`)}>Open</button>
-                                  <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.popPictures}`)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                    </svg></button></div>
+                          <div className='my-2' style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto" }}>
 
-                                <div className=" my-3">
-                                  <label className="form-label" htmlFor="pop_pictures_upload_date">
-                                    Upload Date:
-                                  </label>
-                                  <input
-                                    className="my-0 form-control"
-                                    id="pop_pictures_upload_date"
-                                    name="pop_pictures_upload_date"
-                                    type="date"
-                                    readOnly
-                                    disabled
-                                    value={data.pop_pictures_upload_date}
-                                  />
-                                </div></div>)))}</div></div>)}
+                            {path.state.data.postoperationdetail.popPictures.map((data, index) => (
+                              // Check if the image ID is not in the deletedPopPicturesIds array
+                              // If not, display the image and the delete button
+                              !deletedPopPicturesIds.includes(data.id) && (
+                                <div key={index} className='my-1'>
+                                  <p>Image {index + 1}:</p>
+                                  <img src={`${websiteUrl}${data.popPictures}`} alt="Post Operation Pictures Preview" height="100px" width="100px" />
+                                  <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
+                                    <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedPopPictures(e, data.id)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                        style={{
+                                          background: "transparent", color: "red", // border: "none",
+                                        }}>
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                      </svg></button>
+                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.popPictures}`)}>Open</button>
+                                    <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.popPictures}`)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                      </svg></button></div>
 
-                          <div className="form-group mb-3">
-                            <label className="form-label h5" htmlFor="releasePictures" >
-                              Release Pictures -
-                            </label>
-                            <div className="custom-file">
-                              <input
-                                type="file"
-                                className="btn custom-file-input"
-                                id="releasePictures"
-                                accept="image/*"
-                                name="releasePictures"
-                                multiple
-                                onChange={handleReleasePictures}
-                              />
-                            </div>
-                          </div>
+                                  <div className=" my-3">
+                                    <label className="form-label" htmlFor="pop_pictures_upload_date">
+                                      Upload Date:
+                                    </label>
+                                    <input
+                                      className="my-0 form-control"
+                                      id="pop_pictures_upload_date"
+                                      name="pop_pictures_upload_date"
+                                      type="date"
+                                      readOnly
+                                      disabled
+                                      value={data.pop_pictures_upload_date}
+                                    />
+                                  </div></div>)))}</div></div>)}
 
-                          {releasePicturesPreview.length > 0 && (
+                      <div className="form-group mb-3">
+                        <label className="form-label h5" htmlFor="releasePictures" >
+                          Release Pictures -
+                        </label>
+                        <div className="custom-file">
+                          <input
+                            type="file"
+                            className="btn custom-file-input"
+                            id="releasePictures"
+                            accept="image/*"
+                            name="releasePictures"
+                            multiple
+                            onChange={handleReleasePictures}
+                          />
+                        </div>
+                      </div>
+
+                      {releasePicturesPreview.length > 0 && (
                         <div>
                           <h6>Preview:</h6>
-                          <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto",}}>
+                          <div className='my-2' style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
                             {releasePicturesPreview.map((preview, index) => (
                               <div key={index} className='my-1'>
-                                <img src={preview} alt="Release Pictures Preview" height="100px" width="100px"/>
+                                <img src={preview} alt="Release Pictures Preview" height="100px" width="100px" />
                                 <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteReleasePictures(e, index)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{ background: "transparent", color: "red", // border: "none",
-                                }}>
-                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                </svg></button></div></div>))}</div></div>)}
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                    background: "transparent", color: "red", // border: "none",
+                                  }}>
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                  </svg></button></div></div>))}</div></div>)}
 
-                                {path.state.data.postoperationdetail?.releasePictures.length > 0 && (
+                      {path.state.data.postoperationdetail?.releasePictures.length > 0 && (
                         <div>
                           <h6>Preview of Saved Images:</h6>
-                        <div className='my-2' style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto"}}>
-                         
-                          {path.state.data.postoperationdetail.releasePictures.map((data, index) => (
-                            // Check if the image ID is not in the deletedReleasePicturesIds array
-                            // If not, display the image and the delete button
-                            !deletedReleasePicturesIds.includes(data.id) && (
-                              <div key={index} className='my-1'>
-                                <p>Image {index + 1}:</p>
-                                <img src={`${websiteUrl}${data.releasePictures}`} alt="Release Pictures Preview" height="100px" width="100px"/>
-                                <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
-                                  <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedReleasePictures(e, data.id)}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
-                                  style={{background: "transparent", color: "red", // border: "none",
-                                  }}>
-                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                </svg></button>
-                                  <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.releasePictures}`)}>Open</button>
-                                  <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.releasePictures}`)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                      <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                      <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                    </svg></button></div>
+                          <div className='my-2' style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto" }}>
 
-                                <div className=" my-3">
-                                  <label className="form-label" htmlFor="release_pictures_upload_date">
-                                    Upload Date:
-                                  </label>
-                                  <input
-                                    className="my-0 form-control"
-                                    id="release_pictures_upload_date"
-                                    name="release_pictures_upload_date"
-                                    type="date"
-                                    readOnly
-                                    disabled
-                                    value={data.release_pictures_upload_date}
-                                  />
-                                </div></div>)))}</div></div>)}
+                            {path.state.data.postoperationdetail.releasePictures.map((data, index) => (
+                              // Check if the image ID is not in the deletedReleasePicturesIds array
+                              // If not, display the image and the delete button
+                              !deletedReleasePicturesIds.includes(data.id) && (
+                                <div key={index} className='my-1'>
+                                  <p>Image {index + 1}:</p>
+                                  <img src={`${websiteUrl}${data.releasePictures}`} alt="Release Pictures Preview" height="100px" width="100px" />
+                                  <div className='my-3' style={{ display: "flex", alignItems: "center" }} >
+                                    <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedReleasePictures(e, data.id)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                        style={{
+                                          background: "transparent", color: "red", // border: "none",
+                                        }}>
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                      </svg></button>
+                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.releasePictures}`)}>Open</button>
+                                    <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.releasePictures}`)}>
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                      </svg></button></div>
+
+                                  <div className=" my-3">
+                                    <label className="form-label" htmlFor="release_pictures_upload_date">
+                                      Upload Date:
+                                    </label>
+                                    <input
+                                      className="my-0 form-control"
+                                      id="release_pictures_upload_date"
+                                      name="release_pictures_upload_date"
+                                      type="date"
+                                      readOnly
+                                      disabled
+                                      value={data.release_pictures_upload_date}
+                                    />
+                                  </div></div>)))}</div></div>)}
 
                       <div className="my-1">
                         <button
@@ -2833,7 +2894,7 @@ export default function EditCase() {
             <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
               {localStorage.getItem("username")}
             </label>
-            <img width="17%" style={{ marginRight: "1.5rem", cursor: "pointer" }} src={logo} alt="Logo"/>
+            <img width="17%" style={{ marginRight: "1.5rem", cursor: "pointer" }} src={logo} alt="Logo" />
             <i style={{ cursor: "pointer" }} className="fa-solid fa-right-from-bracket" onClick={logoutUser}></i>
           </span>
         </div>
