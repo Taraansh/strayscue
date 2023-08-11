@@ -251,14 +251,17 @@ const Dashboard = () => {
                 >
                   Add Case
                 </Link>
-                <input
+               <span style={{display:"flex"}}>
+               <input
                   type="text"
                   placeholder="Search by Reporter Name, location, landmark"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
-                <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn mx-2" onClick={(e) => {setSearchQuery("")}}>Clear</button>
-              </div>
+                <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn mx-1" onClick={(e) => {setSearchQuery("")}}>Clear</button>
+              
+               </span>
+               </div>
               {/* Displaying Case Data */}
               <div>
                 <div className="container-fluid" style={{overflow : "scroll"}}>
