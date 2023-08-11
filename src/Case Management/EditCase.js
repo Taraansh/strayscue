@@ -2108,8 +2108,8 @@ export default function EditCase() {
                       </div>
 
                           <h5>Blood Report Pictures</h5>
-                          <div style={{overflow: "scroll"}}>
-                          <table className="table table-bordered">
+                        <div style={{overflow:"scroll"}}>
+                        <table className="table table-bordered">
                             <thead>
                               <tr>
                                 <th scope="col">Images</th>
@@ -2123,14 +2123,16 @@ export default function EditCase() {
                                 <React.Fragment key={index}>
                                     <tr>
                                       <td>
+                                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(158px, 1fr))", gridGap: "32px", padding: "20px", margin: "0 auto", }}>
                                         {images.map((data, imageIndex) => (
                                           !deletedBloodReportImageIds.includes(data.id) && ( // Check if the image id is not in the deleted ids array
 
                                             (data.bloodReportImage) ? (
                                             <div key={imageIndex}>
                                               <img src={`${websiteUrl}${data.bloodReportImage}`} alt="Blood Report Preview" height="100px" width="100px" />
-                                              <button onClick={(e) => handleDeleteSavedBloodReportImage(e, data.id)}>
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                             <div className='my-2'>
+                                             <button className='btn' style={{padding:"0.3rem", border:"1px solid black"}} onClick={(e) => handleDeleteSavedBloodReportImage(e, data.id)}>
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
                                                   background: "transparent", color: "red", // border: "none",
                                                 }}>
                                                   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
@@ -2153,6 +2155,7 @@ export default function EditCase() {
                                                   <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
                                                 </svg>
                                               </button>
+                                             </div>
                                             </div>
                                             ):(
                                               <div key={imageIndex}>
@@ -2179,6 +2182,8 @@ export default function EditCase() {
                                             ))}
                                               </div>)
                                               )))}
+                                        </div>
+                                       
                                           </td>
                                           {images.some(data => !deletedBloodReportImageIds.includes(data.id)) && ( // Check if at least one image is not deleted
                                             <td>
@@ -2194,7 +2199,7 @@ export default function EditCase() {
                                       ))}</>))}
                                         
                                         <tr>
-                                          <td>
+                                          <td >
                                           <input
                                           type="file"
                                           className="btn custom-file-input"
@@ -2204,9 +2209,10 @@ export default function EditCase() {
                                           name="bloodReportImage"
                                           onChange={handleBloodReportImage}
                                         />
-                                        {bloodReportImagePreview.length > 0 && bloodReportImagePreview.map((preview, index)=>(
+                                       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                                       {bloodReportImagePreview.length > 0 && bloodReportImagePreview.map((preview, index)=>(
                                             <div key={index}>
-                                          <div className="my-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                                          <div className="my-2" >
                                           <img src={preview} alt="Blood Report Preview" height="100px" width="100px" />
                                           <div>
                                             <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteBloodReportImage(e, index) }}>
@@ -2217,6 +2223,7 @@ export default function EditCase() {
                                               </svg></button></div></div>
                                           </div>
                                         ))}
+                                       </div>
                                           </td>
                                           <td>
                                           <input
@@ -2230,7 +2237,7 @@ export default function EditCase() {
                                         </tr>
                             </tbody>
                             </table>
-                            </div>
+                        </div>
 
                       <div className="form-group mb-3">
                         <label
