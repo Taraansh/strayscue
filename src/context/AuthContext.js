@@ -9,8 +9,8 @@ export default AuthContext;
 export const AuthProvider = ({ children }) => {
   // Change this link here with the backend link
   const websiteUrl = "http://127.0.0.1:8000";
-  const [case_id, setCaseID] = useState("");
 
+  const [case_id, setCaseID] = useState("");
   const [allCases, setAllCases] = useState([]);
   const [allSponsors, setAllSponsors] = useState([]);
   const [allVets, setAllVets] = useState([]);
@@ -21,22 +21,13 @@ export const AuthProvider = ({ children }) => {
   const [type_of_case, setType_of_case] = useState("");
   const [status_of_case, setStatus_of_case] = useState("");
   const [mortality_of_case, setMortality_of_case] = useState("");
-  let [user, setUser] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? jwtDecode(localStorage.getItem("authTokens"))
-      : null
-  );
-  let [authTokens, setAuthTokens] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? JSON.parse(localStorage.getItem("authTokens"))
-      : null
-  );
+  let [user, setUser] = useState(() => localStorage.getItem("authTokens") ? jwtDecode(localStorage.getItem("authTokens")) : null);
+  let [authTokens, setAuthTokens] = useState(() => localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")): null);
   let [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
   let loginUser = async (e) => {
-   
     e.preventDefault();
     const response = await fetch(`${websiteUrl}/authorize/token/`, {
       method: "POST",
@@ -268,6 +259,254 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  //Handle Button to delete Saved Animal Pictures
+  const handleAnimalPictureDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Animal Picture by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deleteanimalpicture/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Animal Picture when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Animal Picture when the delete request fails
+          console.log("Failed to delete Animal Picture:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Animal Picture:", error);
+      }
+    }
+  };
+
+  //Handle Button to delete Saved Feeding Record Image
+  const handleFeedingRecordImageDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Feeding Record Image by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deletefeedingrecord/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Feeding Record Image when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Feeding Record Image when the delete request fails
+          console.log("Failed to delete Feeding Record Image:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Feeding Record Image:", error);
+      }
+    }
+  };
+
+  //Handle Button to delete Saved Blood Report Image
+    const handleBloodReportImageDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Blood Report by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deletebloodrecord/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Blood Report when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Blood Report when the delete request fails
+          console.log("Failed to delete Blood Report:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Blood Report:", error);
+      }
+    }
+  };
+
+    //Handle Button to delete Saved Medical Prescription Image
+    const handleMedicalPrescriptionImageDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Medical Prescription Image by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deletemedicalprescription/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Medical Prescription Image when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Medical Prescription Image when the delete request fails
+          console.log("Failed to delete Medical Prescription Image:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Medical Prescription Image:", error);
+      }
+    }
+  };
+
+    //Handle Button to delete Saved Treatment Record Image
+    const handleTreatmentRecordImageDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Treatment Record by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deletetreatmentrecord/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Treatment Record when the when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Treatment Record when the delete request fails
+          console.log("Failed to delete Treatment Record:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Treatment Record:", error);
+      }
+    }
+  };
+
+  //Handle Button to delete Saved Organ Image
+  const handleOrganImageDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Organ Image by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deleteorganimage/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Organ Image when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Organ Image when the delete request fails
+          console.log("Failed to delete Organ Image:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Organ Image:", error);
+      }
+    }
+  };
+
+    //Handle Button to delete Saved Post Operation Pictures
+  const handlePopPicturesDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Post Operation Pictures by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deletepostoperationpicture/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Post Operation Pictures when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Post Operation Pictures when the delete request fails
+          console.log("Failed to delete Post Operation Pictures:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Post Operation Pictures:", error);
+      }
+    }
+  };
+
+      //Handle Button to delete Saved Release Pictures
+  const handleReleasePicturesDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Release Picture by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deletereleasepicture/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Release Picture when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Release Picture when the delete request fails
+          console.log("Failed to delete Release Picture:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Release Picture:", error);
+      }
+    }
+  };
+
   const updateToken = useCallback(async () => {
     const response = await fetch(
       `${websiteUrl}/authorize/token/refresh/`,
@@ -297,6 +536,7 @@ export const AuthProvider = ({ children }) => {
   let contextData = {
     websiteUrl: websiteUrl,
     user: user,
+    authTokens: authTokens,
     case_id: case_id,
     type_of_case: type_of_case,
     status_of_case: status_of_case,
@@ -309,7 +549,6 @@ export const AuthProvider = ({ children }) => {
     allUsersLinkedWithNgo: allUsersLinkedWithNgo,
     allCasesLinkedWithNGO: allCasesLinkedWithNGO,
 
-    authTokens: authTokens,
     loginUser: loginUser,
     logoutUser: logoutUser,
     addNewCase: addNewCase,
@@ -322,6 +561,14 @@ export const AuthProvider = ({ children }) => {
     getAllCasesLinkedWithNgo: getAllCasesLinkedWithNgo,
     handleOpenImage: handleOpenImage,
     handleDownloadImage: handleDownloadImage,
+    handleAnimalPictureDeleteButton: handleAnimalPictureDeleteButton,
+    handleFeedingRecordImageDeleteButton: handleFeedingRecordImageDeleteButton,
+    handleBloodReportImageDeleteButton: handleBloodReportImageDeleteButton,
+    handleMedicalPrescriptionImageDeleteButton: handleMedicalPrescriptionImageDeleteButton,
+    handleTreatmentRecordImageDeleteButton: handleTreatmentRecordImageDeleteButton,
+    handleOrganImageDeleteButton: handleOrganImageDeleteButton,
+    handlePopPicturesDeleteButton: handlePopPicturesDeleteButton,
+    handleReleasePicturesDeleteButton: handleReleasePicturesDeleteButton,
   };
 
   useEffect(() => {

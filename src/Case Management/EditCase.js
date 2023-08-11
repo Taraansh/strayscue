@@ -9,7 +9,7 @@ export default function EditCase() {
   const path = useLocation()
   const navigate = useNavigate()
   const [activeButton, setActiveButton] = useState(0);
-  const { user, logoutUser, websiteUrl, allReporters, getAllReporters, allVets, getAllVets, handleOpenImage, handleDownloadImage } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl, allReporters, getAllReporters, allVets, getAllVets, handleOpenImage, handleDownloadImage, handleAnimalPictureDeleteButton, handleFeedingRecordImageDeleteButton, handleBloodReportImageDeleteButton, handleMedicalPrescriptionImageDeleteButton, handleTreatmentRecordImageDeleteButton, handleOrganImageDeleteButton, handlePopPicturesDeleteButton, handleReleasePicturesDeleteButton } = useContext(AuthContext);
 
   // Reporting Details State
   const [frontImageFile, setFrontImageFile] = useState(null);
@@ -89,8 +89,6 @@ export default function EditCase() {
   const [organImagePreview, setOrganImagePreview] = useState([]);
 
   const [deletedMedicalPrescriptionImageIds, setDeletedMedicalPrescriptionImageIds] = useState([]);
-
-
   const [deletedTreatmentRecordImageIds, setDeletedTreatmentRecordImageIds] = useState([]);
   const [deletedOrganImageIds, setDeletedOrganImageIds] = useState([]);
 
@@ -229,36 +227,6 @@ export default function EditCase() {
     handleAnimalPictureDeleteButton(e, id)
   };
 
-  const handleAnimalPictureDeleteButton = async (e, id) => {
-    e.preventDefault()
-    const confirmDelete = window.confirm(
-      "Warning: This image will be deleted forever. Are you Sure?"
-    );
-    if (confirmDelete) {
-      try {
-        // Delete the specific Animal Picture by making an API call
-        const response = await fetch(
-          `${websiteUrl}/cases/deleteanimalpicture/${id}/`,
-          {
-            method: "DELETE",
-          }
-        );
-        if (response.status === 204) {
-          console.log("Image deleted successfully")
-        } else if (response.status === 404) {
-          // Handle the Animal Picture when the image was already deleted
-          alert("Image is already Deleted")
-        } else {
-          // Handle the Animal Picture when the delete request fails
-          console.log("Failed to delete Animal Picture:", id);
-        }
-      } catch (error) {
-        // Handle any errors that occur during the delete operation
-        console.error("Error deleting Animal Picture:", error);
-      }
-    }
-  };
-
   // Medical Details Image Management
   const handleFeedingRecordImage = (event) => {
     const files = event.target.files;
@@ -285,36 +253,6 @@ export default function EditCase() {
     setDeletedFeedingRecordImageIds([...deletedFeedingRecordImageIds, id])
     handleFeedingRecordImageDeleteButton(e, id)
   }
-
-  const handleFeedingRecordImageDeleteButton = async (e, id) => {
-    e.preventDefault()
-    const confirmDelete = window.confirm(
-      "Warning: This image will be deleted forever. Are you Sure?"
-    );
-    if (confirmDelete) {
-      try {
-        // Delete the specific Feeding Record Image by making an API call
-        const response = await fetch(
-          `${websiteUrl}/cases/deletefeedingrecord/${id}/`,
-          {
-            method: "DELETE",
-          }
-        );
-        if (response.status === 204) {
-          console.log("Image deleted successfully")
-        } else if (response.status === 404) {
-          // Handle the Feeding Record Image when the image was already deleted
-          alert("Image is already Deleted")
-        } else {
-          // Handle the Feeding Record Image when the delete request fails
-          console.log("Failed to delete Feeding Record Image:", id);
-        }
-      } catch (error) {
-        // Handle any errors that occur during the delete operation
-        console.error("Error deleting Feeding Record Image:", error);
-      }
-    }
-  };
 
   const handleUpdateBloodReportImageWithDate = (event, date) => {
     const files = event.target.files;
@@ -343,36 +281,6 @@ export default function EditCase() {
     e.preventDefault()
     setDeletedBloodReportImageIds([...deletedBloodReportImageIds, id]);
     handleBloodReportImageDeleteButton(e, id)
-  };
-
-  const handleBloodReportImageDeleteButton = async (e, id) => {
-    e.preventDefault()
-    const confirmDelete = window.confirm(
-      "Warning: This image will be deleted forever. Are you Sure?"
-    );
-    if (confirmDelete) {
-      try {
-        // Delete the specific Blood Report by making an API call
-        const response = await fetch(
-          `${websiteUrl}/cases/deletebloodrecord/${id}/`,
-          {
-            method: "DELETE",
-          }
-        );
-        if (response.status === 204) {
-          console.log("Image deleted successfully")
-        } else if (response.status === 404) {
-          // Handle the Blood Report when the image was already deleted
-          alert("Image is already Deleted")
-        } else {
-          // Handle the Blood Report when the delete request fails
-          console.log("Failed to delete Blood Report:", id);
-        }
-      } catch (error) {
-        // Handle any errors that occur during the delete operation
-        console.error("Error deleting Blood Report:", error);
-      }
-    }
   };
 
   const handleBloodReportImage = (event) => {
@@ -426,36 +334,6 @@ export default function EditCase() {
     handleMedicalPrescriptionImageDeleteButton(e, id)
   };
 
-  const handleMedicalPrescriptionImageDeleteButton = async (e, id) => {
-    e.preventDefault()
-    const confirmDelete = window.confirm(
-      "Warning: This image will be deleted forever. Are you Sure?"
-    );
-    if (confirmDelete) {
-      try {
-        // Delete the specific Medical Prescription Image by making an API call
-        const response = await fetch(
-          `${websiteUrl}/cases/deletemedicalprescription/${id}/`,
-          {
-            method: "DELETE",
-          }
-        );
-        if (response.status === 204) {
-          console.log("Image deleted successfully")
-        } else if (response.status === 404) {
-          // Handle the Medical Prescription Image when the image was already deleted
-          alert("Image is already Deleted")
-        } else {
-          // Handle the Medical Prescription Image when the delete request fails
-          console.log("Failed to delete Medical Prescription Image:", id);
-        }
-      } catch (error) {
-        // Handle any errors that occur during the delete operation
-        console.error("Error deleting Medical Prescription Image:", error);
-      }
-    }
-  };
-
     const handleMedicalPrescriptionImage = (event) => {
     const files = event.target.files;
     const imageFiles = Array.from(files);
@@ -505,36 +383,6 @@ export default function EditCase() {
     handleTreatmentRecordImageDeleteButton(e, id)
   }
 
-  const handleTreatmentRecordImageDeleteButton = async (e, id) => {
-    e.preventDefault()
-    const confirmDelete = window.confirm(
-      "Warning: This image will be deleted forever. Are you Sure?"
-    );
-    if (confirmDelete) {
-      try {
-        // Delete the specific Treatment Record by making an API call
-        const response = await fetch(
-          `${websiteUrl}/cases/deletetreatmentrecord/${id}/`,
-          {
-            method: "DELETE",
-          }
-        );
-        if (response.status === 204) {
-          console.log("Image deleted successfully")
-        } else if (response.status === 404) {
-          // Handle the Treatment Record when the when the image was already deleted
-          alert("Image is already Deleted")
-        } else {
-          // Handle the Treatment Record when the delete request fails
-          console.log("Failed to delete Treatment Record:", id);
-        }
-      } catch (error) {
-        // Handle any errors that occur during the delete operation
-        console.error("Error deleting Treatment Record:", error);
-      }
-    }
-  };
-
   const handleOrganImage = (event) => {
     const files = event.target.files;
     const imageFiles = Array.from(files);
@@ -562,36 +410,6 @@ export default function EditCase() {
     setDeletedOrganImageIds([...deletedOrganImageIds, id]);
     handleOrganImageDeleteButton(e, id)
   }
-
-  const handleOrganImageDeleteButton = async (e, id) => {
-    e.preventDefault()
-    const confirmDelete = window.confirm(
-      "Warning: This image will be deleted forever. Are you Sure?"
-    );
-    if (confirmDelete) {
-      try {
-        // Delete the specific Organ Image by making an API call
-        const response = await fetch(
-          `${websiteUrl}/cases/deleteorganimage/${id}/`,
-          {
-            method: "DELETE",
-          }
-        );
-        if (response.status === 204) {
-          console.log("Image deleted successfully")
-        } else if (response.status === 404) {
-          // Handle the Organ Image when the image was already deleted
-          alert("Image is already Deleted")
-        } else {
-          // Handle the Organ Image when the delete request fails
-          console.log("Failed to delete Organ Image:", id);
-        }
-      } catch (error) {
-        // Handle any errors that occur during the delete operation
-        console.error("Error deleting Organ Image:", error);
-      }
-    }
-  };
 
   // Post Operation Details Image Management
   const handlePopPictures = (event) => {
@@ -621,36 +439,6 @@ export default function EditCase() {
     handlePopPicturesDeleteButton(e, id)
   }
 
-  const handlePopPicturesDeleteButton = async (e, id) => {
-    e.preventDefault()
-    const confirmDelete = window.confirm(
-      "Warning: This image will be deleted forever. Are you Sure?"
-    );
-    if (confirmDelete) {
-      try {
-        // Delete the specific Post Operation Pictures by making an API call
-        const response = await fetch(
-          `${websiteUrl}/cases/deletepostoperationpicture/${id}/`,
-          {
-            method: "DELETE",
-          }
-        );
-        if (response.status === 204) {
-          console.log("Image deleted successfully")
-        } else if (response.status === 404) {
-          // Handle the Post Operation Pictures when the image was already deleted
-          alert("Image is already Deleted")
-        } else {
-          // Handle the Post Operation Pictures when the delete request fails
-          console.log("Failed to delete Post Operation Pictures:", id);
-        }
-      } catch (error) {
-        // Handle any errors that occur during the delete operation
-        console.error("Error deleting Post Operation Pictures:", error);
-      }
-    }
-  };
-
   const handleReleasePictures = (event) => {
     const files = event.target.files;
     const imageFiles = Array.from(files);
@@ -677,36 +465,6 @@ export default function EditCase() {
     setDeletedReleasePicturesIds([...deletedReleasePicturesIds, id]);
     handleReleasePicturesDeleteButton(e, id)
   }
-
-  const handleReleasePicturesDeleteButton = async (e, id) => {
-    e.preventDefault()
-    const confirmDelete = window.confirm(
-      "Warning: This image will be deleted forever. Are you Sure?"
-    );
-    if (confirmDelete) {
-      try {
-        // Delete the specific Release Picture by making an API call
-        const response = await fetch(
-          `${websiteUrl}/cases/deletereleasepicture/${id}/`,
-          {
-            method: "DELETE",
-          }
-        );
-        if (response.status === 204) {
-          console.log("Image deleted successfully")
-        } else if (response.status === 404) {
-          // Handle the Release Picture when the image was already deleted
-          alert("Image is already Deleted")
-        } else {
-          // Handle the Release Picture when the delete request fails
-          console.log("Failed to delete Release Picture:", id);
-        }
-      } catch (error) {
-        // Handle any errors that occur during the delete operation
-        console.error("Error deleting Release Picture:", error);
-      }
-    }
-  };
 
   // Handling Reporting Details
   const handleUpdateReportingDetails = async (e) => {
@@ -1071,7 +829,6 @@ export default function EditCase() {
           flexDirection: "row",
           paddingBottom: "2rem",
           margin: "0",
-
         }}
       >
         <NavBar />
@@ -1216,9 +973,7 @@ export default function EditCase() {
                           {allReporters.map((data, index) => {
                             return (
                               <option key={index} value={data.reported_name}>{data.reported_name}</option>
-                            )
-                          })
-                          }
+                            )})}
                         </select>
                       </div>)}
 
@@ -1275,9 +1030,7 @@ export default function EditCase() {
                               name="reporterAltContact"
                               defaultValue={path.state.data.reportingdetail?.reporterAltContact === "null" ? '' : path.state.data.reportingdetail?.reporterAltContact}
                               placeholder="Alternate Phone Number"
-                              onChange={(e) =>
-                                setReporterAltContact(e.target.value)
-                              }
+                              onChange={(e) =>setReporterAltContact(e.target.value)}
                               autoComplete="altnumber"
                             />
                           </div>
@@ -1467,9 +1220,8 @@ export default function EditCase() {
                                   height="100px"
                                 />
                                 <button onClick={handleDeleteFrontImage}>Delete</button>
-                              </div>))}
+                              </div>))}</div>
 
-                        </div>
                         <div className="col">
                           <div className="form-group">
                             <label className="form-label h5" htmlFor="backImage">
@@ -1520,8 +1272,7 @@ export default function EditCase() {
                               />
                               <button onClick={handleDeleteBackImage}>Delete</button>
                             </div>))}
-                        </div>
-                      </div>
+                        </div></div>
 
                       <div className="row form-1">
                         <div className="form-group">
@@ -1679,9 +1430,7 @@ export default function EditCase() {
                               aria-label="Animal Age"
                               name="animalAge"
                               defaultValue={path.state.data.animaldetail?.animalAge || ''}
-                              onChange={(e) => {
-                                setAnimalAge(e.target.value);
-                              }}
+                              onChange={(e) => {setAnimalAge(e.target.value);}}
                             >
                               <option value="">Age</option>
                               <option value="0-1">0-1 Yrs</option>
@@ -1708,9 +1457,7 @@ export default function EditCase() {
                               aria-label="Animal Temperament"
                               name="animalTemperament"
                               defaultValue={path.state.data.animaldetail?.animalTemperament || ''}
-                              onChange={(e) => {
-                                setAnimalTemperament(e.target.value);
-                              }}
+                              onChange={(e) => {setAnimalTemperament(e.target.value);}}
                             >
                               <option value="">Choose</option>
                               <option value="Friendly">Friendly</option>
@@ -1731,9 +1478,7 @@ export default function EditCase() {
                               aria-label="Animal Gender"
                               name="animalGender"
                               defaultValue={path.state.data.animaldetail?.animalGender || ''}
-                              onChange={(e) => {
-                                setAnimalGender(e.target.value);
-                              }}
+                              onChange={(e) => {setAnimalGender(e.target.value);}}
                             >
                               <option value="">Choose Gender</option>
                               <option value="Male">Male</option>
@@ -1756,9 +1501,7 @@ export default function EditCase() {
                               aria-label="Animal Pregnant"
                               name="animalPregnant"
                               defaultValue={path.state.data.animaldetail?.animalPregnant || ''}
-                              onChange={(e) => {
-                                setAnimalPregnant(e.target.value);
-                              }}
+                              onChange={(e) => {setAnimalPregnant(e.target.value);}}
                             >
                               <option value="">Choose</option>
                               <option value="Yes">Yes</option>
@@ -1782,9 +1525,7 @@ export default function EditCase() {
                             placeholder="Animal Marking"
                             aria-label="Animal Marking"
                             defaultValue={path.state.data.animaldetail?.animalMarking === "null" ? '' : path.state.data.animaldetail?.animalMarking}
-                            onChange={(e) => {
-                              setAnimalMarking(e.target.value);
-                            }}
+                            onChange={(e) => {setAnimalMarking(e.target.value);}}
                           />
                         </div>
                         <div className="form-group col mb-3">
@@ -1799,9 +1540,7 @@ export default function EditCase() {
                             placeholder="Animal Color"
                             aria-label="Animal Color"
                             defaultValue={path.state.data.animaldetail?.animalColor === "null" ? '' : path.state.data.animaldetail?.animalColor}
-                            onChange={(e) => {
-                              setAnimalColor(e.target.value);
-                            }}
+                            onChange={(e) => {setAnimalColor(e.target.value);}}
                           />
                         </div>
                         <div className="form-group col mb-3">
@@ -1814,9 +1553,7 @@ export default function EditCase() {
                             aria-label="Animal Catchable"
                             name="animalCatchable"
                             defaultValue={path.state.data.animaldetail?.animalCatchable}
-                            onChange={(e) => {
-                              setAnimalCatchable(e.target.value);
-                            }}
+                            onChange={(e) => {setAnimalCatchable(e.target.value);}}
                           >
                             <option value="">Choose</option>
                             <option value="Yes">Yes</option>
@@ -1838,9 +1575,7 @@ export default function EditCase() {
                             placeholder="Animal Weight"
                             aria-label="Animal Weight (kgs)"
                             defaultValue={path.state.data.animaldetail?.animalWeight === "null" ? '' : path.state.data.animaldetail?.animalWeight}
-                            onChange={(e) => {
-                              setAnimalWeight(e.target.value);
-                            }}
+                            onChange={(e) => {setAnimalWeight(e.target.value);}}
                           />
                         </div>
                         <div className="form-group col mb-3">
@@ -1855,9 +1590,7 @@ export default function EditCase() {
                             placeholder="Reason for Admission"
                             aria-label="Reason for Admission"
                             defaultValue={path.state.data.animaldetail?.admissionReason === "null" ? '' : path.state.data.animaldetail?.admissionReason}
-                            onChange={(e) => {
-                              setAdmissionReason(e.target.value);
-                            }}
+                            onChange={(e) => {setAdmissionReason(e.target.value);}}
                           />
                         </div>
                       </div>
@@ -1929,10 +1662,8 @@ export default function EditCase() {
                             <button
                               type="button"
                               style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
-                              className="btn "
-                              onClick={() => {
-                                setActiveButton(0);
-                              }}
+                              className="btn"
+                              onClick={() => {setActiveButton(0);}}
                             >
                               Previous
                             </button>
@@ -1940,9 +1671,7 @@ export default function EditCase() {
                               type="button"
                               style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
                               className="btn mx-2"
-                              onClick={() => {
-                                setActiveButton(2);
-                              }}
+                              onClick={() => {setActiveButton(2);}}
                             >
                               Next
                             </button>
@@ -2016,9 +1745,7 @@ export default function EditCase() {
                               aria-label="Animal Vaccinated"
                               name="vaccinationStatus"
                               defaultValue={path.state.data.medicaldetail?.vaccinationStatus || ''}
-                              onChange={(e) =>
-                                setVaccinationStatus(e.target.value)
-                              }
+                              onChange={(e) =>setVaccinationStatus(e.target.value)}
                             >
                               <option value="">Choose Vaccination Status</option>
                               <option value="Already Done">Already Done</option>
@@ -2043,9 +1770,7 @@ export default function EditCase() {
                             >
                               <option value="">Choose</option>
                               <option value="Already Done">Already Done</option>
-                              <option value="To be done in NGO">
-                                To be done in NGO
-                              </option>
+                              <option value="To be done in NGO">To be done in NGO</option>
                               <option value="Not Done">Not Done</option>
                               <option value="Unsure">Unsure</option>
                             </select>
@@ -2178,11 +1903,8 @@ export default function EditCase() {
                                                     background: "transparent", color: "red", // border: "none",
                                                   }}>
                                                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                                  </svg></button></div></div></div>
-                                            ))}
-                                              </div>)
-                                              )))}
-                                        </div>
+                                                  </svg></button></div></div></div>))}
+                                              </div>))))}</div>
                                        
                                           </td>
                                           {images.some(data => !deletedBloodReportImageIds.includes(data.id)) && ( // Check if at least one image is not deleted
@@ -2193,10 +1915,8 @@ export default function EditCase() {
                                                 defaultValue={date === '1111-11-11' ? "" : date}
                                               />
                                             </td>
-                                          )}
-                                            </tr>
-                                        </React.Fragment>
-                                      ))}</>))}
+                                          )}</tr>
+                                        </React.Fragment>))}</>))}
                                         
                                         <tr>
                                           <td >
@@ -2231,7 +1951,7 @@ export default function EditCase() {
                                             id="blood_report_date"
                                             name="blood_report_date"
                                             type="date"
-                                            required={!bloodReportImageAlreadySavedDate}
+                                            required={(bloodReportImagePreview.length > 0) ? true : false}
                                             onChange={(e) => setBloodReportImageDate(e.target.value)}
                                           /></td>
                                         </tr>
@@ -2435,9 +2155,7 @@ export default function EditCase() {
                                 name="operationStartTime"
                                 type="time"
                                 defaultValue={path.state.data.operationdetail?.operationStartTime ? (path.state.data.operationdetail?.operationStartTime === '11:11:11' ? "" : path.state.data.operationdetail?.operationStartTime) : ''}
-                                onChange={(e) =>
-                                  setOperationStartTime(e.target.value)
-                                }
+                                onChange={(e) =>setOperationStartTime(e.target.value)}
                               />
                             </div>
                             <div className="form-group col">
@@ -2453,9 +2171,7 @@ export default function EditCase() {
                                 name="operationEndTime"
                                 type="time"
                                 defaultValue={path.state.data.operationdetail?.operationEndTime ? (path.state.data.operationdetail?.operationEndTime === '11:11:11' ? "" : path.state.data.operationdetail?.operationEndTime) : ''}
-                                onChange={(e) =>
-                                  setOperationEndTime(e.target.value)
-                                }
+                                onChange={(e) =>setOperationEndTime(e.target.value)}
                               />
                             </div>
                           </div>
@@ -2551,17 +2267,13 @@ export default function EditCase() {
                                                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                                   </svg></button></div></div></div>
                                                 ))}
-                                              </div>)
-                                          )))}
-                                      </td>
+                                              </div>))))}</td>
                                       {images.some(data => ! deletedMedicalPrescriptionImageIds.includes(data.id)) && (
                                           <td>
                                             <input type="date" className="form-control" defaultValue={date === '1111-11-11' ? "" : date}/>
-                                          </td>
-                                        )}
+                                          </td>)}
                                     </tr>
-                                  </React.Fragment>
-                                ))}</>))}
+                                  </React.Fragment>))}</>))}
 
                                 <tr>
                                   <td>
@@ -2593,7 +2305,7 @@ export default function EditCase() {
                                     className="form-control"
                                     id='medical_prescription_image_upload_date'
                                     name='medical_prescription_image_upload_date'
-                                    required={!medicalPrescriptionImageAlreadySavedDate}
+                                    required={(medicalPrescriptionImagePreview.length > 0) ? true : false}
                                     onChange={(e)=>setMedicalPrescriptionImageDate(e.target.value)}
                                     /></td>
                                 </tr>
@@ -2842,9 +2554,7 @@ export default function EditCase() {
                             >
                               <option value="">Choose Facility</option>
                               <option value="In Shelter">In Shelter</option>
-                              <option value="Not in shelter">
-                                Not in shelter
-                              </option>
+                              <option value="Not in shelter">Not in shelter</option>
                               <option value="On Street">On Street</option>
                               <option value="Other">Other</option>
                             </select>
