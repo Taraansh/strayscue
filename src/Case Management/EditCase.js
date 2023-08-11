@@ -61,8 +61,11 @@ export default function EditCase() {
   const [feedingRecordImage, setFeedingRecordImage] = useState([]);
   const [feedingRecordImagePreview, setFeedingRecordImagePreview] = useState([]);
   const [bloodReportImage, setBloodReportImage] = useState([]);
+  const [updateBloodReportImageWithDate, setUpdateBloodReportImageWithDate] = useState(null);
   const [bloodReportImagePreview, setBloodReportImagePreview] = useState([]);
+  const [updateBloodReportImageWithDatePreview, setUpdateBloodReportImageWithDatePreview] = useState([]);
   const [bloodReportImageDate, setBloodReportImageDate] = useState([]);
+  const [bloodReportImageAlreadySavedDate, setBloodReportImageAlreadySavedDate] = useState(null);
 
   const [deletedFeedingRecordImageIds, setDeletedFeedingRecordImageIds] = useState([]);
   const [deletedBloodReportImageIds, setDeletedBloodReportImageIds] = useState([]);
@@ -73,14 +76,20 @@ export default function EditCase() {
   const [operationStartTime, setOperationStartTime] = useState(null);
   const [operationEndTime, setOperationEndTime] = useState(null);
   const [operationOutcome, setOperationOutcome] = useState(null);
-  const [medicalPrescriptionImage, setMedicalPrescriptionImage] = useState(null);
-  const [medicalPrescriptionImagePreview, setMedicalPrescriptionImagePreview] = useState(null);
+  const [medicalPrescriptionImage, setMedicalPrescriptionImage] = useState([]);
+  const [updateMedicalPrescriptionImageWithDate, setUpdateMedicalPrescriptionImageWithDate] = useState(null);
+  const [medicalPrescriptionImagePreview, setMedicalPrescriptionImagePreview] = useState([]);
+  const [updateMedicalPrescriptionImageWithDatePreview, setUpdateMedicalPrescriptionImageWithDatePreview] = useState([]);
+  const [medicalPrescriptionImageDate, setMedicalPrescriptionImageDate] = useState([]);
+  const [medicalPrescriptionImageAlreadySavedDate, setMedicalPrescriptionImageAlreadySavedDate] = useState(null);
+
   const [treatmentRecordImage, setTreatmentRecordImage] = useState([]);
   const [treatmentRecordImagePreview, setTreatmentRecordImagePreview] = useState([]);
   const [organImage, setOrganImage] = useState([]);
   const [organImagePreview, setOrganImagePreview] = useState([]);
 
-  const [isMedicalPrescriptionImageDeleted, setIsMedicalPrescriptionImageDeleted] = useState(false);
+  const [deletedMedicalPrescriptionImageIds, setDeletedMedicalPrescriptionImageIds] = useState([]);
+
 
   const [deletedTreatmentRecordImageIds, setDeletedTreatmentRecordImageIds] = useState([]);
   const [deletedOrganImageIds, setDeletedOrganImageIds] = useState([]);
@@ -307,26 +316,27 @@ export default function EditCase() {
     }
   };
 
-  const handleBloodReportImage = (event) => {
+  const handleUpdateBloodReportImageWithDate = (event, date) => {
     const files = event.target.files;
     const imageFiles = Array.from(files);
 
-    setBloodReportImage(imageFiles);
-
-    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file));
-    setBloodReportImagePreview(imagePreviews);
+    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file))
     
+    setUpdateBloodReportImageWithDate(imageFiles);
+    setUpdateBloodReportImageWithDatePreview(imagePreviews);
+
+    setBloodReportImageAlreadySavedDate(date)
   };
 
-  const handleDeleteBloodReportImage = (e, index) => {
+  const handleDeleteUpdateBloodReportImageWithDate = (e, index) => {
     e.preventDefault()
-    const updatedPictures = [...bloodReportImage];
-    const updatedPreviews = [...bloodReportImagePreview];
+    const updatedPictures = [...updateBloodReportImageWithDate];
+    const updatedPreviews = [...updateBloodReportImageWithDatePreview];
 
     updatedPictures.splice(index, 1);
     updatedPreviews.splice(index, 1);
-    setBloodReportImage(updatedPictures);
-    setBloodReportImagePreview(updatedPreviews);
+    setUpdateBloodReportImageWithDate(updatedPictures);
+    setUpdateBloodReportImageWithDatePreview(updatedPreviews);
   };
 
   const handleDeleteSavedBloodReportImage = (e, id) => {
@@ -365,30 +375,107 @@ export default function EditCase() {
     }
   };
 
-  // Operation Details Image Management
-  const handleMedicalPrescriptionImage = (event) => {
-    const file = event.target.files[0];
-    setMedicalPrescriptionImage(file);
+  const handleBloodReportImage = (event) => {
+    const files = event.target.files;
+    const imageFiles = Array.from(files);
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setMedicalPrescriptionImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setMedicalPrescriptionImagePreview("");
+    setBloodReportImage(imageFiles);
+
+    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file));
+    setBloodReportImagePreview(imagePreviews);
+  };
+
+  const handleDeleteBloodReportImage = (e, index) => {
+    e.preventDefault()
+    const updatedPictures = [...bloodReportImage];
+    const updatedPreviews = [...bloodReportImagePreview];
+
+    updatedPictures.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+    setBloodReportImage(updatedPictures);
+    setBloodReportImagePreview(updatedPreviews);
+  };
+
+  // Operation Details Image Management
+  const handleUpdateMedicalPrescriptionImageWithDate = (event, date) => {
+    const files = event.target.files;
+    const imageFiles = Array.from(files);
+
+    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file))
+    
+    setUpdateMedicalPrescriptionImageWithDate(imageFiles);
+    setUpdateMedicalPrescriptionImageWithDatePreview(imagePreviews);
+
+    setMedicalPrescriptionImageAlreadySavedDate(date)
+  };
+
+  const handleDeleteUpdateMedicalPrescriptionImageWithDate = (e, index) => {
+    e.preventDefault()
+    const updatedPictures = [...updateMedicalPrescriptionImageWithDate];
+    const updatedPreviews = [...updateMedicalPrescriptionImageWithDatePreview];
+
+    updatedPictures.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+    setUpdateMedicalPrescriptionImageWithDate(updatedPictures);
+    setUpdateMedicalPrescriptionImageWithDatePreview(updatedPreviews);
+  };
+
+  const handleDeleteSavedMedicalPrescriptionImage = (e, id) => {
+    e.preventDefault()
+    setDeletedMedicalPrescriptionImageIds([...deletedMedicalPrescriptionImageIds, id]);
+    handleMedicalPrescriptionImageDeleteButton(e, id)
+  };
+
+  const handleMedicalPrescriptionImageDeleteButton = async (e, id) => {
+    e.preventDefault()
+    const confirmDelete = window.confirm(
+      "Warning: This image will be deleted forever. Are you Sure?"
+    );
+    if (confirmDelete) {
+      try {
+        // Delete the specific Medical Prescription Image by making an API call
+        const response = await fetch(
+          `${websiteUrl}/cases/deletemedicalprescription/${id}/`,
+          {
+            method: "DELETE",
+          }
+        );
+        if (response.status === 204) {
+          console.log("Image deleted successfully")
+        } else if (response.status === 404) {
+          // Handle the Medical Prescription Image when the image was already deleted
+          alert("Image is already Deleted")
+        } else {
+          // Handle the Medical Prescription Image when the delete request fails
+          console.log("Failed to delete Medical Prescription Image:", id);
+        }
+      } catch (error) {
+        // Handle any errors that occur during the delete operation
+        console.error("Error deleting Medical Prescription Image:", error);
+      }
     }
   };
 
-  const handleDeleteMedicalPrescriptionImage = () => {
-    setMedicalPrescriptionImage(null);
-    setMedicalPrescriptionImagePreview('');
+    const handleMedicalPrescriptionImage = (event) => {
+    const files = event.target.files;
+    const imageFiles = Array.from(files);
+
+    setMedicalPrescriptionImage(imageFiles);
+
+    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file));
+    setMedicalPrescriptionImagePreview(imagePreviews);
   };
 
-  const handleDeleteSavedMedicalPrescriptionImage = () => {
-    setIsMedicalPrescriptionImageDeleted(true);
-  }
+  const handleDeleteMedicalPrescriptionImage = (e, index) => {
+    e.preventDefault()
+    const updatedPictures = [...medicalPrescriptionImage];
+    const updatedPreviews = [...medicalPrescriptionImagePreview];
+
+    updatedPictures.splice(index, 1);
+    updatedPreviews.splice(index, 1);
+    setMedicalPrescriptionImage(updatedPictures);
+    setMedicalPrescriptionImagePreview(updatedPreviews);
+  };
 
   const handleTreatmentRecordImage = (event) => {
     const files = event.target.files;
@@ -753,10 +840,12 @@ export default function EditCase() {
       path.state.data.reportingdetail?.location) && (pincode || path.state.data.reportingdetail?.pincode) && (location || path.state.data.reportingdetail?.landmark)) {
       const formData = new FormData();
 
-      for (let i = 0; i < bloodReportImage.length; i++) {
+      if(updateBloodReportImageWithDate){for (let i = 0; i < updateBloodReportImageWithDate.length; i++) {
+        formData.append('bloodReportImage', updateBloodReportImageWithDate[i]);
+      }}else {for (let i = 0; i < bloodReportImage.length; i++) {
         formData.append('bloodReportImage', bloodReportImage[i]);
-      }
-
+      }}
+      
       for (let i = 0; i < feedingRecordImage.length; i++) {
         formData.append('feedingRecordImage', feedingRecordImage[i]);
       }
@@ -768,7 +857,12 @@ export default function EditCase() {
       formData.append("otherDetails", otherDetails ? otherDetails : path.state.data.medicaldetail?.otherDetails);
       formData.append("admissionDate", admissionDate ? (admissionDate ? admissionDate : "1111-11-11") : (path.state.data.medicaldetail?.admissionDate ? path.state.data.medicaldetail?.admissionDate : "1111-11-11"));
       
-      formData.append("bloodReportImageDate", bloodReportImageDate ? bloodReportImageDate : "1111-11-11");
+      if (updateBloodReportImageWithDate){
+        formData.append("bloodReportImageDate", bloodReportImageAlreadySavedDate ? bloodReportImageAlreadySavedDate : "1111-11-11");
+      } else{
+        formData.append("bloodReportImageDate", bloodReportImageDate ? bloodReportImageDate : "1111-11-11");
+      }
+
       try {
         const response = await axios.put(
           `${websiteUrl}/cases/updatemedical/${path.state.data.medicaldetail?.id}/`,
@@ -804,13 +898,12 @@ export default function EditCase() {
       path.state.data.reportingdetail?.location) && (pincode || path.state.data.reportingdetail?.pincode) && (location || path.state.data.reportingdetail?.landmark)) {
       const formData = new FormData();
 
-      if (medicalPrescriptionImage) {
-        formData.append('medicalPrescriptionImage', medicalPrescriptionImage ? medicalPrescriptionImage : null);
-      } else if (isMedicalPrescriptionImageDeleted) {
-        formData.append('medicalPrescriptionImage', "null");
-      } else {
-        formData.append('medicalPrescriptionImage', path.state.data.operationdetail?.medicalPrescriptionImage);
-      }
+      if(updateMedicalPrescriptionImageWithDate)
+      {for (let i = 0; i < updateMedicalPrescriptionImageWithDate.length; i++) {
+        formData.append('medicalPrescriptionImage', updateMedicalPrescriptionImageWithDate[i]);
+      }}else {for (let i = 0; i < medicalPrescriptionImage.length; i++) {
+        formData.append('medicalPrescriptionImage', medicalPrescriptionImage[i]);
+      }}
 
       for (let i = 0; i < treatmentRecordImage.length; i++) {
         formData.append('treatmentRecordImage', treatmentRecordImage[i]);
@@ -818,6 +911,12 @@ export default function EditCase() {
 
       for (let i = 0; i < organImage.length; i++) {
         formData.append('organImage', organImage[i]);
+      }
+
+      if (updateMedicalPrescriptionImageWithDate){
+        formData.append("medicalPrescriptionImageDate", medicalPrescriptionImageAlreadySavedDate ? medicalPrescriptionImageAlreadySavedDate : "1111-11-11");
+      } else{
+        formData.append("medicalPrescriptionImageDate", medicalPrescriptionImageDate ? medicalPrescriptionImageDate : "1111-11-11");
       }
 
       formData.append("vetName", vetName ? vetName : "");
@@ -939,10 +1038,22 @@ export default function EditCase() {
     }
   };
 
-  function groupImagesByDate(images) {
+  function groupBloodReportImagesByDate(images) {
     const groupedImages = {};
     images.forEach((image) => {
       const date = image.blood_report_date;
+      if (!groupedImages[date]) {
+        groupedImages[date] = [];
+      }
+      groupedImages[date].push(image);
+    });
+    return groupedImages;
+  }
+
+  function groupMedicalPrescriptionImagesByDate(images) {
+    const groupedImages = {};
+    images.forEach((image) => {
+      const date = image.medical_prescription_image_upload_date;
       if (!groupedImages[date]) {
         groupedImages[date] = [];
       }
@@ -1331,8 +1442,8 @@ export default function EditCase() {
                                 height="100px"
                               />
                               <button onClick={handleDeleteSavedFrontImage}>Delete</button>
-                              <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.frontImage}`)}>Open</button>
-                              <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.frontImage}`)}>
+                              <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.frontImage}`)}>Open</button>
+                              <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.frontImage}`)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                   <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                                   <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
@@ -1383,8 +1494,8 @@ export default function EditCase() {
                               height="100px"
                             />
                             <button onClick={handleDeleteSavedBackImage}>Delete</button>
-                            <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.backImage}`)}>Open</button>
-                            <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.backImage}`)}>
+                            <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.backImage}`)}>Open</button>
+                            <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.backImage}`)}>
                               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                 <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                                 <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
@@ -1439,8 +1550,8 @@ export default function EditCase() {
                             height="100px"
                           />
                           <button onClick={handleDeleteSavedConsentFormImage}>Delete</button>
-                          <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`)}>Open</button>
-                          <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`)}>
+                          <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`)}>Open</button>
+                          <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`)}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                               <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                               <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
@@ -1799,8 +1910,8 @@ export default function EditCase() {
                                           background: "transparent", color: "red", // border: "none",
                                         }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.animalPictures}`)}>Open</button>
-                                    <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.animalPictures}`)}>
+                                    <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.animalPictures}`)}>Open</button>
+                                    <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.animalPictures}`)}>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                                         <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
@@ -1997,6 +2108,7 @@ export default function EditCase() {
                       </div>
 
                           <h5>Blood Report Pictures</h5>
+                          <div style={{overflow: "scroll"}}>
                           <table className="table table-bordered">
                             <thead>
                               <tr>
@@ -2005,15 +2117,16 @@ export default function EditCase() {
                               </tr>
                             </thead>
                             <tbody>
-                            {path.state.data.medicaldetail?.bloodReportImage.length > 0 && (
+                              {path.state.data.medicaldetail?.bloodReportImage.length > 0 && ((
                             <>
-                              {Object.entries(groupImagesByDate(path.state.data.medicaldetail?.bloodReportImage)).map(([date, images], index) => (
+                              {Object.entries(groupBloodReportImagesByDate(path.state.data.medicaldetail?.bloodReportImage)).map(([date, images], index) => (
                                 <React.Fragment key={index}>
-                                  {/* {!deletedBloodReportImageIds.includes(images[index].id) && ( // Check if the first image of the group has a deleted id */}
                                     <tr>
                                       <td>
                                         {images.map((data, imageIndex) => (
                                           !deletedBloodReportImageIds.includes(data.id) && ( // Check if the image id is not in the deleted ids array
+
+                                            (data.bloodReportImage) ? (
                                             <div key={imageIndex}>
                                               <img src={`${websiteUrl}${data.bloodReportImage}`} alt="Blood Report Preview" height="100px" width="100px" />
                                               <button onClick={(e) => handleDeleteSavedBloodReportImage(e, data.id)}>
@@ -2024,14 +2137,14 @@ export default function EditCase() {
                                                 </svg>
                                               </button>
                                               <button
-                                                className='mx-2 btn btn-primary'
+                                                className='mx-2 btn'
                                                 style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
                                                 onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.bloodReportImage}`)}
                                               >
                                                 Open
                                               </button>
                                               <button
-                                                className='btn btn-primary'
+                                                className='btn'
                                                 style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }}
                                                 onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.bloodReportImage}`)}
                                               >
@@ -2041,19 +2154,45 @@ export default function EditCase() {
                                                 </svg>
                                               </button>
                                             </div>
+                                            ):(
+                                              <div key={imageIndex}>
+                                              <input
+                                              type="file"
+                                              className="btn custom-file-input"
+                                              id="bloodReportImage"
+                                              accept="image/*"
+                                              multiple
+                                              name="bloodReportImage"
+                                              onChange={(event)=>{handleUpdateBloodReportImageWithDate(event, date)}}
+                                            />
+                                            {updateBloodReportImageWithDatePreview.length > 0 && updateBloodReportImageWithDatePreview.map((preview, index)=>(
+                                                <div key={index}>
+                                              <div className="my-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                                              <img src={preview} alt="Blood Report Preview" height="100px" width="100px" />
+                                              <div>
+                                                <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteUpdateBloodReportImageWithDate(e, index) }}>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                                    background: "transparent", color: "red", // border: "none",
+                                                  }}>
+                                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                                  </svg></button></div></div></div>
+                                            ))}
+                                              </div>)
                                               )))}
                                           </td>
-                                          <td>
-                                            <input
-                                              className="form-control"
-                                              type="date"
-                                              defaultValue={date === '1111-11-11' ? "" : date}
-                                            />
-                                              </td>
+                                          {images.some(data => !deletedBloodReportImageIds.includes(data.id)) && ( // Check if at least one image is not deleted
+                                            <td>
+                                              <input
+                                                className="form-control"
+                                                type="date"
+                                                defaultValue={date === '1111-11-11' ? "" : date}
+                                              />
+                                            </td>
+                                          )}
                                             </tr>
-                                          {/* )} */}
                                         </React.Fragment>
-                                      ))}</>)}
+                                      ))}</>))}
+                                        
                                         <tr>
                                           <td>
                                           <input
@@ -2081,16 +2220,17 @@ export default function EditCase() {
                                           </td>
                                           <td>
                                           <input
-                                              className="form-control"
-                                              id="blood_report_date"
-                                              name="blood_report_date"
-                                              type="date"
-                                              required
-                                              onChange={(e) => setBloodReportImageDate(e.target.value)}
-                                            /></td>
+                                            className="form-control"
+                                            id="blood_report_date"
+                                            name="blood_report_date"
+                                            type="date"
+                                            required={!bloodReportImageAlreadySavedDate}
+                                            onChange={(e) => setBloodReportImageDate(e.target.value)}
+                                          /></td>
                                         </tr>
                             </tbody>
                             </table>
+                            </div>
 
                       <div className="form-group mb-3">
                         <label
@@ -2143,8 +2283,8 @@ export default function EditCase() {
                                       }}>
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.feedingRecordImage}`)}>Open</button>
-                                    <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.feedingRecordImage}`)}>
+                                    <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.feedingRecordImage}`)}>Open</button>
+                                    <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.feedingRecordImage}`)}>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                                         <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
@@ -2336,52 +2476,122 @@ export default function EditCase() {
                         </div>
                       </div>
 
-                      <div className="row form-1">
-                        <div className="col">
-                          <div className="form-group mb-2">
-                            <label
-                              className="form-label h5"
-                              htmlFor="medicalPrescriptionImage"
-                            >
-                              Medical Prescription -
-                            </label>
-                            <div className="custom-file">
-                              <input
-                                type="file"
-                                className="btn custom-file-input"
-                                id="medicalPrescriptionImage"
-                                accept="image/*"
-                                name="medicalPrescriptionImage"
-                                onChange={handleMedicalPrescriptionImage}
-                              />
-                            </div>
-                          </div>
-                          {(!isMedicalPrescriptionImageDeleted) ? ((path.state.data.operationdetail?.medicalPrescriptionImage) ? (<div>
-                            <h6>Preview:</h6>
-                            <img
-                              src={`${websiteUrl}${path.state.data.operationdetail?.medicalPrescriptionImage}`}
-                              alt="Medical Prescription Preview"
-                              height="100px"
-                            />
-                            <button onClick={handleDeleteSavedMedicalPrescriptionImage}>Delete</button>
-                          </div>) : (medicalPrescriptionImagePreview && (
-                            <div>
-                              <h6>Preview:</h6>
-                              <img
-                                src={medicalPrescriptionImagePreview}
-                                alt="Feeding Record Preview"
-                                height="100px"
-                              /><button onClick={handleDeleteMedicalPrescriptionImage}>Delete</button>
-                            </div>))) : (medicalPrescriptionImagePreview && (
-                              <div>
-                                <h6>Preview:</h6>
-                                <img
-                                  src={medicalPrescriptionImagePreview}
-                                  alt="Feeding Record Preview"
-                                  height="100px"
-                                /><button onClick={handleDeleteMedicalPrescriptionImage}>Delete</button>
-                              </div>))}
-                        </div>
+                      <h5>Medical Prescription -</h5>
+                      <div style={{overflow: "scroll"}}>
+                        <table className="table table-bordered">
+                          <thead>
+                            <tr>
+                            <th scope="col">Images</th>
+                            <th scope="col">Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {path.state.data.operationdetail?.medicalPrescriptionImage.length > 0 && ((
+                              <>
+                              {Object.entries(groupMedicalPrescriptionImagesByDate(path.state.data.operationdetail?.medicalPrescriptionImage)).map(([date, images], index)=>(
+                                  <React.Fragment key={index}>
+                                    <tr>
+                                      <td>
+                                        {images.map((data, imageIndex)=>(
+                                          !deletedMedicalPrescriptionImageIds.includes(data.id)&&(
+                                            (data.medicalPrescriptionImage)?(
+                                              <div key={imageIndex}>
+                                                <img src={`${websiteUrl}${data.medicalPrescriptionImage}`} alt="Medical Prescription Preview" height="100px" width="100px" />
+                                                <button onClick={(e) => handleDeleteSavedMedicalPrescriptionImage(e, data.id)}>
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                                  background: "transparent", color: "red", // border: "none",
+                                                }}>
+                                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                                </svg>
+                                              </button>
+                                              <button
+                                                className='mx-2 btn'
+                                                style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                                                onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.medicalPrescriptionImage}`)}
+                                              >
+                                                Open
+                                              </button>
+                                              <button
+                                                className='btn'
+                                                style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }}
+                                                onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.medicalPrescriptionImage}`)}
+                                              >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                </svg>
+                                              </button>
+                                              </div>
+                                            ):(<div key={imageIndex}>
+                                                <input
+                                                  type="file"
+                                                  className="btn custom-file-input"
+                                                  id="medicalPrescriptionImage"
+                                                  accept="image/*"
+                                                  name="medicalPrescriptionImage"
+                                                  multiple
+                                                  onChange={(event)=>{handleUpdateMedicalPrescriptionImageWithDate(event, date)}}
+                                                />
+                                                {updateMedicalPrescriptionImageWithDatePreview.length > 0 && updateMedicalPrescriptionImageWithDatePreview.map((preview, index)=>(
+                                                  <div key={index}>
+                                                    <div className="my-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                                                    <img src={preview} alt="Medical Prescription Preview" height="100px" width="100px" />
+                                                    <div>
+                                                    <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => {handleDeleteUpdateMedicalPrescriptionImageWithDate(e, index) }}>
+                                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                                    background: "transparent", color: "red", // border: "none",
+                                                  }}>
+                                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                                  </svg></button></div></div></div>
+                                                ))}
+                                              </div>)
+                                          )))}
+                                      </td>
+                                      {images.some(data => ! deletedMedicalPrescriptionImageIds.includes(data.id)) && (
+                                          <td>
+                                            <input type="date" className="form-control" defaultValue={date === '1111-11-11' ? "" : date}/>
+                                          </td>
+                                        )}
+                                    </tr>
+                                  </React.Fragment>
+                                ))}</>))}
+
+                                <tr>
+                                  <td>
+                                  <input
+                                    type="file"
+                                    className="btn custom-file-input"
+                                    id="medicalPrescriptionImage"
+                                    accept="image/*"
+                                    multiple
+                                    name="medicalPrescriptionImage"
+                                    onChange={handleMedicalPrescriptionImage}
+                                  />
+                                  {medicalPrescriptionImagePreview.length > 0 && medicalPrescriptionImagePreview.map((preview, index)=>(
+                                    <div key={index}>
+                                      <div className="my-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                                      <img src={preview} alt="Medical Prescription Preview" height="100px" width="100px" />
+                                      <div>
+                                        <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteMedicalPrescriptionImage(e, index) }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                        background: "transparent", color: "red", // border: "none",
+                                        }}>
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                        </svg></button></div></div>
+                                    </div>
+                                  ))}
+                                  </td>
+                                  <td>
+                                    <input type="date" 
+                                    className="form-control"
+                                    id='medical_prescription_image_upload_date'
+                                    name='medical_prescription_image_upload_date'
+                                    required={!medicalPrescriptionImageAlreadySavedDate}
+                                    onChange={(e)=>setMedicalPrescriptionImageDate(e.target.value)}
+                                    /></td>
+                                </tr>
+                          </tbody>
+                        </table>
                       </div>
 
                       <div className="form-group mb-3">
@@ -2435,8 +2645,8 @@ export default function EditCase() {
                                       }}>
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.treatmentRecordImage}`)}>Open</button>
-                                    <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.treatmentRecordImage}`)}>
+                                    <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.treatmentRecordImage}`)}>Open</button>
+                                    <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.treatmentRecordImage}`)}>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                                         <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
@@ -2511,8 +2721,8 @@ export default function EditCase() {
                                         }}>
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.organImage}`)}>Open</button>
-                                    <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.organImage}`)}>
+                                    <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.organImage}`)}>Open</button>
+                                    <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.organImage}`)}>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                                         <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
@@ -2785,8 +2995,8 @@ export default function EditCase() {
                                         }}>
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.popPictures}`)}>Open</button>
-                                    <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.popPictures}`)}>
+                                    <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.popPictures}`)}>Open</button>
+                                    <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.popPictures}`)}>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                                         <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
@@ -2858,8 +3068,8 @@ export default function EditCase() {
                                         }}>
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.releasePictures}`)}>Open</button>
-                                    <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.releasePictures}`)}>
+                                    <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.releasePictures}`)}>Open</button>
+                                    <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.releasePictures}`)}>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                                         <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
