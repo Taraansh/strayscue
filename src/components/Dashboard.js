@@ -486,7 +486,7 @@ const Dashboard = () => {
           }}
         >
           <span>
-            <div
+            <Link to="/Settings"
             style={{textDecoration:"none", color:"black"}}>
             <label style={{ padding: "0.5rem", fontWeight: "bold", cursor:"pointer" }}>
               {localStorage.getItem("username")}
@@ -497,7 +497,7 @@ const Dashboard = () => {
               src={logo}
               alt="Logo"
             ></img>
-            </div>
+            </Link>
 
             <i
               style={{ cursor: "pointer" }}
