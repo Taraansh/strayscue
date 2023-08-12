@@ -1883,6 +1883,7 @@ export default function EditCase() {
                                              </div>
                                             </div>
                                             ):(
+
                                               <div key={imageIndex}>
                                               <input
                                               type="file"
@@ -1895,7 +1896,7 @@ export default function EditCase() {
                                             />
                                             {updateBloodReportImageWithDatePreview.length > 0 && updateBloodReportImageWithDatePreview.map((preview, index)=>(
                                                 <div key={index}>
-                                              <div className="my-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                                              <div className="my-2">
                                               <img src={preview} alt="Blood Report Preview" height="100px" width="100px" />
                                               <div>
                                                 <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteUpdateBloodReportImageWithDate(e, index) }}>
@@ -1904,7 +1905,7 @@ export default function EditCase() {
                                                   }}>
                                                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                                   </svg></button></div></div></div>))}
-                                              </div>))))}</div>
+                                              </div> ))))}</div>
                                        
                                           </td>
                                           {images.some(data => !deletedBloodReportImageIds.includes(data.id)) && ( // Check if at least one image is not deleted
@@ -1934,7 +1935,7 @@ export default function EditCase() {
                                             <div key={index}>
                                           <div className="my-2" >
                                           <img src={preview} alt="Blood Report Preview" height="100px" width="100px" />
-                                          <div>
+                                          <div className='my-2'>
                                             <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteBloodReportImage(e, index) }}>
                                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
                                                 background: "transparent", color: "red", // border: "none",
@@ -2215,12 +2216,16 @@ export default function EditCase() {
                                   <React.Fragment key={index}>
                                     <tr>
                                       <td>
+                                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(158px, 1fr))", gridGap: "32px", padding: "20px", margin: "0 auto", }}>
+
                                         {images.map((data, imageIndex)=>(
                                           !deletedMedicalPrescriptionImageIds.includes(data.id)&&(
                                             (data.medicalPrescriptionImage)?(
                                               <div key={imageIndex}>
                                                 <img src={`${websiteUrl}${data.medicalPrescriptionImage}`} alt="Medical Prescription Preview" height="100px" width="100px" />
-                                                <button onClick={(e) => handleDeleteSavedMedicalPrescriptionImage(e, data.id)}>
+                                                <div className='my-2' >
+
+                                                <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedMedicalPrescriptionImage(e, data.id)}>
                                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
                                                   background: "transparent", color: "red", // border: "none",
                                                 }}>
@@ -2245,6 +2250,7 @@ export default function EditCase() {
                                                 </svg>
                                               </button>
                                               </div>
+                                              </div>
                                             ):(<div key={imageIndex}>
                                                 <input
                                                   type="file"
@@ -2258,6 +2264,8 @@ export default function EditCase() {
                                                 {updateMedicalPrescriptionImageWithDatePreview.length > 0 && updateMedicalPrescriptionImageWithDatePreview.map((preview, index)=>(
                                                   <div key={index}>
                                                     <div className="my-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                                                    
+
                                                     <img src={preview} alt="Medical Prescription Preview" height="100px" width="100px" />
                                                     <div>
                                                     <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => {handleDeleteUpdateMedicalPrescriptionImageWithDate(e, index) }}>
@@ -2266,8 +2274,9 @@ export default function EditCase() {
                                                   }}>
                                                     <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                                   </svg></button></div></div></div>
+                                                    
                                                 ))}
-                                              </div>))))}</td>
+                                              </div>))))}</div></td>
                                       {images.some(data => ! deletedMedicalPrescriptionImageIds.includes(data.id)) && (
                                           <td>
                                             <input type="date" className="form-control" defaultValue={date === '1111-11-11' ? "" : date}/>
@@ -2286,11 +2295,13 @@ export default function EditCase() {
                                     name="medicalPrescriptionImage"
                                     onChange={handleMedicalPrescriptionImage}
                                   />
+                                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+
                                   {medicalPrescriptionImagePreview.length > 0 && medicalPrescriptionImagePreview.map((preview, index)=>(
                                     <div key={index}>
-                                      <div className="my-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                                      <div className="my-2" >
                                       <img src={preview} alt="Medical Prescription Preview" height="100px" width="100px" />
-                                      <div>
+                                      <div className='my-2'>
                                         <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteMedicalPrescriptionImage(e, index) }}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
                                         background: "transparent", color: "red", // border: "none",
@@ -2299,6 +2310,8 @@ export default function EditCase() {
                                         </svg></button></div></div>
                                     </div>
                                   ))}
+                                  </div>
+
                                   </td>
                                   <td>
                                     <input type="date" 
