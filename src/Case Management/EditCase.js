@@ -61,11 +61,8 @@ export default function EditCase() {
   const [feedingRecordImage, setFeedingRecordImage] = useState([]);
   const [feedingRecordImagePreview, setFeedingRecordImagePreview] = useState([]);
   const [bloodReportImage, setBloodReportImage] = useState([]);
-  const [updateBloodReportImageWithDate, setUpdateBloodReportImageWithDate] = useState(null);
   const [bloodReportImagePreview, setBloodReportImagePreview] = useState([]);
-  const [updateBloodReportImageWithDatePreview, setUpdateBloodReportImageWithDatePreview] = useState([]);
   const [bloodReportImageDate, setBloodReportImageDate] = useState([]);
-  const [bloodReportImageAlreadySavedDate, setBloodReportImageAlreadySavedDate] = useState(null);
 
   const [deletedFeedingRecordImageIds, setDeletedFeedingRecordImageIds] = useState([]);
   const [deletedBloodReportImageIds, setDeletedBloodReportImageIds] = useState([]);
@@ -77,11 +74,8 @@ export default function EditCase() {
   const [operationEndTime, setOperationEndTime] = useState(null);
   const [operationOutcome, setOperationOutcome] = useState(null);
   const [medicalPrescriptionImage, setMedicalPrescriptionImage] = useState([]);
-  const [updateMedicalPrescriptionImageWithDate, setUpdateMedicalPrescriptionImageWithDate] = useState(null);
   const [medicalPrescriptionImagePreview, setMedicalPrescriptionImagePreview] = useState([]);
-  const [updateMedicalPrescriptionImageWithDatePreview, setUpdateMedicalPrescriptionImageWithDatePreview] = useState([]);
   const [medicalPrescriptionImageDate, setMedicalPrescriptionImageDate] = useState([]);
-  const [medicalPrescriptionImageAlreadySavedDate, setMedicalPrescriptionImageAlreadySavedDate] = useState(null);
 
   const [treatmentRecordImage, setTreatmentRecordImage] = useState([]);
   const [treatmentRecordImagePreview, setTreatmentRecordImagePreview] = useState([]);
@@ -254,29 +248,6 @@ export default function EditCase() {
     handleFeedingRecordImageDeleteButton(e, id)
   }
 
-  const handleUpdateBloodReportImageWithDate = (event, date) => {
-    const files = event.target.files;
-    const imageFiles = Array.from(files);
-
-    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file))
-    
-    setUpdateBloodReportImageWithDate(imageFiles);
-    setUpdateBloodReportImageWithDatePreview(imagePreviews);
-
-    setBloodReportImageAlreadySavedDate(date)
-  };
-
-  const handleDeleteUpdateBloodReportImageWithDate = (e, index) => {
-    e.preventDefault()
-    const updatedPictures = [...updateBloodReportImageWithDate];
-    const updatedPreviews = [...updateBloodReportImageWithDatePreview];
-
-    updatedPictures.splice(index, 1);
-    updatedPreviews.splice(index, 1);
-    setUpdateBloodReportImageWithDate(updatedPictures);
-    setUpdateBloodReportImageWithDatePreview(updatedPreviews);
-  };
-
   const handleDeleteSavedBloodReportImage = (e, id) => {
     e.preventDefault()
     setDeletedBloodReportImageIds([...deletedBloodReportImageIds, id]);
@@ -305,29 +276,6 @@ export default function EditCase() {
   };
 
   // Operation Details Image Management
-  const handleUpdateMedicalPrescriptionImageWithDate = (event, date) => {
-    const files = event.target.files;
-    const imageFiles = Array.from(files);
-
-    const imagePreviews = imageFiles.map((file) => URL.createObjectURL(file))
-    
-    setUpdateMedicalPrescriptionImageWithDate(imageFiles);
-    setUpdateMedicalPrescriptionImageWithDatePreview(imagePreviews);
-
-    setMedicalPrescriptionImageAlreadySavedDate(date)
-  };
-
-  const handleDeleteUpdateMedicalPrescriptionImageWithDate = (e, index) => {
-    e.preventDefault()
-    const updatedPictures = [...updateMedicalPrescriptionImageWithDate];
-    const updatedPreviews = [...updateMedicalPrescriptionImageWithDatePreview];
-
-    updatedPictures.splice(index, 1);
-    updatedPreviews.splice(index, 1);
-    setUpdateMedicalPrescriptionImageWithDate(updatedPictures);
-    setUpdateMedicalPrescriptionImageWithDatePreview(updatedPreviews);
-  };
-
   const handleDeleteSavedMedicalPrescriptionImage = (e, id) => {
     e.preventDefault()
     setDeletedMedicalPrescriptionImageIds([...deletedMedicalPrescriptionImageIds, id]);
@@ -598,11 +546,9 @@ export default function EditCase() {
       path.state.data.reportingdetail?.location) && (pincode || path.state.data.reportingdetail?.pincode) && (location || path.state.data.reportingdetail?.landmark)) {
       const formData = new FormData();
 
-      if(updateBloodReportImageWithDate){for (let i = 0; i < updateBloodReportImageWithDate.length; i++) {
-        formData.append('bloodReportImage', updateBloodReportImageWithDate[i]);
-      }}else {for (let i = 0; i < bloodReportImage.length; i++) {
+      for (let i = 0; i < bloodReportImage.length; i++) {
         formData.append('bloodReportImage', bloodReportImage[i]);
-      }}
+      }
       
       for (let i = 0; i < feedingRecordImage.length; i++) {
         formData.append('feedingRecordImage', feedingRecordImage[i]);
@@ -615,11 +561,8 @@ export default function EditCase() {
       formData.append("otherDetails", otherDetails ? otherDetails : path.state.data.medicaldetail?.otherDetails);
       formData.append("admissionDate", admissionDate ? (admissionDate ? admissionDate : "1111-11-11") : (path.state.data.medicaldetail?.admissionDate ? path.state.data.medicaldetail?.admissionDate : "1111-11-11"));
       
-      if (updateBloodReportImageWithDate){
-        formData.append("bloodReportImageDate", bloodReportImageAlreadySavedDate ? bloodReportImageAlreadySavedDate : "1111-11-11");
-      } else{
-        formData.append("bloodReportImageDate", bloodReportImageDate ? bloodReportImageDate : "1111-11-11");
-      }
+      formData.append("bloodReportImageDate", bloodReportImageDate ? bloodReportImageDate : "1111-11-11");
+      
 
       try {
         const response = await axios.put(
@@ -656,12 +599,9 @@ export default function EditCase() {
       path.state.data.reportingdetail?.location) && (pincode || path.state.data.reportingdetail?.pincode) && (location || path.state.data.reportingdetail?.landmark)) {
       const formData = new FormData();
 
-      if(updateMedicalPrescriptionImageWithDate)
-      {for (let i = 0; i < updateMedicalPrescriptionImageWithDate.length; i++) {
-        formData.append('medicalPrescriptionImage', updateMedicalPrescriptionImageWithDate[i]);
-      }}else {for (let i = 0; i < medicalPrescriptionImage.length; i++) {
+      for (let i = 0; i < medicalPrescriptionImage.length; i++) {
         formData.append('medicalPrescriptionImage', medicalPrescriptionImage[i]);
-      }}
+      }
 
       for (let i = 0; i < treatmentRecordImage.length; i++) {
         formData.append('treatmentRecordImage', treatmentRecordImage[i]);
@@ -671,11 +611,8 @@ export default function EditCase() {
         formData.append('organImage', organImage[i]);
       }
 
-      if (updateMedicalPrescriptionImageWithDate){
-        formData.append("medicalPrescriptionImageDate", medicalPrescriptionImageAlreadySavedDate ? medicalPrescriptionImageAlreadySavedDate : "1111-11-11");
-      } else{
-        formData.append("medicalPrescriptionImageDate", medicalPrescriptionImageDate ? medicalPrescriptionImageDate : "1111-11-11");
-      }
+      formData.append("medicalPrescriptionImageDate", medicalPrescriptionImageDate ? medicalPrescriptionImageDate : "1111-11-11");
+      
 
       formData.append("vetName", vetName ? vetName : "");
       formData.append("operationDate", operationDate ? operationDate : "1111-11-11");
@@ -1882,31 +1819,7 @@ export default function EditCase() {
                                               </button>
                                              </div>
                                             </div>
-                                            )
-                                            // :(
-                                            //   <div key={imageIndex}>
-                                            //   <input
-                                            //   type="file"
-                                            //   className="btn custom-file-input"
-                                            //   id="bloodReportImage"
-                                            //   accept="image/*"
-                                            //   multiple
-                                            //   name="bloodReportImage"
-                                            //   onChange={(event)=>{handleUpdateBloodReportImageWithDate(event, date)}}
-                                            // />
-                                            // {updateBloodReportImageWithDatePreview.length > 0 && updateBloodReportImageWithDatePreview.map((preview, index)=>(
-                                            //     <div key={index}>
-                                            //   <div className="my-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
-                                            //   <img src={preview} alt="Blood Report Preview" height="100px" width="100px" />
-                                            //   <div>
-                                            //     <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteUpdateBloodReportImageWithDate(e, index) }}>
-                                            //       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
-                                            //         background: "transparent", color: "red", // border: "none",
-                                            //       }}>
-                                            //         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                            //       </svg></button></div></div></div>))}
-                                            //   </div>)
-                                              )))}</div>
+                                            ))))}</div>
                                        
                                           </td>
                                           {images.some(data => !deletedBloodReportImageIds.includes(data.id)) && ( // Check if at least one image is not deleted
@@ -2250,38 +2163,8 @@ export default function EditCase() {
                                                   <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
                                                 </svg>
                                               </button>
-                                              </div>
-
-                                              </div>
-                                            )
-                                            // :(<div key={imageIndex}>
-                                            //     <input
-                                            //       type="file"
-                                            //       className="btn custom-file-input"
-                                            //       id="medicalPrescriptionImage"
-                                            //       accept="image/*"
-                                            //       name="medicalPrescriptionImage"
-                                            //       multiple
-                                            //       onChange={(event)=>{handleUpdateMedicalPrescriptionImageWithDate(event, date)}}
-                                            //     />
-                                            //     {updateMedicalPrescriptionImageWithDatePreview.length > 0 && updateMedicalPrescriptionImageWithDatePreview.map((preview, index)=>(
-                                            //       <div key={index}>
-                                            //         <div className="my-2" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
-                                                    
-
-                                            //         <img src={preview} alt="Medical Prescription Preview" height="100px" width="100px" />
-                                            //         <div>
-                                            //         <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => {handleDeleteUpdateMedicalPrescriptionImageWithDate(e, index) }}>
-                                            //       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
-                                            //         background: "transparent", color: "red", // border: "none",
-                                            //       }}>
-                                            //         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                            //       </svg></button></div></div></div>
-                                                    
-                                            //     ))}
-                                            //   </div>)
-                                              )))}</div></td>
-
+                                              </div></div>
+                                            ))))}</div></td>
 
                                       {images.some(data => ! deletedMedicalPrescriptionImageIds.includes(data.id)) && (
                                           <td>
@@ -2302,7 +2185,6 @@ export default function EditCase() {
                                     onChange={handleMedicalPrescriptionImage}
                                   />
                                   <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
-
                                   {medicalPrescriptionImagePreview.length > 0 && medicalPrescriptionImagePreview.map((preview, index)=>(
                                     <div key={index}>
                                       <div className="my-2" >
@@ -2317,7 +2199,6 @@ export default function EditCase() {
                                     </div>
                                   ))}
                                   </div>
-
                                   </td>
                                   <td>
                                     <input type="date" 
