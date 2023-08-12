@@ -102,7 +102,7 @@ const VetManagement = () => {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />            </div>
             {/* Displaying Vet Data */}
-            <div className="container-fluid" style={{ overflow: "scroll" }}>
+            <div className="container-fluid" style={{ overflow: "auto" }}>
               <table className="table table-bordered">
                 <thead>
                   <tr>

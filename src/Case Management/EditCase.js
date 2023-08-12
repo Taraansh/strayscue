@@ -4,10 +4,11 @@ import NavBar from '../components/NavBar'
 import logo from "../assets/profile.png";
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
-
+import '../index.css'
 export default function EditCase() {
   const path = useLocation()
   const navigate = useNavigate()
+  const [openedImage, setOpenedImage] = useState(null);
   const [activeButton, setActiveButton] = useState(0);
   const { user, logoutUser, websiteUrl, allReporters, getAllReporters, allVets, getAllVets, handleOpenImage, handleDownloadImage, handleAnimalPictureDeleteButton, handleFeedingRecordImageDeleteButton, handleBloodReportImageDeleteButton, handleMedicalPrescriptionImageDeleteButton, handleTreatmentRecordImageDeleteButton, handleOrganImageDeleteButton, handlePopPicturesDeleteButton, handleReleasePicturesDeleteButton } = useContext(AuthContext);
 
@@ -282,7 +283,7 @@ export default function EditCase() {
     handleMedicalPrescriptionImageDeleteButton(e, id)
   };
 
-    const handleMedicalPrescriptionImage = (event) => {
+  const handleMedicalPrescriptionImage = (event) => {
     const files = event.target.files;
     const imageFiles = Array.from(files);
 
@@ -549,7 +550,7 @@ export default function EditCase() {
       for (let i = 0; i < bloodReportImage.length; i++) {
         formData.append('bloodReportImage', bloodReportImage[i]);
       }
-      
+
       for (let i = 0; i < feedingRecordImage.length; i++) {
         formData.append('feedingRecordImage', feedingRecordImage[i]);
       }
@@ -560,9 +561,9 @@ export default function EditCase() {
       formData.append("fitForSurgery", fitForSurgery ? fitForSurgery : path.state.data.medicaldetail?.fitForSurgery);
       formData.append("otherDetails", otherDetails ? otherDetails : path.state.data.medicaldetail?.otherDetails);
       formData.append("admissionDate", admissionDate ? (admissionDate ? admissionDate : "1111-11-11") : (path.state.data.medicaldetail?.admissionDate ? path.state.data.medicaldetail?.admissionDate : "1111-11-11"));
-      
+
       formData.append("bloodReportImageDate", bloodReportImageDate ? bloodReportImageDate : "1111-11-11");
-      
+
 
       try {
         const response = await axios.put(
@@ -612,7 +613,7 @@ export default function EditCase() {
       }
 
       formData.append("medicalPrescriptionImageDate", medicalPrescriptionImageDate ? medicalPrescriptionImageDate : "1111-11-11");
-      
+
 
       formData.append("vetName", vetName ? vetName : "");
       formData.append("operationDate", operationDate ? operationDate : "1111-11-11");
@@ -910,7 +911,8 @@ export default function EditCase() {
                           {allReporters.map((data, index) => {
                             return (
                               <option key={index} value={data.reported_name}>{data.reported_name}</option>
-                            )})}
+                            )
+                          })}
                         </select>
                       </div>)}
 
@@ -967,7 +969,7 @@ export default function EditCase() {
                               name="reporterAltContact"
                               defaultValue={path.state.data.reportingdetail?.reporterAltContact === "null" ? '' : path.state.data.reportingdetail?.reporterAltContact}
                               placeholder="Alternate Phone Number"
-                              onChange={(e) =>setReporterAltContact(e.target.value)}
+                              onChange={(e) => setReporterAltContact(e.target.value)}
                               autoComplete="altnumber"
                             />
                           </div>
@@ -1131,13 +1133,24 @@ export default function EditCase() {
                                 alt="Consent Form Preview"
                                 height="100px"
                               />
-                              <button onClick={handleDeleteSavedFrontImage}>Delete</button>
-                              <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.frontImage}`)}>Open</button>
-                              <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.frontImage}`)}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                </svg></button>
+                              <div className='my-2'>
+                                <button onClick={handleDeleteSavedFrontImage} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                    style={{
+                                      background: "transparent", color: "red", // border: "none",
+                                    }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                  </svg>
+                                </button>
+                                <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                                  onClick={(e) => {
+                                    e.preventDefault(); // Prevent default form submission
+                                    setOpenedImage(`${websiteUrl}${path.state.data.reportingdetail?.frontImage}`);
+                                  }}>Open</button>                              <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.frontImage}`)}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                  </svg></button>
+                              </div>
                             </div>) : (frontImagePreview && (
                               <div>
                                 <h6>Preview:</h6>
@@ -1146,7 +1159,15 @@ export default function EditCase() {
                                   alt="Consent Form Preview"
                                   height="100px"
                                 />
-                                <button onClick={handleDeleteFrontImage}>Delete</button>
+                                <div className="my-2">
+                                  <button onClick={handleDeleteFrontImage} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                      style={{
+                                        background: "transparent", color: "red", // border: "none",
+                                      }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                    </svg>
+                                  </button>
+                                </div>
                               </div>))
                             ) : (frontImagePreview && (
                               <div>
@@ -1156,7 +1177,15 @@ export default function EditCase() {
                                   alt="Consent Form Preview"
                                   height="100px"
                                 />
-                                <button onClick={handleDeleteFrontImage}>Delete</button>
+                                <div className="my-2">
+                                  <button onClick={handleDeleteFrontImage} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                      style={{
+                                        background: "transparent", color: "red", // border: "none",
+                                      }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                    </svg>
+                                  </button>
+                                </div>
                               </div>))}</div>
 
                         <div className="col">
@@ -1182,13 +1211,24 @@ export default function EditCase() {
                               alt="Consent Form Preview"
                               height="100px"
                             />
-                            <button onClick={handleDeleteSavedBackImage}>Delete</button>
-                            <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.backImage}`)}>Open</button>
-                            <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.backImage}`)}>
-                              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                              </svg></button>
+                            <div className='my-2'>
+                              <button onClick={handleDeleteSavedBackImage} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                  style={{
+                                    background: "transparent", color: "red", // border: "none",
+                                  }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg>
+                              </button>
+                              <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                                onClick={(e) => {
+                                  e.preventDefault(); // Prevent default form submission
+                                  setOpenedImage(`${websiteUrl}${path.state.data.reportingdetail?.backImage}`);
+                                }}>Open</button>                                <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.backImage}`)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                </svg></button>
+                            </div>
                           </div>) : (backImagePreview && (
                             <div>
                               <h6>Preview:</h6>
@@ -1197,7 +1237,15 @@ export default function EditCase() {
                                 alt="Consent Form Preview"
                                 height="100px"
                               />
-                              <button onClick={handleDeleteBackImage}>Delete</button>
+                              <div className="my-2">
+                                <button onClick={handleDeleteBackImage} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                    style={{
+                                      background: "transparent", color: "red", // border: "none",
+                                    }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                  </svg>
+                                </button>
+                              </div>
                             </div>))
                           ) : (backImagePreview && (
                             <div>
@@ -1207,7 +1255,15 @@ export default function EditCase() {
                                 alt="Consent Form Preview"
                                 height="100px"
                               />
-                              <button onClick={handleDeleteBackImage}>Delete</button>
+                              <div className="my-2">
+                                <button onClick={handleDeleteBackImage} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                    style={{
+                                      background: "transparent", color: "red", // border: "none",
+                                    }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                  </svg>
+                                </button>
+                              </div>
                             </div>))}
                         </div></div>
 
@@ -1217,7 +1273,7 @@ export default function EditCase() {
                             className="form-label h5"
                             htmlFor="consentFormImage"
                           >
-                            Consent Form
+                            Consent Form:
                           </label>
                           <div className="custom-file">
                             <input
@@ -1237,13 +1293,25 @@ export default function EditCase() {
                             alt="Consent Form Preview"
                             height="100px"
                           />
-                          <button onClick={handleDeleteSavedConsentFormImage}>Delete</button>
-                          <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`)}>Open</button>
-                          <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                            </svg></button>
+                          <div className='my-2'>
+                            <button onClick={handleDeleteSavedConsentFormImage} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                style={{
+                                  background: "transparent", color: "red", // border: "none",
+                                }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                              </svg>
+                            </button>
+                            <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                              onClick={(e) => {
+                                e.preventDefault(); // Prevent default form submission
+                                setOpenedImage(`${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`);
+                              }}>Open</button>
+                            <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.reportingdetail?.consentFormImage}`)}>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                              </svg></button>
+                          </div>
                         </div>) : (consentFormImagePreview && (
                           <div>
                             <h6>Preview:</h6>
@@ -1252,7 +1320,15 @@ export default function EditCase() {
                               alt="Consent Form Preview"
                               height="100px"
                             />
-                            <button onClick={handleDeleteConsentFormImage}>Delete</button>
+                            <div className="my-2">
+                              <button onClick={handleDeleteConsentFormImage} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                  style={{
+                                    background: "transparent", color: "red", // border: "none",
+                                  }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg>
+                              </button>
+                            </div>
                           </div>))
                         ) : (consentFormImagePreview && (
                           <div>
@@ -1262,7 +1338,15 @@ export default function EditCase() {
                               alt="Consent Form Preview"
                               height="100px"
                             />
-                            <button onClick={handleDeleteConsentFormImage}>Delete</button>
+                            <div className="my-2">
+                              <button onClick={handleDeleteConsentFormImage} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                  style={{
+                                    background: "transparent", color: "red", // border: "none",
+                                  }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                </svg>
+                              </button>
+                            </div>
                           </div>))}
                       </div>
 
@@ -1367,7 +1451,7 @@ export default function EditCase() {
                               aria-label="Animal Age"
                               name="animalAge"
                               defaultValue={path.state.data.animaldetail?.animalAge || ''}
-                              onChange={(e) => {setAnimalAge(e.target.value);}}
+                              onChange={(e) => { setAnimalAge(e.target.value); }}
                             >
                               <option value="">Age</option>
                               <option value="0-1">0-1 Yrs</option>
@@ -1394,7 +1478,7 @@ export default function EditCase() {
                               aria-label="Animal Temperament"
                               name="animalTemperament"
                               defaultValue={path.state.data.animaldetail?.animalTemperament || ''}
-                              onChange={(e) => {setAnimalTemperament(e.target.value);}}
+                              onChange={(e) => { setAnimalTemperament(e.target.value); }}
                             >
                               <option value="">Choose</option>
                               <option value="Friendly">Friendly</option>
@@ -1415,7 +1499,7 @@ export default function EditCase() {
                               aria-label="Animal Gender"
                               name="animalGender"
                               defaultValue={path.state.data.animaldetail?.animalGender || ''}
-                              onChange={(e) => {setAnimalGender(e.target.value);}}
+                              onChange={(e) => { setAnimalGender(e.target.value); }}
                             >
                               <option value="">Choose Gender</option>
                               <option value="Male">Male</option>
@@ -1438,7 +1522,7 @@ export default function EditCase() {
                               aria-label="Animal Pregnant"
                               name="animalPregnant"
                               defaultValue={path.state.data.animaldetail?.animalPregnant || ''}
-                              onChange={(e) => {setAnimalPregnant(e.target.value);}}
+                              onChange={(e) => { setAnimalPregnant(e.target.value); }}
                             >
                               <option value="">Choose</option>
                               <option value="Yes">Yes</option>
@@ -1462,7 +1546,7 @@ export default function EditCase() {
                             placeholder="Animal Marking"
                             aria-label="Animal Marking"
                             defaultValue={path.state.data.animaldetail?.animalMarking === "null" ? '' : path.state.data.animaldetail?.animalMarking}
-                            onChange={(e) => {setAnimalMarking(e.target.value);}}
+                            onChange={(e) => { setAnimalMarking(e.target.value); }}
                           />
                         </div>
                         <div className="form-group col mb-3">
@@ -1477,7 +1561,7 @@ export default function EditCase() {
                             placeholder="Animal Color"
                             aria-label="Animal Color"
                             defaultValue={path.state.data.animaldetail?.animalColor === "null" ? '' : path.state.data.animaldetail?.animalColor}
-                            onChange={(e) => {setAnimalColor(e.target.value);}}
+                            onChange={(e) => { setAnimalColor(e.target.value); }}
                           />
                         </div>
                         <div className="form-group col mb-3">
@@ -1490,7 +1574,7 @@ export default function EditCase() {
                             aria-label="Animal Catchable"
                             name="animalCatchable"
                             defaultValue={path.state.data.animaldetail?.animalCatchable}
-                            onChange={(e) => {setAnimalCatchable(e.target.value);}}
+                            onChange={(e) => { setAnimalCatchable(e.target.value); }}
                           >
                             <option value="">Choose</option>
                             <option value="Yes">Yes</option>
@@ -1512,7 +1596,7 @@ export default function EditCase() {
                             placeholder="Animal Weight"
                             aria-label="Animal Weight (kgs)"
                             defaultValue={path.state.data.animaldetail?.animalWeight === "null" ? '' : path.state.data.animaldetail?.animalWeight}
-                            onChange={(e) => {setAnimalWeight(e.target.value);}}
+                            onChange={(e) => { setAnimalWeight(e.target.value); }}
                           />
                         </div>
                         <div className="form-group col mb-3">
@@ -1527,7 +1611,7 @@ export default function EditCase() {
                             placeholder="Reason for Admission"
                             aria-label="Reason for Admission"
                             defaultValue={path.state.data.animaldetail?.admissionReason === "null" ? '' : path.state.data.animaldetail?.admissionReason}
-                            onChange={(e) => {setAdmissionReason(e.target.value);}}
+                            onChange={(e) => { setAdmissionReason(e.target.value); }}
                           />
                         </div>
                       </div>
@@ -1580,7 +1664,11 @@ export default function EditCase() {
                                           background: "transparent", color: "red", // border: "none",
                                         }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                    <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.animalPictures}`)}>Open</button>
+                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                                      onClick={(e) => {
+                                        e.preventDefault(); // Prevent default form submission
+                                        setOpenedImage(`${websiteUrl}${data.animalPictures}`);
+                                      }}>Open</button>
                                     <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.animalPictures}`)}>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
@@ -1600,7 +1688,7 @@ export default function EditCase() {
                               type="button"
                               style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
                               className="btn"
-                              onClick={() => {setActiveButton(0);}}
+                              onClick={() => { setActiveButton(0); }}
                             >
                               Previous
                             </button>
@@ -1608,7 +1696,7 @@ export default function EditCase() {
                               type="button"
                               style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
                               className="btn mx-2"
-                              onClick={() => {setActiveButton(2);}}
+                              onClick={() => { setActiveButton(2); }}
                             >
                               Next
                             </button>
@@ -1682,7 +1770,7 @@ export default function EditCase() {
                               aria-label="Animal Vaccinated"
                               name="vaccinationStatus"
                               defaultValue={path.state.data.medicaldetail?.vaccinationStatus || ''}
-                              onChange={(e) =>setVaccinationStatus(e.target.value)}
+                              onChange={(e) => setVaccinationStatus(e.target.value)}
                             >
                               <option value="">Choose Vaccination Status</option>
                               <option value="Already Done">Already Done</option>
@@ -1769,110 +1857,114 @@ export default function EditCase() {
                         </div>
                       </div>
 
-                          <h5>Blood Report Pictures</h5>
-                        <div style={{overflow:"scroll"}}>
+                      <h5>Blood Report Pictures</h5>
+                      <div style={{ overflow: "auto" }}>
                         <table className="table table-bordered">
-                            <thead>
-                              <tr>
-                                <th scope="col">Images</th>
-                                <th scope="col">Date</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {path.state.data.medicaldetail?.bloodReportImage.length > 0 && ((
-                            <>
-                              {Object.entries(groupBloodReportImagesByDate(path.state.data.medicaldetail?.bloodReportImage)).map(([date, images], index) => (
-                                <React.Fragment key={index}>
+                          <thead>
+                            <tr>
+                              <th scope="col">Images</th>
+                              <th scope="col">Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {path.state.data.medicaldetail?.bloodReportImage.length > 0 && ((
+                              <>
+                                {Object.entries(groupBloodReportImagesByDate(path.state.data.medicaldetail?.bloodReportImage)).map(([date, images], index) => (
+                                  <React.Fragment key={index}>
                                     <tr>
                                       <td>
                                         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(158px, 1fr))", gridGap: "32px", padding: "20px", margin: "0 auto", }}>
-                                        {images.map((data, imageIndex) => (
-                                          !deletedBloodReportImageIds.includes(data.id) && ( // Check if the image id is not in the deleted ids array
+                                          {images.map((data, imageIndex) => (
+                                            !deletedBloodReportImageIds.includes(data.id) && ( // Check if the image id is not in the deleted ids array
 
-                                            (data.bloodReportImage) && (
-                                            <div key={imageIndex}>
-                                              <img src={`${websiteUrl}${data.bloodReportImage}`} alt="Blood Report Preview" height="100px" width="100px" />
-                                             <div className='my-2'>
-                                             <button className='btn' style={{padding:"0.3rem", border:"1px solid black"}} onClick={(e) => handleDeleteSavedBloodReportImage(e, data.id)}>
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
-                                                  background: "transparent", color: "red", // border: "none",
-                                                }}>
-                                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                                </svg>
-                                              </button>
-                                              <button
-                                                className='mx-2 btn'
-                                                style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
-                                                onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.bloodReportImage}`)}
-                                              >
-                                                Open
-                                              </button>
-                                              <button
-                                                className='btn'
-                                                style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }}
-                                                onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.bloodReportImage}`)}
-                                              >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                                </svg>
-                                              </button>
-                                             </div>
-                                            </div>
-                                            ))))}</div>
-                                       
-                                          </td>
-                                          {images.some(data => !deletedBloodReportImageIds.includes(data.id)) && ( // Check if at least one image is not deleted
-                                            <td>
-                                              <input
-                                                className="form-control"
-                                                type="date"
-                                                defaultValue={date === '1111-11-11' ? "" : date}
-                                              />
-                                            </td>
-                                          )}</tr>
-                                        </React.Fragment>))}</>))}
-                                        
-                                        <tr>
-                                          <td >
-                                          <input
-                                          type="file"
-                                          className="btn custom-file-input"
-                                          id="bloodReportImage"
-                                          accept="image/*"
-                                          multiple
-                                          name="bloodReportImage"
-                                          onChange={handleBloodReportImage}
-                                        />
-                                       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
-                                       {bloodReportImagePreview.length > 0 && bloodReportImagePreview.map((preview, index)=>(
-                                            <div key={index}>
-                                          <div className="my-2" >
-                                          <img src={preview} alt="Blood Report Preview" height="100px" width="100px" />
-                                          <div className='my-2'>
-                                            <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteBloodReportImage(e, index) }}>
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
-                                                background: "transparent", color: "red", // border: "none",
-                                              }}>
-                                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                              </svg></button></div></div>
-                                          </div>
-                                        ))}
-                                       </div>
-                                          </td>
-                                          <td>
+                                              (data.bloodReportImage) && (
+                                                <div key={imageIndex}>
+                                                  <img src={`${websiteUrl}${data.bloodReportImage}`} alt="Blood Report Preview" height="100px" width="100px" />
+                                                  <div className='my-2'>
+                                                    <button className='btn' style={{ padding: "0.3rem", border: "1px solid black" }} onClick={(e) => handleDeleteSavedBloodReportImage(e, data.id)}>
+                                                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                                        background: "transparent", color: "red", // border: "none",
+                                                      }}>
+                                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                                      </svg>
+                                                    </button>
+                                                    <button
+                                                      className='mx-2 btn'
+                                                      style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                                                      onClick={(e) => {
+                                                        e.preventDefault(); // Prevent default form submission
+                                                        setOpenedImage(`${websiteUrl}${data.bloodReportImage}`);
+                                                      }}
+                                                    >
+                                                      Open
+                                                    </button>
+
+                                                    <button
+                                                      className='btn'
+                                                      style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }}
+                                                      onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.bloodReportImage}`)}
+                                                    >
+                                                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                      </svg>
+                                                    </button>
+                                                  </div>
+                                                </div>
+                                              ))))}</div>
+
+                                      </td>
+                                      {images.some(data => !deletedBloodReportImageIds.includes(data.id)) && ( // Check if at least one image is not deleted
+                                        <td>
                                           <input
                                             className="form-control"
-                                            id="blood_report_date"
-                                            name="blood_report_date"
                                             type="date"
-                                            required={(bloodReportImagePreview.length > 0) ? true : false}
-                                            onChange={(e) => setBloodReportImageDate(e.target.value)}
-                                          /></td>
-                                        </tr>
-                            </tbody>
-                            </table>
-                        </div>
+                                            defaultValue={date === '1111-11-11' ? "" : date}
+                                          />
+                                        </td>
+                                      )}</tr>
+                                  </React.Fragment>))}</>))}
+
+                            <tr>
+                              <td >
+                                <input
+                                  type="file"
+                                  className="btn custom-file-input"
+                                  id="bloodReportImage"
+                                  accept="image/*"
+                                  multiple
+                                  name="bloodReportImage"
+                                  onChange={handleBloodReportImage}
+                                />
+                                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                                  {bloodReportImagePreview.length > 0 && bloodReportImagePreview.map((preview, index) => (
+                                    <div key={index}>
+                                      <div className="my-2" >
+                                        <img src={preview} alt="Blood Report Preview" height="100px" width="100px" />
+                                        <div className='my-2'>
+                                          <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteBloodReportImage(e, index) }}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                              background: "transparent", color: "red", // border: "none",
+                                            }}>
+                                              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                            </svg></button></div></div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </td>
+                              <td>
+                                <input
+                                  className="form-control"
+                                  id="blood_report_date"
+                                  name="blood_report_date"
+                                  type="date"
+                                  required={(bloodReportImagePreview.length > 0) ? true : false}
+                                  onChange={(e) => setBloodReportImageDate(e.target.value)}
+                                /></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
 
                       <div className="form-group mb-3">
                         <label
@@ -1925,7 +2017,11 @@ export default function EditCase() {
                                       }}>
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                    <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.feedingRecordImage}`)}>Open</button>
+                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                                      onClick={(e) => {
+                                        e.preventDefault(); // Prevent default form submission
+                                        setOpenedImage(`${websiteUrl}${data.feedingRecordImage}`);
+                                      }}>Open</button>
                                     <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.feedingRecordImage}`)}>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
@@ -2070,7 +2166,7 @@ export default function EditCase() {
                                 name="operationStartTime"
                                 type="time"
                                 defaultValue={path.state.data.operationdetail?.operationStartTime ? (path.state.data.operationdetail?.operationStartTime === '11:11:11' ? "" : path.state.data.operationdetail?.operationStartTime) : ''}
-                                onChange={(e) =>setOperationStartTime(e.target.value)}
+                                onChange={(e) => setOperationStartTime(e.target.value)}
                               />
                             </div>
                             <div className="form-group col">
@@ -2086,7 +2182,7 @@ export default function EditCase() {
                                 name="operationEndTime"
                                 type="time"
                                 defaultValue={path.state.data.operationdetail?.operationEndTime ? (path.state.data.operationdetail?.operationEndTime === '11:11:11' ? "" : path.state.data.operationdetail?.operationEndTime) : ''}
-                                onChange={(e) =>setOperationEndTime(e.target.value)}
+                                onChange={(e) => setOperationEndTime(e.target.value)}
                               />
                             </div>
                           </div>
@@ -2115,100 +2211,103 @@ export default function EditCase() {
                       </div>
 
                       <h5>Medical Prescription -</h5>
-                      <div style={{overflow: "scroll"}}>
+                      <div style={{ overflow: "auto" }}>
                         <table className="table table-bordered">
                           <thead>
                             <tr>
-                            <th scope="col">Images</th>
-                            <th scope="col">Date</th>
+                              <th scope="col">Images</th>
+                              <th scope="col">Date</th>
                             </tr>
                           </thead>
                           <tbody>
                             {path.state.data.operationdetail?.medicalPrescriptionImage.length > 0 && ((
                               <>
-                              {Object.entries(groupMedicalPrescriptionImagesByDate(path.state.data.operationdetail?.medicalPrescriptionImage)).map(([date, images], index)=>(
+                                {Object.entries(groupMedicalPrescriptionImagesByDate(path.state.data.operationdetail?.medicalPrescriptionImage)).map(([date, images], index) => (
                                   <React.Fragment key={index}>
                                     <tr>
                                       <td>
-                                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(158px, 1fr))", gridGap: "32px", padding: "20px", margin: "0 auto", }}>
+                                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(158px, 1fr))", gridGap: "32px", padding: "20px", margin: "0 auto", }}>
 
-                                        {images.map((data, imageIndex)=>(
-                                          !deletedMedicalPrescriptionImageIds.includes(data.id)&&(
-                                            (data.medicalPrescriptionImage) && (
-                                              <div key={imageIndex}>
-                                                <img src={`${websiteUrl}${data.medicalPrescriptionImage}`} alt="Medical Prescription Preview" height="100px" width="100px" />
-                                                <div className='my-2' >
+                                          {images.map((data, imageIndex) => (
+                                            !deletedMedicalPrescriptionImageIds.includes(data.id) && (
+                                              (data.medicalPrescriptionImage) && (
+                                                <div key={imageIndex}>
+                                                  <img src={`${websiteUrl}${data.medicalPrescriptionImage}`} alt="Medical Prescription Preview" height="100px" width="100px" />
+                                                  <div className='my-2' >
 
-                                                <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedMedicalPrescriptionImage(e, data.id)}>
-                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
-                                                  background: "transparent", color: "red", // border: "none",
-                                                }}>
-                                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                                </svg>
-                                              </button>
-                                              <button
-                                                className='mx-2 btn'
-                                                style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
-                                                onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.medicalPrescriptionImage}`)}
-                                              >
-                                                Open
-                                              </button>
-                                              <button
-                                                className='btn'
-                                                style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }}
-                                                onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.medicalPrescriptionImage}`)}
-                                              >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
-                                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                                </svg>
-                                              </button>
-                                              </div></div>
-                                            ))))}</div></td>
+                                                    <button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteSavedMedicalPrescriptionImage(e, data.id)}>
+                                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                                        background: "transparent", color: "red", // border: "none",
+                                                      }}>
+                                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                                      </svg>
+                                                    </button>
+                                                    <button
+                                                      className='mx-2 btn'
+                                                      style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                                                      onClick={(e) => {
+                                                        e.preventDefault(); // Prevent default form submission
+                                                        setOpenedImage(`${websiteUrl}${data.medicalPrescriptionImage}`);
+                                                      }}
+                                                    >
+                                                      Open
+                                                    </button>
+                                                    <button
+                                                      className='btn'
+                                                      style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }}
+                                                      onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.medicalPrescriptionImage}`)}
+                                                    >
+                                                      <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
+                                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                                      </svg>
+                                                    </button>
+                                                  </div></div>
+                                              ))))}</div></td>
 
-                                      {images.some(data => ! deletedMedicalPrescriptionImageIds.includes(data.id)) && (
-                                          <td>
-                                            <input type="date" className="form-control" defaultValue={date === '1111-11-11' ? "" : date}/>
-                                          </td>)}
+                                      {images.some(data => !deletedMedicalPrescriptionImageIds.includes(data.id)) && (
+                                        <td>
+                                          <input type="date" className="form-control" defaultValue={date === '1111-11-11' ? "" : date} />
+                                        </td>)}
                                     </tr>
                                   </React.Fragment>))}</>))}
 
-                                <tr>
-                                  <td>
-                                  <input
-                                    type="file"
-                                    className="btn custom-file-input"
-                                    id="medicalPrescriptionImage"
-                                    accept="image/*"
-                                    multiple
-                                    name="medicalPrescriptionImage"
-                                    onChange={handleMedicalPrescriptionImage}
-                                  />
-                                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
-                                  {medicalPrescriptionImagePreview.length > 0 && medicalPrescriptionImagePreview.map((preview, index)=>(
+                            <tr>
+                              <td>
+                                <input
+                                  type="file"
+                                  className="btn custom-file-input"
+                                  id="medicalPrescriptionImage"
+                                  accept="image/*"
+                                  multiple
+                                  name="medicalPrescriptionImage"
+                                  onChange={handleMedicalPrescriptionImage}
+                                />
+                                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(100px, 1fr))", gridGap: "10px", padding: "20px", margin: "0 auto", }}>
+                                  {medicalPrescriptionImagePreview.length > 0 && medicalPrescriptionImagePreview.map((preview, index) => (
                                     <div key={index}>
                                       <div className="my-2" >
-                                      <img src={preview} alt="Medical Prescription Preview" height="100px" width="100px" />
-                                      <div className='my-2'>
-                                        <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteMedicalPrescriptionImage(e, index) }}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
-                                        background: "transparent", color: "red", // border: "none",
-                                        }}>
-                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                        </svg></button></div></div>
+                                        <img src={preview} alt="Medical Prescription Preview" height="100px" width="100px" />
+                                        <div className='my-2'>
+                                          <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteMedicalPrescriptionImage(e, index) }}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
+                                              background: "transparent", color: "red", // border: "none",
+                                            }}>
+                                              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                            </svg></button></div></div>
                                     </div>
                                   ))}
-                                  </div>
-                                  </td>
-                                  <td>
-                                    <input type="date" 
-                                    className="form-control"
-                                    id='medical_prescription_image_upload_date'
-                                    name='medical_prescription_image_upload_date'
-                                    required={(medicalPrescriptionImagePreview.length > 0) ? true : false}
-                                    onChange={(e)=>setMedicalPrescriptionImageDate(e.target.value)}
-                                    /></td>
-                                </tr>
+                                </div>
+                              </td>
+                              <td>
+                                <input type="date"
+                                  className="form-control"
+                                  id='medical_prescription_image_upload_date'
+                                  name='medical_prescription_image_upload_date'
+                                  required={(medicalPrescriptionImagePreview.length > 0) ? true : false}
+                                  onChange={(e) => setMedicalPrescriptionImageDate(e.target.value)}
+                                /></td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -2264,7 +2363,11 @@ export default function EditCase() {
                                       }}>
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                    <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.treatmentRecordImage}`)}>Open</button>
+                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                                      onClick={(e) => {
+                                        e.preventDefault(); // Prevent default form submission
+                                        setOpenedImage(`${websiteUrl}${data.treatmentRecordImage}`);
+                                      }}>Open</button>
                                     <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.treatmentRecordImage}`)}>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
@@ -2340,7 +2443,11 @@ export default function EditCase() {
                                         }}>
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                    <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.organImage}`)}>Open</button>
+                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                                      onClick={(e) => {
+                                        e.preventDefault(); // Prevent default form submission
+                                        setOpenedImage(`${websiteUrl}${data.organImage}`);
+                                      }}>Open</button>
                                     <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.organImage}`)}>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
@@ -2612,7 +2719,11 @@ export default function EditCase() {
                                         }}>
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                    <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.popPictures}`)}>Open</button>
+                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                                      onClick={(e) => {
+                                        e.preventDefault(); // Prevent default form submission
+                                        setOpenedImage(`${websiteUrl}${data.popPictures}`);
+                                      }}>Open</button>
                                     <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.popPictures}`)}>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
@@ -2685,7 +2796,11 @@ export default function EditCase() {
                                         }}>
                                         <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
                                       </svg></button>
-                                    <button className='mx-2 btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${data.releasePictures}`)}>Open</button>
+                                    <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
+                                      onClick={(e) => {
+                                        e.preventDefault(); // Prevent default form submission
+                                        setOpenedImage(`${websiteUrl}${data.releasePictures}`);
+                                      }}>Open</button>
                                     <button className='btn' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft: "0.4rem", paddingRight: "0", paddingBottom: "0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${data.releasePictures}`)}>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                         <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
@@ -2747,6 +2862,24 @@ export default function EditCase() {
               )}
             </div>
           </div>
+          {openedImage && (
+            <div className="image-modal-overlay">
+              <div className="image-modal">
+                <button className="close-button btn btn-light" onClick={() => setOpenedImage(null)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z"
+                      id="_icons"
+                      fill="white"
+                      className="fill-000000"
+                    ></path>
+                  </svg>
+                </button>
+                <img src={openedImage} alt="Opened Image" className="opened-image" />
+              </div>
+            </div>
+          )}
         </div>
         <div
           style={{
@@ -2771,6 +2904,8 @@ export default function EditCase() {
           </span>
         </div>
       </div>
+
+
     </>
   )
 }

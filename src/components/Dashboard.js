@@ -264,7 +264,7 @@ const Dashboard = () => {
                </div>
               {/* Displaying Case Data */}
               <div>
-                <div className="container-fluid" style={{overflow : "scroll"}}>
+                <div className="container-fluid" style={{overflow : "auto"}}>
                   <div
                     className="btn-group my-2 mb-4"
                     style={{ width: "100%" }}

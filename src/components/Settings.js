@@ -157,7 +157,7 @@ const Settings = () => {
           <div className="case-lists mx-auto">
             <div
               className="container-fluid"
-              style={{ overflow: "scroll", paddingBottom: "2rem" }}
+              style={{ overflow: "auto", paddingBottom: "2rem" }}
             >
               <form onSubmit={handleModifyProfile}>
                 <div className="mb-3">
@@ -351,7 +351,7 @@ const Settings = () => {
           <div className="case-lists mx-auto">
             <div
               className="container-fluid"
-              style={{ overflow: "scroll", paddingBottom: "2rem" }}
+              style={{ overflow:"auto", paddingBottom: "2rem" }}
             >
               <form onSubmit={handleModifyPassword}>
                 <label
