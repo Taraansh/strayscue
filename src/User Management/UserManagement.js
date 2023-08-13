@@ -70,7 +70,6 @@ const UserManagement = () => {
           >
             <h4 className="heading1">Users List</h4>
             <div className="case-lists mx-auto">
-            <h5 className="heading1">Add User in NGO</h5>
               <div className="menu1">
                 <Link
                   to="/UserManagement/AddUser"
