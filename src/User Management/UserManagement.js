@@ -91,7 +91,7 @@ const UserManagement = () => {
                 />
               </div>
               {/* Displaying User linked with Ngo Data */}
-              <div className="container-fluid" style={{ overflow: "scroll" }}>
+              <div className="container-fluid" style={{ overflow: "auto" }}>
                 <table className="table table-bordered">
                   <thead>
                     <tr>

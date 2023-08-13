@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function EditReporter() {
     const path = useLocation();
+    const [openedImage, setOpenedImage] = useState(null);
     const navigate = useNavigate();
     const { user, logoutUser, websiteUrl, handleOpenImage, handleDownloadImage } = useContext(AuthContext);
     const [reported_name, setReportedName] = useState(null);
@@ -210,13 +211,24 @@ export default function EditReporter() {
                             alt="Verification ID Preview"
                             height="100px"
                           />
-                          <button onClick={handleDeleteSavedVerificationId}>Delete</button>
-                          <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} onClick={(e) => handleOpenImage(e, `${websiteUrl}${path.state.data.verification_id}`)}>Open</button>
-                          <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.verification_id}`)}>
+                         <div className="my-2">
+                         <button onClick={handleDeleteSavedVerificationId} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
+                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                        style={{
+                                          background: "transparent", color: "red", // border: "none",
+                                        }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                      </svg>
+                         </button>
+                         <button className='mx-2 btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }} 
+                            onClick={(e) => {
+                              e.preventDefault(); // Prevent default form submission
+                              setOpenedImage(`${websiteUrl}${path.state.data.verification_id}`);
+                            }}>Open</button>                          <button className='btn btn-primary' style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", paddingLeft:"0.4rem", paddingRight:"0", paddingBottom:"0.2rem" }} onClick={(e) => handleDownloadImage(e, `${websiteUrl}${path.state.data.verification_id}`)}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-download" viewBox="0 0 24 24">
                                       <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
                                       <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
                                     </svg></button>
+                         </div>
                         </div>):(verificationIdPreview && (
                     <div>
                       <h6>Preview:</h6>
@@ -236,9 +248,15 @@ export default function EditReporter() {
                         alt="Verification ID Preview"
                         height="100px"
                       />
-                      <button onClick={handleDeleteVerificationId}>
-                        Delete
-                      </button>
+                       <div className="my-2">
+                           <button onClick={handleDeleteVerificationId} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
+                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
+                                        style={{
+                                          background: "transparent", color: "red", // border: "none",
+                                        }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                      </svg>
+                         </button>
+                           </div>
                     </div>)
                   )}
                 </div>
@@ -272,6 +290,24 @@ export default function EditReporter() {
             </div>
           </div>
         </div>
+        {openedImage && (
+  <div className="image-modal-overlay">
+    <div className="image-modal">
+       <button className="close-button btn btn-light" onClick={() => setOpenedImage(null)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z"
+                                    id="_icons"
+                                    fill="white"
+                                    className="fill-000000"
+                                  ></path>
+                                </svg>
+                              </button>
+      <img src={openedImage} alt="Opened Image" className="opened-image" />
+    </div>
+  </div>
+)}
       </>
       <div
         style={{
