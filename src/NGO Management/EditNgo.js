@@ -8,7 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function EditNgo() {
-  const { user, logoutUser, websiteUrl, handleOpenImage, handleDownloadImage } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl, handleDownloadImage } = useContext(AuthContext);
   const isSuperUser = localStorage.getItem("is_superuser");
   
   const [openedImage, setOpenedImage] = useState(null);
@@ -419,7 +419,7 @@ export default function EditNgo() {
                             height="100px"
                           />
                          <div className="my-2">
-                         <button className="my-2" onClick={handleDeleteSavedNgoLogo} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
+                         <button className="my-2 btn" onClick={handleDeleteSavedNgoLogo} style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
                                         style={{
                                           background: "transparent", color: "red", // border: "none",
@@ -521,7 +521,7 @@ export default function EditNgo() {
                                   ></path>
                                 </svg>
                               </button>
-      <img src={openedImage} alt="Opened Image" className="opened-image" />
+      <img src={openedImage} alt="Preview" className="opened-image" />
     </div>
   </div>
 )}

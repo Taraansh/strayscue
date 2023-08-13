@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 export default function EditVet() {
   const path = useLocation();
   const [openedImage, setOpenedImage] = useState(null);
-  const { user, logoutUser, websiteUrl, handleOpenImage, handleDownloadImage } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl, handleDownloadImage } = useContext(AuthContext);
   const [vet_name, setVetName] = useState(null);
   const [registration_id, setRegistrationId] = useState(null);
   const [vet_certification, setVetCertification] = useState(null);
@@ -417,7 +417,7 @@ export default function EditVet() {
                                   ></path>
                                 </svg>
                               </button>
-      <img src={openedImage} alt="Opened Image" className="opened-image" />
+      <img src={openedImage} alt="Preview" className="opened-image" />
     </div>
   </div>
 )}

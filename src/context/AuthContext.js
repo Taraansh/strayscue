@@ -232,16 +232,16 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const handleOpenImage = (e, imageUrl) => {
-    e.preventDefault();
-    // Create a temporary link element
-    const link = document.createElement('a');
-    link.href = imageUrl;
-    link.setAttribute('target', '_blank'); // Open the link in a new tab
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // const handleOpenImage = (e, imageUrl) => {
+  //   e.preventDefault();
+  //   // Create a temporary link element
+  //   const link = document.createElement('a');
+  //   link.href = imageUrl;
+  //   link.setAttribute('target', '_blank'); // Open the link in a new tab
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   const handleDownloadImage = async (e, imageUrl) => {
     e.preventDefault();
@@ -559,7 +559,7 @@ export const AuthProvider = ({ children }) => {
     getAllNgos: getAllNgos,
     getAllUsersLinkedWithNgo: getAllUsersLinkedWithNgo,
     getAllCasesLinkedWithNgo: getAllCasesLinkedWithNgo,
-    handleOpenImage: handleOpenImage,
+    // handleOpenImage: handleOpenImage,
     handleDownloadImage: handleDownloadImage,
     handleAnimalPictureDeleteButton: handleAnimalPictureDeleteButton,
     handleFeedingRecordImageDeleteButton: handleFeedingRecordImageDeleteButton,

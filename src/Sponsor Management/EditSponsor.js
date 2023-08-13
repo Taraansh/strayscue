@@ -11,7 +11,7 @@ export default function EditSponsor() {
   const path = useLocation();
   const [openedImage, setOpenedImage] = useState(null);
 
-  const { user, logoutUser, websiteUrl, handleOpenImage, handleDownloadImage } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl, handleDownloadImage } = useContext(AuthContext);
   const [sponsor_name, setSponsorName] = useState(null);
   const [animal_fit_for_surgery, setAnimalFitForSurgery] = useState(null);
   const [sponsor_amount, setAmount] = useState(null);
@@ -359,7 +359,7 @@ export default function EditSponsor() {
                                   ></path>
                                 </svg>
                               </button>
-      <img src={openedImage} alt="Opened Image" className="opened-image" />
+      <img src={openedImage} alt="Preview" className="opened-image" />
     </div>
   </div>
 )}

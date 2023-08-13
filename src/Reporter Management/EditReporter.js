@@ -11,7 +11,7 @@ export default function EditReporter() {
     const path = useLocation();
     const [openedImage, setOpenedImage] = useState(null);
     const navigate = useNavigate();
-    const { user, logoutUser, websiteUrl, handleOpenImage, handleDownloadImage } = useContext(AuthContext);
+    const { user, logoutUser, websiteUrl, handleDownloadImage } = useContext(AuthContext);
     const [reported_name, setReportedName] = useState(null);
     const [phone_number, setPhoneNumber] = useState(null);
     const [alternate_phone_number, setAlternatePhoneNumber] = useState(null);
@@ -304,7 +304,7 @@ export default function EditReporter() {
                                   ></path>
                                 </svg>
                               </button>
-      <img src={openedImage} alt="Opened Image" className="opened-image" />
+      <img src={openedImage} alt="Preview" className="opened-image" />
     </div>
   </div>
 )}

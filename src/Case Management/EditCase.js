@@ -10,7 +10,7 @@ export default function EditCase() {
   const navigate = useNavigate()
   const [openedImage, setOpenedImage] = useState(null);
   const [activeButton, setActiveButton] = useState(0);
-  const { user, logoutUser, websiteUrl, allReporters, getAllReporters, allVets, getAllVets, handleOpenImage, handleDownloadImage, handleAnimalPictureDeleteButton, handleFeedingRecordImageDeleteButton, handleBloodReportImageDeleteButton, handleMedicalPrescriptionImageDeleteButton, handleTreatmentRecordImageDeleteButton, handleOrganImageDeleteButton, handlePopPicturesDeleteButton, handleReleasePicturesDeleteButton } = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl, allReporters, getAllReporters, allVets, getAllVets, handleDownloadImage, handleAnimalPictureDeleteButton, handleFeedingRecordImageDeleteButton, handleBloodReportImageDeleteButton, handleMedicalPrescriptionImageDeleteButton, handleTreatmentRecordImageDeleteButton, handleOrganImageDeleteButton, handlePopPicturesDeleteButton, handleReleasePicturesDeleteButton } = useContext(AuthContext);
 
   // Reporting Details State
   const [frontImageFile, setFrontImageFile] = useState(null);
@@ -2876,7 +2876,7 @@ export default function EditCase() {
                     ></path>
                   </svg>
                 </button>
-                <img src={openedImage} alt="Opened Image" className="opened-image" />
+                <img src={openedImage} alt="Preview" className="opened-image" />
               </div>
             </div>
           )}
