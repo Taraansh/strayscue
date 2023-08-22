@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const ReporterManagement = () => {
   const { user, logoutUser, allReporters, getAllReporters, websiteUrl } =
@@ -69,8 +70,9 @@ const ReporterManagement = () => {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
-        paddingBottom: "2rem",
+        flexDirection: "column",
+        justifyContent:"space-between",
+        height:"100vh",
         margin: "0",
        
       }}
@@ -82,6 +84,7 @@ const ReporterManagement = () => {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
+            paddingBottom:"3rem"
           }}
           className="container"
         >
@@ -197,6 +200,7 @@ const ReporterManagement = () => {
           ></i>
         </span>
       </div>
+      <Footer/>
     </div>
   ) : (
     <div>

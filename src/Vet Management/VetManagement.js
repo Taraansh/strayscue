@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const VetManagement = () => {
   const { user, logoutUser, allVets, getAllVets, websiteUrl } = useContext(AuthContext);
@@ -64,8 +65,9 @@ const VetManagement = () => {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
-        paddingBottom: "2rem",
+        flexDirection: "column",
+        justifyContent:"space-between",
+        height:"100vh",
         margin: "0",
        
       }}
@@ -77,6 +79,7 @@ const VetManagement = () => {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
+            paddingBottom:"3rem"
           }}
           className="container"
         >
@@ -191,6 +194,7 @@ const VetManagement = () => {
           ></i>
         </span>
       </div>
+      <Footer/>
     </div>
   ) : (
     <div>
