@@ -5,6 +5,7 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Footer from "../components/Footer";
 
 const AddReporter = () => {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
@@ -77,8 +78,9 @@ const AddReporter = () => {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
-        paddingBottom: "2rem",
+        flexDirection: "column",
+        justifyContent:"space-between",
+        height:"100vh",
         margin: "0",
        
       }}
@@ -90,6 +92,7 @@ const AddReporter = () => {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
+            paddingBottom:"3rem"
           }}
           className="container"
         >
@@ -268,6 +271,7 @@ const AddReporter = () => {
           ></i>
         </span>
       </div>
+      <Footer/>
     </div>
   ) : (
     <div>

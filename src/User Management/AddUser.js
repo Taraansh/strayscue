@@ -5,6 +5,7 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const AddUser = () => {
   const { user, logoutUser, websiteUrl, allNgos, getAllNgos, } = useContext(AuthContext);
@@ -81,8 +82,9 @@ const AddUser = () => {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
-        paddingBottom: "2rem",
+        flexDirection: "column",
+        justifyContent:"space-between",
+        height:"100vh",
         margin: "0",
        
       }}
@@ -93,6 +95,7 @@ const AddUser = () => {
           style={{
             paddingTop: "5rem",
             width: "100vw",
+            paddingBottom:"3rem",
             paddingLeft: "50px",
           }}
           className="container"
@@ -327,6 +330,7 @@ const AddUser = () => {
           ></i>
         </span>
       </div>
+      <Footer/>
     </div>
   )
 };

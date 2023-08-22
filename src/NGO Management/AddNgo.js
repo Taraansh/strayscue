@@ -5,6 +5,7 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Footer from "../components/Footer";
 
 const AddNgo = () => {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
@@ -96,10 +97,10 @@ const AddNgo = () => {
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
-          paddingBottom: "2rem",
+          flexDirection: "column",
+          justifyContent:"space-between",
           margin: "0",
-          
+          height:"100vh",
         }}
       >
         <NavBar />
@@ -109,6 +110,7 @@ const AddNgo = () => {
               paddingTop: "5rem",
               width: "100vw",
               paddingLeft: "50px",
+              paddingBottom:"3rem"
             }}
             className="container"
           >
@@ -429,6 +431,7 @@ const AddNgo = () => {
             ></i>
           </span>
         </div>
+        <Footer/>
       </div>
     )
   );

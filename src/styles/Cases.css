@@ -62,6 +62,10 @@
   display: flex;
 
 }
+.top-menu{
+  display: flex;
+  justify-content: space-between;
+}
 .form-buttons
 {
   display: flex;
@@ -114,6 +118,10 @@
 .footer-text
 {
   display: none;
+}
+.top-menu{
+  flex-direction: column;
+
 }
 }
 @media (min-width: 768px) and (max-width: 1024px) {

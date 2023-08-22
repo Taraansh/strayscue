@@ -5,9 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import AddModal from "../utils/AddModal";
 import "../styles/Cases.css";
 import logo from "../assets/profile.png";
-
+import Footer from './Footer'
 
 const Dashboard = () => {
+   
   const { user, logoutUser, allCases, getAllCases, allCasesLinkedWithNGO, getAllCasesLinkedWithNgo, websiteUrl } = useContext(AuthContext);
   const [modalShow, setModalShow] = React.useState(false);
   const [activeButton, setActiveButton] = useState(0);
@@ -188,11 +189,11 @@ const Dashboard = () => {
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
-          paddingBottom:"2.3rem",
-          margin: "0",
-          
-        }}
+          flexDirection: "column",
+          justifyContent:"space-between",
+          height:"100vh",
+           margin: "0",
+         }}
       >
 
       <NavBar />
@@ -202,7 +203,7 @@ const Dashboard = () => {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
-           
+            paddingBottom:"3rem"
           }}
           className="container"
         >
@@ -506,7 +507,9 @@ const Dashboard = () => {
             ></i>
           </span>
         </div>
+        <Footer />
       </div>
+      
     </>
   ) : (
     <div>

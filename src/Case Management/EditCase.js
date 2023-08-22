@@ -5,6 +5,7 @@ import logo from "../assets/profile.png";
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import '../index.css'
+import Footer from '../components/Footer';
 export default function EditCase() {
   const path = useLocation()
   const navigate = useNavigate()
@@ -764,8 +765,9 @@ export default function EditCase() {
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
-          paddingBottom: "2rem",
+          flexDirection: "column",
+          justifyContent:"space-between",
+          height:"100vh",
           margin: "0",
         }}
       >
@@ -777,6 +779,7 @@ export default function EditCase() {
             flexDirection: "column",
             width: "100vw",
             paddingLeft: "50px",
+            paddingBottom:"3rem"
           }}
         >
           <hr />
@@ -835,7 +838,7 @@ export default function EditCase() {
           </div>
 
           <div className="case-lists mx-auto">
-            <div className="mx-auto px-4 container-fluid">
+            <div className="mx-auto p-4 container-fluid">
               {/* Change bar */}
               <div
                 className="btn-group form-1 mt-2"
@@ -1350,11 +1353,12 @@ export default function EditCase() {
                           </div>))}
                       </div>
 
-                      <div className="my-3">
+                      <div className="my-3 top-menu">
+                        <div>
                         <button
                           type="button"
                           style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
-                          className="btn"
+                          className="btn mx-1 my-1"
                           onClick={() => {
                             setActiveButton(1);
                           }}
@@ -1364,14 +1368,15 @@ export default function EditCase() {
                         <button
                           type="submit"
                           style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
-                          className="btn  float-end mx-1"
+                          className="btn mx-1 my-1"
                         >
                           Save
                         </button>
+                        </div>
                         <button
                           type="button"
-                          style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
-                          className="btn  float-end mx-1"
+                          style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff", width:"fit-content" }}
+                          className="btn mx-1 my-1"
                           onClick={() => {
                             const confirmDelete = window.confirm(
                               "Are you sure you want to Exit?"
@@ -2903,6 +2908,7 @@ export default function EditCase() {
             <i style={{ cursor: "pointer" }} className="fa-solid fa-right-from-bracket" onClick={logoutUser}></i>
           </span>
         </div>
+        <Footer/>
       </div>
 
 

@@ -6,6 +6,7 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function EditVet() {
   const path = useLocation();
@@ -128,8 +129,9 @@ export default function EditVet() {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
-        paddingBottom: "2rem",
+        flexDirection: "column",
+        justifyContent:"space-between",
+        height:"100vh",
         margin: "0",
       
       }}
@@ -141,6 +143,7 @@ export default function EditVet() {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
+            paddingBottom:"3rem"
           }}
           className="container"
         >
@@ -455,6 +458,7 @@ export default function EditVet() {
           ></i>
         </span>
       </div>
+      <Footer/>
     </div>
   ) : (
     <div>

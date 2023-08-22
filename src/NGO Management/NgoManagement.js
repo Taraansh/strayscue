@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
+import Footer from "../components/Footer";
 
 const NGOManagement = () => {
   const { user, logoutUser, allNgos, getAllNgos, websiteUrl } = useContext(AuthContext);
@@ -66,8 +67,9 @@ const NGOManagement = () => {
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
-          paddingBottom: "2rem",
+          flexDirection: "column",
+          justifyContent:"space-between",
+          height:"100vh",
           margin: "0",
          
         }}
@@ -79,6 +81,7 @@ const NGOManagement = () => {
               paddingTop: "5rem",
               width: "100vw",
               paddingLeft: "50px",
+              paddingBottom:"3rem"
             }}
             className="container"
           >
@@ -199,6 +202,7 @@ const NGOManagement = () => {
             ></i>
           </span>
         </div>
+        <Footer/>
       </div>
     )
   );
