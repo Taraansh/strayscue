@@ -6,6 +6,7 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function EditSponsor() {
   const path = useLocation();
@@ -91,8 +92,9 @@ export default function EditSponsor() {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
-        paddingBottom: "2rem",
+        flexDirection: "column",
+        height:"100vh",
+        justifyContent:"space-between",
         margin: "0",
        
       }}
@@ -104,6 +106,7 @@ export default function EditSponsor() {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
+            paddingBottom:"3rem"
           }}
           className="container"
         >
@@ -397,6 +400,7 @@ export default function EditSponsor() {
           ></i>
         </span>
       </div>
+      <Footer/>
     </div>
   ) : (
     <div>

@@ -5,6 +5,7 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Footer from "../components/Footer";
 
 const AddVet = () => {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
@@ -98,8 +99,9 @@ const AddVet = () => {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
-        paddingBottom: "2rem",
+        flexDirection: "column",
+        height:"100vh",
+        justifyContent:"space-between",
         margin: "0",
        
       }}
@@ -111,6 +113,7 @@ const AddVet = () => {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
+            paddingBottom:"3rem"
           }}
           className="container"
         >
@@ -295,6 +298,7 @@ const AddVet = () => {
           ></i>
         </span>
       </div>
+      <Footer/>
     </div>
   ) : (
     <div>

@@ -5,6 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import axios from "axios";
+import Footer from "./Footer";
 
 const Settings = () => {
   const { user, logoutUser, websiteUrl} = useContext(AuthContext);
@@ -138,8 +139,9 @@ const Settings = () => {
     <div
       style={{
         display: "flex",
-        flexDirection: "row",
-        paddingBottom: "2.3rem",
+        flexDirection: "column",
+        justifyContent:"space-between",
+        height:"100vh",
         margin: "0",
       }}
     >
@@ -150,6 +152,7 @@ const Settings = () => {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
+            paddingBottom:"3rem"
           }}
           className="container"
         >
@@ -512,6 +515,7 @@ const Settings = () => {
           ></i>
         </span>
       </div>
+      <Footer/>
     </div>
   ) : (
     <div>

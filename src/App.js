@@ -19,8 +19,14 @@ import EditVet from "./Vet Management/EditVet";
 import EditReporter from "./Reporter Management/EditReporter";
 import EditNgo from "./NGO Management/EditNgo";
 import EditUser from "./User Management/EditUser";
+import React from "react";
+
 
 function App() {
+  
+ 
+
+
   return (
     <div className="App">
       <Router>
@@ -52,18 +58,10 @@ function App() {
 
             <Route path="/Settings" element={<Settings />} />
           </Routes>
-          {/* <div>
-  <hr style={{marginTop:"5rem"}}/>
-<footer
- style={{textAlign:"center",
- alignItems:"center",
- paddingBottom:"0.5rem",
- display:"flex",
- fontSize:"0.8rem",
- justifyContent:"center"
-}}><span style={{ fontWeight:"bold",marginRight:"0.1rem"}}>copyright &copy; Sterilization 2022.</span> <span> All rights reserved</span></footer>   </div> */}
+
         </AuthProvider>
       </Router>
+     
     </div>
   );
 }

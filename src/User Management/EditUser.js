@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import axios from "axios";
+import Footer from "../components/Footer";
 
 export default function EditUser() {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
@@ -66,8 +67,9 @@ export default function EditUser() {
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
-          paddingBottom: "2rem",
+          flexDirection: "column",
+          justifyContent:"space-between",
+          height:"100vh",
           margin: "0",
          
         }}
@@ -79,6 +81,7 @@ export default function EditUser() {
               paddingTop: "5rem",
               width: "100vw",
               paddingLeft: "50px",
+              paddingBottom:"3rem"
             }}
             className="container"
           >
@@ -307,6 +310,7 @@ export default function EditUser() {
             ></i>
           </span>
         </div>
+        <Footer/>
       </div>
     )
   );

@@ -6,6 +6,7 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function EditNgo() {
   const { user, logoutUser, websiteUrl, handleDownloadImage } = useContext(AuthContext);
@@ -146,10 +147,10 @@ export default function EditNgo() {
     user && (<div
         style={{
           display: "flex",
-          flexDirection: "row",
-          paddingBottom: "2rem",
+          flexDirection: "column",
+          justifyContent:"space-between",
           margin: "0",
-          
+          height:"100vh",
         }}
       >
         <NavBar />
@@ -159,6 +160,7 @@ export default function EditNgo() {
               paddingTop: "5rem",
               width: "100vw",
               paddingLeft: "50px",
+              paddingBottom:"3rem"
             }}
             className="container"
           >
@@ -557,6 +559,7 @@ export default function EditNgo() {
             ></i>
           </span>
         </div>
+        <Footer/>
       </div>)
   );
 }
