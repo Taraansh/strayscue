@@ -12,24 +12,26 @@ const UserManagement = () => {
     logoutUser,
     getAllUsersLinkedWithNgo,
     allUsersLinkedWithNgo,
+    allUsersForAdmin,
+    getAllUsersForAdmin,
   } = useContext(AuthContext);
   const isSuperUser = localStorage.getItem("is_superuser");
   const type_of_user_in_ngo = localStorage.getItem("type_of_user_in_ngo");
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredUsersLinkedWithNgo, setFilteredUsersLinkedWithNgo] = useState(
-    []
-  );
+  const [filteredUsersLinkedWithNgo, setFilteredUsersLinkedWithNgo] = useState([]);
+  const [filteredUsersForAdmin, setFilteredUsersForAdmin] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     getAllUsersLinkedWithNgo();
-  }, [getAllUsersLinkedWithNgo]);
+    getAllUsersForAdmin();
+  }, [getAllUsersLinkedWithNgo, getAllUsersForAdmin]);
 
   useEffect(() => {
     // Filter Users based on search query
-    const filtered = allUsersLinkedWithNgo.filter((data) => {
+    const filteredNgoUsers = allUsersLinkedWithNgo.filter((data) => {
       const lowerCaseSearchQuery = searchQuery.toLowerCase();
       return (
         data.username.toLowerCase().includes(lowerCaseSearchQuery) ||
@@ -38,8 +40,20 @@ const UserManagement = () => {
         data.email.toLowerCase().includes(lowerCaseSearchQuery)
       );
     });
-    setFilteredUsersLinkedWithNgo(filtered);
-  }, [allUsersLinkedWithNgo, searchQuery]);
+    setFilteredUsersLinkedWithNgo(filteredNgoUsers);
+
+    // Filter Users based on search query
+    const filteredAdminUsers = allUsersForAdmin.filter((data) => {
+      const lowerCaseSearchQuery = searchQuery.toLowerCase();
+      return (
+        data.username.toLowerCase().includes(lowerCaseSearchQuery) ||
+        data.type_of_user_in_ngo.toLowerCase().includes(lowerCaseSearchQuery) ||
+        data.user_contact.toLowerCase().includes(lowerCaseSearchQuery) ||
+        data.email.toLowerCase().includes(lowerCaseSearchQuery)
+      );
+    });
+    setFilteredUsersForAdmin(filteredAdminUsers);
+  }, [allUsersLinkedWithNgo, allUsersForAdmin, searchQuery]);
 
   const handleEditUserLinkedWithNgo = (data) => {
     navigate("/UserManagement/EditUser", { state: { data: data } });
@@ -54,10 +68,9 @@ const UserManagement = () => {
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent:"space-between",
-          height:"100vh",
+          justifyContent: "space-between",
+          height: "100vh",
           margin: "0",
-          
         }}
       >
         <NavBar />
@@ -67,7 +80,7 @@ const UserManagement = () => {
               paddingTop: "5rem",
               width: "100vw",
               paddingLeft: "50px",
-              paddingBottom:"3rem"
+              paddingBottom: "3rem",
             }}
             className="container"
           >
@@ -83,14 +96,30 @@ const UserManagement = () => {
                   }}
                   className="btn "
                 >
-                  Add 
+                  Add
                 </Link>
-                <input
-                  type="text"
-                  placeholder="Search by Name/Type/Email"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
+                <span style={{ display: "flex" }}>
+                  <input
+                    type="text"
+                    placeholder="Search by Name/Type/Email"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    style={{
+                      background: "rgb(245, 145, 32)",
+                      border: "none",
+                      color: "#ffffff",
+                    }}
+                    className="btn mx-1"
+                    onClick={(e) => {
+                      setSearchQuery("");
+                    }}
+                  >
+                    Clear
+                  </button>
+                </span>
               </div>
               {/* Displaying User linked with Ngo Data */}
               <div className="container-fluid" style={{ overflow: "auto" }}>
@@ -107,7 +136,8 @@ const UserManagement = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredUsersLinkedWithNgo.map((data, index) => {
+                    {
+                      (isSuperUser === "true")?(filteredUsersForAdmin.map((data, index) => {
                       return (
                         <tr key={index}>
                           <th>{index + 1}</th>
@@ -119,7 +149,11 @@ const UserManagement = () => {
                           <td>
                             <button
                               className="btn"
-                              style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                              style={{
+                                background: "rgb(245, 145, 32)",
+                                border: "none",
+                                color: "#ffffff",
+                              }}
                               onClick={() => handleEditUserLinkedWithNgo(data)}
                             >
                               Edit
@@ -127,7 +161,33 @@ const UserManagement = () => {
                           </td>
                         </tr>
                       );
-                    })}
+                    })):(filteredUsersLinkedWithNgo.map((data, index) => {
+                      return (
+                        <tr key={index}>
+                          <th>{index + 1}</th>
+                          <td>{data.username}</td>
+                          <td>{data.email}</td>
+                          <td>{data.user_contact}</td>
+                          <td>{data.type_of_user_in_ngo}</td>
+                          <td>{data.is_active}</td>
+                          <td>
+                            <button
+                              className="btn"
+                              style={{
+                                background: "rgb(245, 145, 32)",
+                                border: "none",
+                                color: "#ffffff",
+                              }}
+                              onClick={() => handleEditUserLinkedWithNgo(data)}
+                            >
+                              Edit
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    }))
+                    }
+                    
                   </tbody>
                 </table>
               </div>
@@ -166,7 +226,7 @@ const UserManagement = () => {
             ></i>
           </span>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     )
   );

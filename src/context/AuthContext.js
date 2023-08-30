@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [allNgos, setAllNgos] = useState([]);
   const [allCasesLinkedWithNGO, setAllCasesLinkedWithNGO] = useState([]);
   const [allUsersLinkedWithNgo, setAllUsersLinkedWithNgo] = useState([]);
+  const [allUsersForAdmin, setAllUsersForAdmin] = useState([]);
   const [type_of_case, setType_of_case] = useState("");
   const [status_of_case, setStatus_of_case] = useState("");
   const [mortality_of_case, setMortality_of_case] = useState("");
@@ -234,16 +235,20 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // const handleOpenImage = (e, imageUrl) => {
-  //   e.preventDefault();
-  //   // Create a temporary link element
-  //   const link = document.createElement('a');
-  //   link.href = imageUrl;
-  //   link.setAttribute('target', '_blank'); // Open the link in a new tab
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  // };
+  const getAllUsersForAdmin = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `${websiteUrl}/authorize/getallusers/`
+      );
+      const data = await response.json();
+      console.log(data);
+      setAllUsersForAdmin(data);
+    } catch (error) {
+      // Handle error, e.g., set an error state or display an error message
+      console.error("Error fetching Users:", error);
+    }
+  }, []);
+
 
   const handleDownloadImage = async (e, imageUrl) => {
     e.preventDefault();
@@ -549,6 +554,7 @@ export const AuthProvider = ({ children }) => {
     allReporters: allReporters,
     allNgos: allNgos,
     allUsersLinkedWithNgo: allUsersLinkedWithNgo,
+    allUsersForAdmin: allUsersForAdmin,
     allCasesLinkedWithNGO: allCasesLinkedWithNGO,
 
     loginUser: loginUser,
@@ -560,6 +566,7 @@ export const AuthProvider = ({ children }) => {
     getAllReporters: getAllReporters,
     getAllNgos: getAllNgos,
     getAllUsersLinkedWithNgo: getAllUsersLinkedWithNgo,
+    getAllUsersForAdmin:getAllUsersForAdmin,
     getAllCasesLinkedWithNgo: getAllCasesLinkedWithNgo,
     // handleOpenImage: handleOpenImage,
     handleDownloadImage: handleDownloadImage,
