@@ -99,6 +99,7 @@ export const AuthProvider = ({ children }) => {
 
   let addNewCase = async (typeOfCase, statusOfCase, mortalityOfCase) => {
     const userAddingThisCase = localStorage.getItem("id");
+    const ngoLinkedWithThisCase = localStorage.getItem("ngo_linked_with_this_user");
 
     const response = await fetch(`${websiteUrl}/cases/add/`, {
       method: "POST",
@@ -110,6 +111,7 @@ export const AuthProvider = ({ children }) => {
         status_of_case: statusOfCase,
         mortality_of_case: mortalityOfCase,
         user_adding_this_case: userAddingThisCase,
+        ngo_linked_with_this_case: ngoLinkedWithThisCase,
       }),
     });
 
