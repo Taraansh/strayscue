@@ -1011,6 +1011,7 @@ export default function EditCase() {
                               name="landmark"
                               placeholder="Near to xyz place"
                               required
+                              autoComplete='landmark'
                               defaultValue={path.state.data.reportingdetail?.landmark === "null" ? '' : path.state.data.reportingdetail?.landmark}
                               onChange={(e) => setLandmark(e.target.value)}
                             />
@@ -2910,8 +2911,6 @@ export default function EditCase() {
         </div>
         <Footer/>
       </div>
-
-
     </>
   )
 }
