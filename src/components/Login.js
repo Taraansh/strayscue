@@ -42,7 +42,6 @@ const Login = () => {
             "linear-gradient(45deg, rgb(50, 143, 138), rgb(245, 145, 32))",
         }}
       >
-        {" "}
         <Card
           style={{
             border: "1px solid",
@@ -56,7 +55,7 @@ const Login = () => {
             style={{ margin: "auto", width: "50%" }}
             src={logo}
           />
-          <Form noValidate onSubmit={loginUser}>
+          <Form onSubmit={loginUser}>
             <Card.Body>
               <Card.Title className="mb-3 text-center">
                 <h2 className="mb-3" style={{ fontWeight: "bold" }}>
@@ -141,7 +140,7 @@ const Login = () => {
                 }}
               >
                 <Button
-                  className=" btn btn-light"
+                  className="btn btn-light"
                   onClick={() => setSmShow(true)}
                 >
                   Forgot Password?
@@ -151,7 +150,7 @@ const Login = () => {
                   style={{ background: "rgb(245, 145, 32)", border: "none" }}
                   type="submit"
                 >
-                  Sign In
+                  Log In
                 </Button>
               </div>
             </Card.Body>
