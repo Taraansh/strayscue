@@ -179,7 +179,7 @@ export default function EditSponsor() {
 
                 <div className="row my-1">
                   <div className="col">
-                    <label className="form-label" htmlFor="start_date">
+                    <label className="form-label" style={{ fontWeight: "bold" }} htmlFor="start_date">
                       Start Date
                     </label>
                     <input
@@ -198,7 +198,7 @@ export default function EditSponsor() {
                     />
                   </div>
                   <div className="col">
-                    <label className="form-label" htmlFor="end_date">
+                    <label className="form-label" style={{ fontWeight: "bold" }} htmlFor="end_date">
                       End Date
                     </label>
                     <input
@@ -220,7 +220,7 @@ export default function EditSponsor() {
 
                 <div className="row">
                   <div
-                    className="col-md-6 mb-3"
+                    className="col-md-6"
                     style={{ display: "flex", flexDirection: "column" }}
                   >
                     <label
@@ -249,7 +249,7 @@ export default function EditSponsor() {
                             alt="Consent Form Preview"
                             height="100px"
                           />
-                         <div className='my-3' style={{ display: "flex", alignItems: "center" }}>
+                         <div className='my-1' style={{ display: "flex", alignItems: "center" }}>
                          <button onClick={handleDeleteSavedSponsorLogo} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
                                         style={{
@@ -404,5 +404,3 @@ export default function EditSponsor() {
     </div>
   );
 }
-
-// <div>EditSponsor - {path.state.data.sponsor_name}</div>
