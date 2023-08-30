@@ -167,7 +167,7 @@ const AddSponsor = () => {
 
                 <div className="row my-1">
                   <div className="col">
-                    <label className="form-label" htmlFor="start_date">
+                    <label className="form-label" style={{ fontWeight: "bold" }} htmlFor="start_date">
                       Start Date
                     </label>
                     <input
@@ -179,7 +179,7 @@ const AddSponsor = () => {
                     />
                   </div>
                   <div className="col">
-                    <label className="form-label" htmlFor="end_date">
+                    <label className="form-label" style={{ fontWeight: "bold" }} htmlFor="end_date">
                       End Date
                     </label>
                     <input
