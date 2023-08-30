@@ -1645,7 +1645,7 @@ export default function EditCase() {
                             {animalPicturesPreview.map((preview, index) => (
                               <div key={index} className='my-1'>
                                 <img src={preview} alt="Animal Pictures Preview" height="100px" width="100px" />
-                                <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteAnimalPicture(e, index)}>
+                                <div className="my-2"><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteAnimalPicture(e, index)}>
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
                                     background: "transparent", color: "red", // border: "none",
                                   }}>
@@ -1997,7 +1997,7 @@ export default function EditCase() {
                             {feedingRecordImagePreview.map((preview, index) => (
                               <div key={index} className='my-1'>
                                 <img src={preview} alt="Feeding Record Preview" height="100px" width="100px" />
-                                <div>
+                                <div className="my-2">
                                   <button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => { handleDeleteFeedingRecordImage(e, index) }}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
                                       background: "transparent", color: "red", // border: "none",
@@ -2067,7 +2067,7 @@ export default function EditCase() {
                             <button
                               type="button"
                               style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
-                              className="btn  mx-1"
+                              className="btn mx-2"
                               onClick={() => {
                                 const confirmDelete = window.confirm(
                                   "Are you sure you want to Exit?"
@@ -2343,7 +2343,7 @@ export default function EditCase() {
                             {treatmentRecordImagePreview.map((preview, index) => {
                               return (<div key={index} className='my-1'>
                                 <img src={preview} alt="Treatment Record Preview" height="100px" width="100px" />
-                                <div><button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteTreatmentRecordImage(e, index)}>
+                                <div className="my-2"><button className="btn" style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteTreatmentRecordImage(e, index)}>
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
                                     background: "transparent", color: "red", // border: "none",
                                   }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
@@ -2419,7 +2419,7 @@ export default function EditCase() {
                             {organImagePreview.map((preview, index) => {
                               return (<div key={index} className='my-1'>
                                 <img src={preview} alt="Organ Pictures Preview" height="100px" width="100px" />
-                                <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteOrganImage(e, index)}>
+                                <div className="my-2"><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteOrganImage(e, index)}>
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
                                     background: "transparent", color: "red", // border: "none",
                                   }}>
@@ -2503,7 +2503,7 @@ export default function EditCase() {
                             <button
                               type="button"
                               style={{ background: "rgb(245, 145, 32)", border: "none", color: "#ffffff" }}
-                              className="btn  mx-1"
+                              className="btn mx-2"
                               onClick={() => {
                                 const confirmDelete = window.confirm(
                                   "Are you sure you want to Exit?"
@@ -2697,7 +2697,7 @@ export default function EditCase() {
                             {popPicturesPreview.map((preview, index) => (
                               <div key={index} className='my-1'>
                                 <img src={preview} alt="Post Operation Pictures Preview" height="100px" width="100px" />
-                                <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeletePopPictures(e, index)}>
+                                <div className="my-2"><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeletePopPictures(e, index)}>
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
                                     background: "transparent", color: "red", // border: "none",
                                   }}>
@@ -2774,7 +2774,7 @@ export default function EditCase() {
                             {releasePicturesPreview.map((preview, index) => (
                               <div key={index} className='my-1'>
                                 <img src={preview} alt="Release Pictures Preview" height="100px" width="100px" />
-                                <div><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteReleasePictures(e, index)}>
+                                <div className="my-2"><button className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }} onClick={(e) => handleDeleteReleasePictures(e, index)}>
                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16" style={{
                                     background: "transparent", color: "red", // border: "none",
                                   }}>
