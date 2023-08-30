@@ -17,8 +17,10 @@ export default function Footer() {
           bottom: "0px",
         }}
       >
-        Copyright&copy; <span style={{ fontWeight: "bold" }}> Strayscue </span>{" "}
-        2023
+        <p>
+          Copyright&copy; <span style={{ fontWeight: "bold" }}>Strayscue</span>{" "}
+          2023
+        </p>
       </div>
     </div>
   );
