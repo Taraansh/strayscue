@@ -96,12 +96,15 @@ const AddSponsor = () => {
               >
                 Add Sponsor
               </Link>
-              <input
+
+              <span style={{display:"flex"}}><input
                 type="text"
                 placeholder="Search by Name/Type"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
+              <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn mx-1" onClick={(e) => {setSearchQuery("")}}>Clear</button></span>
+              
             </div>
             {/* Displaying Sponsor Data */}
             <div className="container-fluid" style={{ overflow: "auto" }}>
