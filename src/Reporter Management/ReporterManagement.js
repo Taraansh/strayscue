@@ -102,12 +102,14 @@ const ReporterManagement = () => {
               >
                 Add Reporter
               </Link>
-              <input
+              <span style={{display:"flex"}}><input
                 type="text"
                 placeholder="Search by Name/E-mail/Contact"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-              />
+              />              
+              <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn mx-1" onClick={(e) => {setSearchQuery("")}}>Clear</button></span>
+              
             </div>
             {/* Displaying Reporter Data */}
             <div className="container-fluid" style={{ overflow: "auto" }}>

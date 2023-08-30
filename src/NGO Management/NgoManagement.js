@@ -85,7 +85,7 @@ const NGOManagement = () => {
             }}
             className="container"
           >
-            <h4 className="heading1">NGO Management</h4>
+            <h4 className="heading1">NGOs List</h4>
             <div className="case-lists mx-auto">
               <div className="menu1">
                 <Link
@@ -99,12 +99,14 @@ const NGOManagement = () => {
                 >
                   Add NGO
                 </Link>
-                <input
+                <span style={{display:"flex"}}><input
                   type="text"
                   placeholder="Search by Name/Darpan ID"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
+                <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn mx-1" onClick={(e) => {setSearchQuery("")}}>Clear</button></span>
+
               </div>
               {/* Displaying Case Data */}
               <div className="container-fluid" style={{ overflow: "auto" }}>

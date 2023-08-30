@@ -97,13 +97,16 @@ const VetManagement = () => {
               >
                 Add Vet
               </Link>
-              <input
+              <span style={{display:"flex"}}><input
                 type="text"
                 id="search-input"
                 placeholder="Search by Name/Registration ID"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-              />            </div>
+              />     
+                <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn mx-1" onClick={(e) => {setSearchQuery("")}}>Clear</button></span>
+                     
+              </div>
             {/* Displaying Vet Data */}
             <div className="container-fluid" style={{ overflow: "auto" }}>
               <table className="table table-bordered">
