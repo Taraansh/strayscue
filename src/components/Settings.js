@@ -186,7 +186,7 @@ const Settings = () => {
                     >
                       Profile Photo:
                     </label>
-                    <div className="custom-file">
+                    {(localStorage.getItem("profilePhoto")==="null") ? (<div className="custom-file">
                       <input
                         className="form-control custom-file-imput"
                         type="file"
@@ -195,11 +195,19 @@ const Settings = () => {
                         accept="image/*"
                         onChange={handleProfilePhotoChange}
                       />
-                    </div>
+                    </div>):(isProfilePhotoDeleted && <div className="custom-file">
+                      <input
+                        className="form-control custom-file-imput"
+                        type="file"
+                        id="profilePhoto"
+                        name="profilePhoto"
+                        accept="image/*"
+                        onChange={handleProfilePhotoChange}
+                      />
+                    </div>)}
                     {!isProfilePhotoDeleted ? ((localStorage.getItem("profilePhoto") !=="null") ? (
-                        <div className="mt-4">
+                        <div className="mt-2">
                           <div>
-                            <h6>Profile Image:</h6>
                             <div className="mt-4 mx-3"
                               style={{border: "1px solid black", borderRadius: "0.2rem", position: "relative", width: "max-content"}}
                             >
