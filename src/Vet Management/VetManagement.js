@@ -6,9 +6,12 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const VetManagement = () => {
-  const { user, logoutUser, allVets, getAllVets, websiteUrl } = useContext(AuthContext);
+  const { user, logoutUser, allVets, getAllVets, websiteUrl } =
+    useContext(AuthContext);
   const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -41,18 +44,15 @@ const VetManagement = () => {
     if (confirmDelete) {
       try {
         // Delete the specific Vet by making an API call
-        const response = await fetch(
-          `${websiteUrl}/vets/delete/${id}/`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`${websiteUrl}/vets/delete/${id}/`, {
+          method: "DELETE",
+        });
         if (response.ok) {
           // Vet successfully deleted, perform any necessary actions (e.g., refresh the vet list)
           getAllVets(); // Refresh the Vet list after deletion
         } else {
           // Handle the case when the delete request fails
-          console.log("Failed to Delete Vet:", id);
+          toast.error("Failed to Delete Vet");
         }
       } catch (error) {
         // Handle any errors that occur during the delete operation
@@ -66,10 +66,9 @@ const VetManagement = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        justifyContent:"space-between",
-        height:"100vh",
+        justifyContent: "space-between",
+        height: "100vh",
         margin: "0",
-       
       }}
     >
       <NavBar />
@@ -79,7 +78,7 @@ const VetManagement = () => {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
-            paddingBottom:"3rem"
+            paddingBottom: "3rem",
           }}
           className="container"
         >
@@ -97,16 +96,30 @@ const VetManagement = () => {
               >
                 Add Vet
               </Link>
-              <span style={{display:"flex"}}><input
-                type="text"
-                id="search-input"
-                placeholder="Search by Name/Registration ID"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />     
-                <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn mx-1" onClick={(e) => {setSearchQuery("")}}>Clear</button></span>
-                     
-              </div>
+              <span style={{ display: "flex" }}>
+                <input
+                  type="text"
+                  id="search-input"
+                  placeholder="Search by Name/Registration ID"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button
+                  type="button"
+                  style={{
+                    background: "rgb(245, 145, 32)",
+                    border: "none",
+                    color: "#ffffff",
+                  }}
+                  className="btn mx-1"
+                  onClick={(e) => {
+                    setSearchQuery("");
+                  }}
+                >
+                  Clear
+                </button>
+              </span>
+            </div>
             {/* Displaying Vet Data */}
             <div className="container-fluid" style={{ overflow: "auto" }}>
               <table className="table table-bordered">
@@ -128,7 +141,11 @@ const VetManagement = () => {
                         <td>
                           <button
                             className="btn"
-                            style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                            style={{
+                              background: "rgb(245, 145, 32)",
+                              border: "none",
+                              color: "#ffffff",
+                            }}
                             onClick={() => handleEditVetButton(data)}
                           >
                             Edit
@@ -197,7 +214,7 @@ const VetManagement = () => {
           ></i>
         </span>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   ) : (
     <div>

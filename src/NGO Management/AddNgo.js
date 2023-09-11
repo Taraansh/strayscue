@@ -6,8 +6,8 @@ import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../components/Footer";
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const AddNgo = () => {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
@@ -18,7 +18,8 @@ const AddNgo = () => {
   const [description, setDescription] = useState(null);
   const [mission_statement, setMissionStatement] = useState(null);
   const [helpline_number, setHelplineNumber] = useState(null);
-  const [alternate_helpline_number, setAlternateHelplineNumber] = useState(null);
+  const [alternate_helpline_number, setAlternateHelplineNumber] =
+    useState(null);
   const [facebook_page, setFacebookPage] = useState(null);
   const [linkedin_page, setLinkedinPage] = useState(null);
   const [instagram_page, setInstagramPage] = useState(null);
@@ -79,7 +80,6 @@ const AddNgo = () => {
         }
       );
       if (response.status === 201) {
-        console.log("Success:", response.data);
         toast.success("NGO Added Successfully");
         navigate("/NGO");
         // Handle success or display a success message.
@@ -100,9 +100,9 @@ const AddNgo = () => {
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent:"space-between",
+          justifyContent: "space-between",
           margin: "0",
-          height:"100vh",
+          height: "100vh",
         }}
       >
         <NavBar />
@@ -112,7 +112,7 @@ const AddNgo = () => {
               paddingTop: "5rem",
               width: "100vw",
               paddingLeft: "50px",
-              paddingBottom:"3rem"
+              paddingBottom: "3rem",
             }}
             className="container"
           >
@@ -137,7 +137,7 @@ const AddNgo = () => {
                       required
                       id="ngo_name"
                       name="ngo_name"
-                      onChange={(e)=> setNgoName(e.target.value)}
+                      onChange={(e) => setNgoName(e.target.value)}
                     />
                   </div>
                   <div className="col-md-4">
@@ -155,7 +155,7 @@ const AddNgo = () => {
                       id="darpan_id"
                       name="darpan_id"
                       required
-                      onChange={(e)=> setDarpanId(e.target.value)}
+                      onChange={(e) => setDarpanId(e.target.value)}
                     />
                   </div>
                   <div className="col-md-4">
@@ -172,7 +172,7 @@ const AddNgo = () => {
                       className="form-control"
                       id="description"
                       name="description"
-                      onChange={(e)=> setDescription(e.target.value)}
+                      onChange={(e) => setDescription(e.target.value)}
                     />
                   </div>
 
@@ -190,7 +190,7 @@ const AddNgo = () => {
                       placeholder="Mission Statement"
                       id="mission_statement"
                       name="mission_statement"
-                      onChange={(e)=> setMissionStatement(e.target.value)}
+                      onChange={(e) => setMissionStatement(e.target.value)}
                     />
                   </div>
                   <div className="col-md-4">
@@ -207,7 +207,7 @@ const AddNgo = () => {
                       placeholder="Helpline No"
                       id="helpline_number"
                       name="helpline_number"
-                      onChange={(e)=> setHelplineNumber(e.target.value)}
+                      onChange={(e) => setHelplineNumber(e.target.value)}
                     />
                   </div>
                   <div className="col-md-4">
@@ -224,7 +224,9 @@ const AddNgo = () => {
                       placeholder="Alternate Helpline No"
                       id="alternate_helpline_number"
                       name="alternate_helpline_number"
-                      onChange={(e)=> setAlternateHelplineNumber(e.target.value)}
+                      onChange={(e) =>
+                        setAlternateHelplineNumber(e.target.value)
+                      }
                     />
                   </div>
 
@@ -242,7 +244,7 @@ const AddNgo = () => {
                       placeholder="Facebook Page"
                       id="facebook_page"
                       name="facebook_page"
-                      onChange={(e)=> setFacebookPage(e.target.value)}
+                      onChange={(e) => setFacebookPage(e.target.value)}
                     />
                   </div>
                   <div className="col-md-4">
@@ -259,7 +261,7 @@ const AddNgo = () => {
                       placeholder="Linkdin Page"
                       id="linkedin_page"
                       name="linkedin_page"
-                      onChange={(e)=> setLinkedinPage(e.target.value)}
+                      onChange={(e) => setLinkedinPage(e.target.value)}
                     />
                   </div>
                   <div className="col-md-4">
@@ -276,7 +278,7 @@ const AddNgo = () => {
                       placeholder="Instagram Page"
                       id="instagram_page"
                       name="instagram_page"
-                      onChange={(e)=> setInstagramPage(e.target.value)}
+                      onChange={(e) => setInstagramPage(e.target.value)}
                     />
                   </div>
 
@@ -294,7 +296,7 @@ const AddNgo = () => {
                       placeholder="Twitter Page"
                       id="twitter_page"
                       name="twitter_page"
-                      onChange={(e)=> setTwitterPage(e.target.value)}
+                      onChange={(e) => setTwitterPage(e.target.value)}
                     />
                   </div>
                   <div className="col-md-4">
@@ -311,7 +313,7 @@ const AddNgo = () => {
                       placeholder="NGO Email"
                       id="ngo_email"
                       name="ngo_email"
-                      onChange={(e)=> setNgoEmail(e.target.value)}
+                      onChange={(e) => setNgoEmail(e.target.value)}
                     />
                   </div>
                   <div className="col-md-4">
@@ -328,53 +330,70 @@ const AddNgo = () => {
                       placeholder="NGO Website"
                       id="ngo_website"
                       name="ngo_website"
-                      onChange={(e)=> setNgoWebsite(e.target.value)}
+                      onChange={(e) => setNgoWebsite(e.target.value)}
                     />
                   </div>
 
-                    <div className="col-md-4">
+                  <div className="col-md-4">
                     <div
-                    className="mb-3"
-                    style={{ display: "flex", flexDirection: "column" }}
-                  >
-                    <label
-                      htmlFor="ngo_logo"
-                      style={{ fontWeight: "bold" }}
-                      className="form-label"
+                      className="mb-3"
+                      style={{ display: "flex", flexDirection: "column" }}
                     >
-                      NGO Logo -
-                    </label>
-                    <div className="custom-file">
-                      <input
-                        type="file"
-                        className="custom-file-input"
-                        id="ngo_logo"
-                        accept="image/*"
-                        name="ngo_logo"
-                        onChange={handleNgoLogoChange}
-                      />
-                    </div>
-                    {ngoLogoPreview && (
-                      <div>
-                        <h6>Preview:</h6>
-                        <img
-                          src={ngoLogoPreview}
-                          alt="NGO Logo Preview"
-                          height="100px"
+                      <label
+                        htmlFor="ngo_logo"
+                        style={{ fontWeight: "bold" }}
+                        className="form-label"
+                      >
+                        NGO Logo -
+                      </label>
+                      <div className="custom-file">
+                        <input
+                          type="file"
+                          className="custom-file-input"
+                          id="ngo_logo"
+                          accept="image/*"
+                          name="ngo_logo"
+                          onChange={handleNgoLogoChange}
                         />
-                        <div className="my-2">
-                           <button onClick={handleDeleteNgoLogo} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
-                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
-                                        style={{
-                                          background: "transparent", color: "red", // border: "none",
-                                        }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                      </svg>
-                         </button>
-                           </div>
                       </div>
-                    )}
-                  </div>
+                      {ngoLogoPreview && (
+                        <div>
+                          <h6>Preview:</h6>
+                          <img
+                            src={ngoLogoPreview}
+                            alt="NGO Logo Preview"
+                            height="100px"
+                          />
+                          <div className="my-2">
+                            <button
+                              onClick={handleDeleteNgoLogo}
+                              className="btn"
+                              style={{
+                                background: "#ffffff",
+                                border: "1px solid grey",
+                                padding: "0.3rem",
+                              }}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                className="bi bi-trash-fill"
+                                viewBox="0 0 16 16"
+                                style={{
+                                  background: "transparent",
+                                  color: "red", // border: "none",
+                                }}
+                              >
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
+                  </div>
 
                   <div className="col-12">
                     <button
@@ -389,19 +408,19 @@ const AddNgo = () => {
                       Submit
                     </button>
                     <button
-                    style={{
-                      background: "rgb(245, 145, 32)",
-                      color: "#ffffff",
-                      cursor: "pointer",
-                    }}
-                    type="button"
-                    className="btn mx-2"
-                    onClick={() => {
-                      navigate("/NGO");
-                    }}
-                  >
-                    Cancel
-                  </button>
+                      style={{
+                        background: "rgb(245, 145, 32)",
+                        color: "#ffffff",
+                        cursor: "pointer",
+                      }}
+                      type="button"
+                      className="btn mx-2"
+                      onClick={() => {
+                        navigate("/NGO");
+                      }}
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </form>
               </div>
@@ -424,7 +443,7 @@ const AddNgo = () => {
         >
           <span>
             <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
-            {localStorage.getItem("username")}
+              {localStorage.getItem("username")}
             </label>
             <img
               width="17%"
@@ -439,7 +458,7 @@ const AddNgo = () => {
             ></i>
           </span>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     )
   );

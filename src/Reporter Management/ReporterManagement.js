@@ -6,6 +6,8 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const ReporterManagement = () => {
   const { user, logoutUser, allReporters, getAllReporters, websiteUrl } =
@@ -46,18 +48,15 @@ const ReporterManagement = () => {
     if (confirmDelete) {
       try {
         // Delete the specific Reporter by making an API call
-        const response = await fetch(
-          `${websiteUrl}/reporters/delete/${id}/`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`${websiteUrl}/reporters/delete/${id}/`, {
+          method: "DELETE",
+        });
         if (response.ok) {
           // Reporter successfully deleted, perform any necessary actions (e.g., refresh the Reporter list)
           getAllReporters(); // Refresh the Reporter list after deletion
         } else {
           // Handle the case when the delete request fails
-          console.log("Failed to Delete Reporter:", id);
+          toast.error("Failed to Delete Reporter");
         }
       } catch (error) {
         // Handle any errors that occur during the delete operation
@@ -71,10 +70,9 @@ const ReporterManagement = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        justifyContent:"space-between",
-        height:"100vh",
+        justifyContent: "space-between",
+        height: "100vh",
         margin: "0",
-       
       }}
     >
       <NavBar />
@@ -84,7 +82,7 @@ const ReporterManagement = () => {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
-            paddingBottom:"3rem"
+            paddingBottom: "3rem",
           }}
           className="container"
         >
@@ -102,14 +100,28 @@ const ReporterManagement = () => {
               >
                 Add Reporter
               </Link>
-              <span style={{display:"flex"}}><input
-                type="text"
-                placeholder="Search by Name/E-mail/Contact"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />              
-              <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn mx-1" onClick={(e) => {setSearchQuery("")}}>Clear</button></span>
-              
+              <span style={{ display: "flex" }}>
+                <input
+                  type="text"
+                  placeholder="Search by Name/E-mail/Contact"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button
+                  type="button"
+                  style={{
+                    background: "rgb(245, 145, 32)",
+                    border: "none",
+                    color: "#ffffff",
+                  }}
+                  className="btn mx-1"
+                  onClick={(e) => {
+                    setSearchQuery("");
+                  }}
+                >
+                  Clear
+                </button>
+              </span>
             </div>
             {/* Displaying Reporter Data */}
             <div className="container-fluid" style={{ overflow: "auto" }}>
@@ -134,7 +146,11 @@ const ReporterManagement = () => {
                         <td>
                           <button
                             className="btn"
-                            style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
+                            style={{
+                              background: "rgb(245, 145, 32)",
+                              border: "none",
+                              color: "#ffffff",
+                            }}
                             onClick={() => handleEditReporterButton(data)}
                           >
                             Edit
@@ -202,7 +218,7 @@ const ReporterManagement = () => {
           ></i>
         </span>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   ) : (
     <div>

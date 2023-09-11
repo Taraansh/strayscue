@@ -6,8 +6,8 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import axios from "axios";
 import Footer from "../components/Footer";
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 export default function EditUser() {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
@@ -33,10 +33,11 @@ export default function EditUser() {
       username: username ? username : path.state.data.username,
       user_contact: user_contact ? user_contact : path.state.data.user_contact,
       email: email ? email : path.state.data.email,
-      type_of_user_in_ngo: type_of_user_in_ngo ? type_of_user_in_ngo : path.state.data.type_of_user_in_ngo,
-      is_active: is_active ? is_active: path.state.data.is_active,
+      type_of_user_in_ngo: type_of_user_in_ngo
+        ? type_of_user_in_ngo
+        : path.state.data.type_of_user_in_ngo,
+      is_active: is_active ? is_active : path.state.data.is_active,
     };
-    console.log(update_data)
 
     try {
       const response = await axios.put(
@@ -49,7 +50,6 @@ export default function EditUser() {
         }
       );
       if (response.status === 200) {
-        console.log("Success", response.data);
         toast.success("Updated Succesfully");
         navigate("/UserManagement");
       }
@@ -57,9 +57,6 @@ export default function EditUser() {
       console.error("Error:", error);
     }
   };
-  //   return (
-  //     <div>EditUser - {path.state.data.username}</div>
-  //   )
 
   return (
     (isSuperUser === "true" ||
@@ -70,10 +67,9 @@ export default function EditUser() {
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent:"space-between",
-          height:"100vh",
+          justifyContent: "space-between",
+          height: "100vh",
           margin: "0",
-         
         }}
       >
         <NavBar />
@@ -83,7 +79,7 @@ export default function EditUser() {
               paddingTop: "5rem",
               width: "100vw",
               paddingLeft: "50px",
-              paddingBottom:"3rem"
+              paddingBottom: "3rem",
             }}
             className="container"
           >
@@ -94,22 +90,6 @@ export default function EditUser() {
                   className="row g-3"
                   onSubmit={handleUpdateUserLinkedWithNgo}
                 >
-                  {/* <div className="col-md-6">
-                  <label
-                    htmlFor="inputEmail4"
-                    style={{ fontWeight: "bold" }}
-                    className="form-label"
-                  >
-                    Name <span style={{ color: "red" }}>*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="First name"
-                    aria-label="First name"
-                    required
-                  />
-                </div> */}
 
                   <div className="col-md-6">
                     <label
@@ -210,44 +190,23 @@ export default function EditUser() {
                     </select>
                   </div>
 
-                  {/* {isSuperUser === "true" && (<div className="col-md-6">
-                  <label
-                    htmlFor="ngo_linked_with_this_user"
-                    style={{ fontWeight: "bold" }}
-                    className="form-label"
-                  >
-                    Select Ngo for this User <span style={{ color: "red" }}>*</span>
-                  </label>
-                  <select id="ngo_linked_with_this_user" 
-                  name="ngo_linked_with_this_user" 
-                  className="form-select"
-                  defaultValue={path.state.data.ngo_linked_with_this_user}
-                  onChange={(e)=> setNgo_linked_with_this_user(e.target.value)}>
-                    <option value="">Choose</option>
-                    {
-                      allNgos.map((data, index)=> {
-                        return <option key={index} value={data.ngo_name}>{data.ngo_name}</option>
-                      })
-                    }
-                  </select>
-                </div>)} */}
-
-               <div className="col-md-6">
-                  <label
-                    htmlFor="ngo_linked_with_this_user"
-                    style={{ fontWeight: "bold" }}
-                    className="form-label"
-                  >
-                    Select Ngo for this User <span style={{ color: "red" }}>*</span>
-                  </label>
-                  <input id="ngo_linked_with_this_user" 
-                  name="ngo_linked_with_this_user" 
-                  className="form-control"
-                  value={path.state.data.ngo_name}
-                  readOnly
-                  >
-                  </input>
-                </div>
+                  <div className="col-md-6">
+                    <label
+                      htmlFor="ngo_linked_with_this_user"
+                      style={{ fontWeight: "bold" }}
+                      className="form-label"
+                    >
+                      Select Ngo for this User
+                      <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      id="ngo_linked_with_this_user"
+                      name="ngo_linked_with_this_user"
+                      className="form-control"
+                      value={path.state.data.ngo_name}
+                      readOnly
+                    ></input>
+                  </div>
 
                   <div className="col-12">
                     <button
@@ -312,7 +271,7 @@ export default function EditUser() {
             ></i>
           </span>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     )
   );

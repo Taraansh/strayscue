@@ -5,9 +5,12 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import Footer from "../components/Footer";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const NGOManagement = () => {
-  const { user, logoutUser, allNgos, getAllNgos, websiteUrl } = useContext(AuthContext);
+  const { user, logoutUser, allNgos, getAllNgos, websiteUrl } =
+    useContext(AuthContext);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredNgos, setFilteredNgos] = useState([]);
   const isSuperUser = localStorage.getItem("is_superuser");
@@ -41,18 +44,15 @@ const NGOManagement = () => {
     if (confirmDelete) {
       try {
         // Delete the specific NGO by making an API call
-        const response = await fetch(
-          `${websiteUrl}/ngos/delete/${id}/`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`${websiteUrl}/ngos/delete/${id}/`, {
+          method: "DELETE",
+        });
         if (response.ok) {
           // NGO successfully deleted, perform any necessary actions (e.g., refresh the NGO list)
           getAllNgos(); // Refresh the NGO list after deletion
         } else {
           // Handle the case when the delete request fails
-          console.log("Failed to Delete NGO:", id);
+          toast.error("Failed to Delete NGO");
         }
       } catch (error) {
         // Handle any errors that occur during the delete operation
@@ -68,10 +68,9 @@ const NGOManagement = () => {
         style={{
           display: "flex",
           flexDirection: "column",
-          justifyContent:"space-between",
-          height:"100vh",
+          justifyContent: "space-between",
+          height: "100vh",
           margin: "0",
-         
         }}
       >
         <NavBar />
@@ -81,7 +80,7 @@ const NGOManagement = () => {
               paddingTop: "5rem",
               width: "100vw",
               paddingLeft: "50px",
-              paddingBottom:"3rem"
+              paddingBottom: "3rem",
             }}
             className="container"
           >
@@ -99,14 +98,28 @@ const NGOManagement = () => {
                 >
                   Add NGO
                 </Link>
-                <span style={{display:"flex"}}><input
-                  type="text"
-                  placeholder="Search by Name/Darpan ID"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn mx-1" onClick={(e) => {setSearchQuery("")}}>Clear</button></span>
-
+                <span style={{ display: "flex" }}>
+                  <input
+                    type="text"
+                    placeholder="Search by Name/Darpan ID"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    style={{
+                      background: "rgb(245, 145, 32)",
+                      border: "none",
+                      color: "#ffffff",
+                    }}
+                    className="btn mx-1"
+                    onClick={(e) => {
+                      setSearchQuery("");
+                    }}
+                  >
+                    Clear
+                  </button>
+                </span>
               </div>
               {/* Displaying Case Data */}
               <div className="container-fluid" style={{ overflow: "auto" }}>
@@ -134,19 +147,22 @@ const NGOManagement = () => {
                               height="30px"
                             />
                           </td>
-                          <td style={{display:"flex", flexDirection:"row"}}>
-                          <button
-                                className="btn btn-primary"
-                                style={{ background: "rgb(245, 145, 32)", border:"none"}}
-                                onClick={() => {
-                                  handleEditNgoButton(data);
-                                }}
-                              >
-                                Edit
-                              </button>
+                          <td style={{ display: "flex", flexDirection: "row" }}>
+                            <button
+                              className="btn btn-primary"
+                              style={{
+                                background: "rgb(245, 145, 32)",
+                                border: "none",
+                              }}
+                              onClick={() => {
+                                handleEditNgoButton(data);
+                              }}
+                            >
+                              Edit
+                            </button>
                             <div
                               className="btn  mx-1"
-                              style={{background:"#ffffff", color:"red"}}
+                              style={{ background: "#ffffff", color: "red" }}
                               onClick={() => {
                                 handleNgoDeleteButton(data.id);
                               }}
@@ -204,7 +220,7 @@ const NGOManagement = () => {
             ></i>
           </span>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     )
   );

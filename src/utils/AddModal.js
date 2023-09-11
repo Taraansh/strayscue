@@ -18,7 +18,7 @@ export default function AddModal(props) {
 
   return (
     <Modal
-    style={{zIndex:"999999999999999999999999"}}
+      style={{ zIndex: "999999999999999999999999" }}
       {...props}
       size="md"
       aria-labelledby="contained-modal-title-vcenter"

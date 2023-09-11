@@ -18,7 +18,7 @@ export default function Footer() {
         }}
       >
         <p>
-          Copyright&copy; <span style={{ fontWeight: "bold" }}>Strayscue</span>{" "}
+          Copyright&copy; <span style={{ fontWeight: "bold" }}>Strayscue</span>
           2023
         </p>
       </div>

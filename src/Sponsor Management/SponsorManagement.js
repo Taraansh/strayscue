@@ -5,12 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import Footer from "../components/Footer";
-
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const AddSponsor = () => {
   const { user, logoutUser, allSponsors, getAllSponsors, websiteUrl } =
     useContext(AuthContext);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredSponsors, setFilteredSponsors] = useState([]);
@@ -35,7 +36,6 @@ const AddSponsor = () => {
     navigate("/Sponsor/EditSponsor", { state: { data: data } });
   };
 
-
   const handleSponsorDeleteButton = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this Sponsor?"
@@ -43,18 +43,15 @@ const AddSponsor = () => {
     if (confirmDelete) {
       try {
         // Delete the specific Sponsor by making an API call
-        const response = await fetch(
-          `${websiteUrl}/sponsors/delete/${id}/`,
-          {
-            method: "DELETE",
-          }
-        );
+        const response = await fetch(`${websiteUrl}/sponsors/delete/${id}/`, {
+          method: "DELETE",
+        });
         if (response.ok) {
           // Sponsor successfully deleted, perform any necessary actions (e.g., refresh the Sponsor list)
           getAllSponsors(); // Refresh the Sponsor list after deletion
         } else {
           // Handle the case when the delete request fails
-          console.log("Failed to Delete Sponsor:", id);
+          toast.error("Failed to Delete Sponsor");
         }
       } catch (error) {
         // Handle any errors that occur during the delete operation
@@ -68,10 +65,9 @@ const AddSponsor = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        justifyContent:"space-between",
-        height:"100vh",
+        justifyContent: "space-between",
+        height: "100vh",
         margin: "0",
-      
       }}
     >
       <NavBar />
@@ -81,7 +77,7 @@ const AddSponsor = () => {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
-            paddingBottom:"3rem"
+            paddingBottom: "3rem",
           }}
           className="container"
         >
@@ -100,14 +96,28 @@ const AddSponsor = () => {
                 Add Sponsor
               </Link>
 
-              <span style={{display:"flex"}}><input
-                type="text"
-                placeholder="Search by Name/Type"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button type="button" style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }} className="btn mx-1" onClick={(e) => {setSearchQuery("")}}>Clear</button></span>
-              
+              <span style={{ display: "flex" }}>
+                <input
+                  type="text"
+                  placeholder="Search by Name/Type"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <button
+                  type="button"
+                  style={{
+                    background: "rgb(245, 145, 32)",
+                    border: "none",
+                    color: "#ffffff",
+                  }}
+                  className="btn mx-1"
+                  onClick={(e) => {
+                    setSearchQuery("");
+                  }}
+                >
+                  Clear
+                </button>
+              </span>
             </div>
             {/* Displaying Sponsor Data */}
             <div className="container-fluid" style={{ overflow: "auto" }}>
@@ -136,9 +146,17 @@ const AddSponsor = () => {
                           />
                         </td>
                         <td>
-                          <button className="btn"
-                          style={{ background: "rgb(245, 145, 32)", border: "none", color:"#ffffff" }}
-                          onClick={()=>handleEditSponsorButton(data)}>Edit</button>
+                          <button
+                            className="btn"
+                            style={{
+                              background: "rgb(245, 145, 32)",
+                              border: "none",
+                              color: "#ffffff",
+                            }}
+                            onClick={() => handleEditSponsorButton(data)}
+                          >
+                            Edit
+                          </button>
                           <div
                             className="btn mx-1"
                             onClick={() => {
@@ -169,7 +187,6 @@ const AddSponsor = () => {
               </table>
             </div>
           </div>
-     
         </div>
       </>
       <div
@@ -189,7 +206,7 @@ const AddSponsor = () => {
       >
         <span>
           <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
-          {localStorage.getItem("username")}
+            {localStorage.getItem("username")}
           </label>
           <img
             width="17%"
@@ -204,7 +221,7 @@ const AddSponsor = () => {
           ></i>
         </span>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   ) : (
     <div>

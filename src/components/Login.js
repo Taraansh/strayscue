@@ -3,8 +3,8 @@ import AuthContext from "../context/AuthContext";
 import logo from "../assets/logo.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import {
   Button,
   Container,
@@ -156,31 +156,6 @@ const Login = () => {
             </Card.Body>
           </Form>
         </Card>
-        {/* <Modal
-        style={{zIndex:"999999999999"}}
-          className="bottom-modal"
-          size="sm"
-          show={smShow}
-          onHide={() => setSmShow(false)}
-          aria-labelledby="example-modal-sizes-title-sm"
-        >
-          <Modal.Header closeButton>
-            <Modal.Body>
-              <div>
-                <span><i
-                  style={{
-                    fontSize: "20px",
-                    marginRight: "10px",
-                    color: "#ffffff",
-                  }}
-                  className="fa-solid fa-circle-exclamation"
-                ></i></span>
-                <span> Contact Your Admin</span>
-               
-              </div>
-            </Modal.Body>
-          </Modal.Header>
-        </Modal> */}
       </Container>
     </div>
   );

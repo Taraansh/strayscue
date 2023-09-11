@@ -6,8 +6,8 @@ import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../components/Footer";
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const AddVet = () => {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
@@ -83,7 +83,6 @@ const AddVet = () => {
         }
       );
       if (response.status === 201) {
-        console.log("Success:", response.data);
         toast.success("Vet Added Successfully");
         navigate("/Vet");
         // Handle success or display a success message.
@@ -102,10 +101,9 @@ const AddVet = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        height:"100vh",
-        justifyContent:"space-between",
+        height: "100vh",
+        justifyContent: "space-between",
         margin: "0",
-       
       }}
     >
       <NavBar />
@@ -115,7 +113,7 @@ const AddVet = () => {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
-            paddingBottom:"3rem"
+            paddingBottom: "3rem",
           }}
           className="container"
         >
@@ -193,14 +191,31 @@ const AddVet = () => {
                         height="100px"
                       />
                       <div className="my-2">
-                           <button onClick={handleDeleteVetCertification} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
-                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
-                                        style={{
-                                          background: "transparent", color: "red", // border: "none",
-                                        }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                      </svg>
-                         </button>
-                           </div>
+                        <button
+                          onClick={handleDeleteVetCertification}
+                          className="btn"
+                          style={{
+                            background: "#ffffff",
+                            border: "1px solid grey",
+                            padding: "0.3rem",
+                          }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            className="bi bi-trash-fill"
+                            viewBox="0 0 16 16"
+                            style={{
+                              background: "transparent",
+                              color: "red", // border: "none",
+                            }}
+                          >
+                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -235,14 +250,31 @@ const AddVet = () => {
                         height="100px"
                       />
                       <div className="my-2">
-                           <button onClick={handleDeleteVerificationId} className='btn' style={{ background: "#ffffff", border: "1px solid grey", padding: "0.3rem" }}>
-                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash-fill" viewBox="0 0 16 16"
-                                        style={{
-                                          background: "transparent", color: "red", // border: "none",
-                                        }}><path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                      </svg>
-                         </button>
-                           </div>
+                        <button
+                          onClick={handleDeleteVerificationId}
+                          className="btn"
+                          style={{
+                            background: "#ffffff",
+                            border: "1px solid grey",
+                            padding: "0.3rem",
+                          }}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            className="bi bi-trash-fill"
+                            viewBox="0 0 16 16"
+                            style={{
+                              background: "transparent",
+                              color: "red", // border: "none",
+                            }}
+                          >
+                            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -297,7 +329,7 @@ const AddVet = () => {
       >
         <span>
           <label style={{ padding: "0.5rem", fontWeight: "bold" }}>
-          {localStorage.getItem("username")}
+            {localStorage.getItem("username")}
           </label>
           <img
             width="17%"
@@ -312,7 +344,7 @@ const AddVet = () => {
           ></i>
         </span>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   ) : (
     <div>

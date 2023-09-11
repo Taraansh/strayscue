@@ -19,7 +19,9 @@ const UserManagement = () => {
   const type_of_user_in_ngo = localStorage.getItem("type_of_user_in_ngo");
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredUsersLinkedWithNgo, setFilteredUsersLinkedWithNgo] = useState([]);
+  const [filteredUsersLinkedWithNgo, setFilteredUsersLinkedWithNgo] = useState(
+    []
+  );
   const [filteredUsersForAdmin, setFilteredUsersForAdmin] = useState([]);
 
   const navigate = useNavigate();
@@ -136,58 +138,61 @@ const UserManagement = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {
-                      (isSuperUser === "true")?(filteredUsersForAdmin.map((data, index) => {
-                      return (
-                        <tr key={index}>
-                          <th>{index + 1}</th>
-                          <td>{data.username}</td>
-                          <td>{data.email}</td>
-                          <td>{data.user_contact}</td>
-                          <td>{data.type_of_user_in_ngo}</td>
-                          <td>{data.is_active}</td>
-                          <td>
-                            <button
-                              className="btn"
-                              style={{
-                                background: "rgb(245, 145, 32)",
-                                border: "none",
-                                color: "#ffffff",
-                              }}
-                              onClick={() => handleEditUserLinkedWithNgo(data)}
-                            >
-                              Edit
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })):(filteredUsersLinkedWithNgo.map((data, index) => {
-                      return (
-                        <tr key={index}>
-                          <th>{index + 1}</th>
-                          <td>{data.username}</td>
-                          <td>{data.email}</td>
-                          <td>{data.user_contact}</td>
-                          <td>{data.type_of_user_in_ngo}</td>
-                          <td>{data.is_active}</td>
-                          <td>
-                            <button
-                              className="btn"
-                              style={{
-                                background: "rgb(245, 145, 32)",
-                                border: "none",
-                                color: "#ffffff",
-                              }}
-                              onClick={() => handleEditUserLinkedWithNgo(data)}
-                            >
-                              Edit
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    }))
-                    }
-                    
+                    {isSuperUser === "true"
+                      ? filteredUsersForAdmin.map((data, index) => {
+                          return (
+                            <tr key={index}>
+                              <th>{index + 1}</th>
+                              <td>{data.username}</td>
+                              <td>{data.email}</td>
+                              <td>{data.user_contact}</td>
+                              <td>{data.type_of_user_in_ngo}</td>
+                              <td>{data.is_active}</td>
+                              <td>
+                                <button
+                                  className="btn"
+                                  style={{
+                                    background: "rgb(245, 145, 32)",
+                                    border: "none",
+                                    color: "#ffffff",
+                                  }}
+                                  onClick={() =>
+                                    handleEditUserLinkedWithNgo(data)
+                                  }
+                                >
+                                  Edit
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      : filteredUsersLinkedWithNgo.map((data, index) => {
+                          return (
+                            <tr key={index}>
+                              <th>{index + 1}</th>
+                              <td>{data.username}</td>
+                              <td>{data.email}</td>
+                              <td>{data.user_contact}</td>
+                              <td>{data.type_of_user_in_ngo}</td>
+                              <td>{data.is_active}</td>
+                              <td>
+                                <button
+                                  className="btn"
+                                  style={{
+                                    background: "rgb(245, 145, 32)",
+                                    border: "none",
+                                    color: "#ffffff",
+                                  }}
+                                  onClick={() =>
+                                    handleEditUserLinkedWithNgo(data)
+                                  }
+                                >
+                                  Edit
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
                   </tbody>
                 </table>
               </div>

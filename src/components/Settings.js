@@ -6,11 +6,11 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import axios from "axios";
 import Footer from "./Footer";
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const Settings = () => {
-  const { user, logoutUser, websiteUrl} = useContext(AuthContext);
+  const { user, logoutUser, websiteUrl } = useContext(AuthContext);
 
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -89,8 +89,9 @@ const Settings = () => {
         }
       );
       if (response.status === 200) {
-        console.log("Success", response.data);
-        toast.success('Updated Succesfully. Please login again to view changes.')
+        toast.success(
+          "Updated Succesfully. Please login again to view changes."
+        );
       }
     } catch (error) {
       console.error("Error:", error);
@@ -120,14 +121,12 @@ const Settings = () => {
 
         // Check if the response status is 200 (OK)
         if (response.status === 200) {
-          const responseData = await response.json(); // Parse the response data as JSON
-          console.log(responseData);
           logoutUser(e);
-          toast.success('Password Changed Successfully. Please Login Again.')
+          toast.success("Password Changed Successfully. Please Login Again.");
         } else if (response.status === 401) {
-          toast.error('Enter Old Password Again.')
+          toast.error("Enter Old Password Again.");
         } else {
-          toast.error('Something went wrong.')
+          toast.error("Something went wrong.");
         }
       } else {
         toast.error("Enter New Password Again");
@@ -142,8 +141,8 @@ const Settings = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        justifyContent:"space-between",
-        height:"100vh",
+        justifyContent: "space-between",
+        height: "100vh",
         margin: "0",
       }}
     >
@@ -154,7 +153,7 @@ const Settings = () => {
             paddingTop: "5rem",
             width: "100vw",
             paddingLeft: "50px",
-            paddingBottom:"3rem"
+            paddingBottom: "3rem",
           }}
           className="container"
         >
@@ -191,41 +190,68 @@ const Settings = () => {
                     >
                       Profile Photo:
                     </label>
-                    {(localStorage.getItem("profilePhoto")==="null") ? (<div className="custom-file">
-                      <input
-                        className="form-control custom-file-imput"
-                        type="file"
-                        id="profilePhoto"
-                        name="profilePhoto"
-                        accept="image/*"
-                        onChange={handleProfilePhotoChange}
-                      />
-                    </div>):(isProfilePhotoDeleted && <div className="custom-file">
-                      <input
-                        className="form-control custom-file-imput"
-                        type="file"
-                        id="profilePhoto"
-                        name="profilePhoto"
-                        accept="image/*"
-                        onChange={handleProfilePhotoChange}
-                      />
-                    </div>)}
-                    {!isProfilePhotoDeleted ? ((localStorage.getItem("profilePhoto") !=="null") ? (
+                    {localStorage.getItem("profilePhoto") === "null" ? (
+                      <div className="custom-file">
+                        <input
+                          className="form-control custom-file-imput"
+                          type="file"
+                          id="profilePhoto"
+                          name="profilePhoto"
+                          accept="image/*"
+                          onChange={handleProfilePhotoChange}
+                        />
+                      </div>
+                    ) : (
+                      isProfilePhotoDeleted && (
+                        <div className="custom-file">
+                          <input
+                            className="form-control custom-file-imput"
+                            type="file"
+                            id="profilePhoto"
+                            name="profilePhoto"
+                            accept="image/*"
+                            onChange={handleProfilePhotoChange}
+                          />
+                        </div>
+                      )
+                    )}
+                    {!isProfilePhotoDeleted ? (
+                      localStorage.getItem("profilePhoto") !== "null" ? (
                         <div className="mt-2">
                           <div>
-                            <div className="mt-4 mx-3"
-                              style={{border: "1px solid black", borderRadius: "0.2rem", position: "relative", width: "max-content"}}
+                            <div
+                              className="mt-4 mx-3"
+                              style={{
+                                border: "1px solid black",
+                                borderRadius: "0.2rem",
+                                position: "relative",
+                                width: "max-content",
+                              }}
                             >
                               <img
-                                src={`${websiteUrl}${localStorage.getItem("profilePhoto")}`}
-                                alt="Profile" height="100px"
+                                src={`${websiteUrl}${localStorage.getItem(
+                                  "profilePhoto"
+                                )}`}
+                                alt="Profile"
+                                height="100px"
                               />
                               <button
-                                style={{position: "absolute",top: "0",right: "0",padding: "0",background: "#ffffff"}}
+                                style={{
+                                  position: "absolute",
+                                  top: "0",
+                                  right: "0",
+                                  padding: "0",
+                                  background: "#ffffff",
+                                }}
                                 className="btn"
                                 onClick={handleDeleteSavedProfilePhoto}
                               >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="red" viewBox="0 0 24 24"
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="25"
+                                  height="25"
+                                  fill="red"
+                                  viewBox="0 0 24 24"
                                 >
                                   <path
                                     d="M5.3 18.7c.2.2.4.3.7.3s.5-.1.7-.3l5.3-5.3 5.3 5.3c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L13.4 12l5.3-5.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0L12 10.6 6.7 5.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l5.3 5.3-5.3 5.3c-.4.4-.4 1 0 1.4z"
@@ -234,7 +260,7 @@ const Settings = () => {
                                     className="fill-000000"
                                   ></path>
                                 </svg>
-                              </button>                          
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -364,7 +390,7 @@ const Settings = () => {
           <div className="case-lists mx-auto">
             <div
               className="container-fluid"
-              style={{ overflow:"auto", paddingBottom: "2rem" }}
+              style={{ overflow: "auto", paddingBottom: "2rem" }}
             >
               <form onSubmit={handleModifyPassword}>
                 <label
@@ -517,7 +543,7 @@ const Settings = () => {
           ></i>
         </span>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   ) : (
     <div>
