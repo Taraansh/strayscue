@@ -297,6 +297,7 @@ const Dashboard = () => {
                 </Link>
                 <span style={{ display: "flex" }}>
                   <input
+                  id="search-query"
                     type="text"
                     placeholder="Search by Reporter Name, location, landmark"
                     value={searchQuery}
@@ -574,7 +575,7 @@ const Dashboard = () => {
               to="/Settings"
               style={{ textDecoration: "none", color: "black" }}
             >
-              <label
+              <span
                 style={{
                   padding: "0.5rem",
                   fontWeight: "bold",
@@ -582,7 +583,7 @@ const Dashboard = () => {
                 }}
               >
                 {localStorage.getItem("username")}
-              </label>
+              </span>
               <img
                 width="17%"
                 style={{ marginRight: "1.5rem", cursor: "pointer" }}
