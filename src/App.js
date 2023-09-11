@@ -20,17 +20,15 @@ import EditReporter from "./Reporter Management/EditReporter";
 import EditNgo from "./NGO Management/EditNgo";
 import EditUser from "./User Management/EditUser";
 import React from "react";
-
+import { ToastContainer } from 'react-toastify';
 
 function App() {
-  
- 
-
 
   return (
     <div className="App">
       <Router>
         <AuthProvider>
+            <ToastContainer/>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/Dashboard" element={<Dashboard />} />
@@ -58,7 +56,6 @@ function App() {
 
             <Route path="/Settings" element={<Settings />} />
           </Routes>
-
         </AuthProvider>
       </Router>
      

@@ -6,6 +6,8 @@ import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../components/Footer";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const AddVet = () => {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
@@ -82,7 +84,7 @@ const AddVet = () => {
       );
       if (response.status === 201) {
         console.log("Success:", response.data);
-        alert("Vet Added Successfully");
+        toast.success("Vet Added Successfully");
         navigate("/Vet");
         // Handle success or display a success message.
       } else {

@@ -6,6 +6,8 @@ import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../components/Footer";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const AddReporter = () => {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
@@ -61,7 +63,7 @@ const AddReporter = () => {
       );
       if (response.status === 201) {
         console.log("Success:", response.data);
-        alert("Reporter Added Successfully");
+        toast.success("Reporter Added Successfully");
         navigate("/Reporter");
         // Handle success or display a success message.
       } else {

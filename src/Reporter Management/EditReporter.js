@@ -7,6 +7,8 @@ import logo from "../assets/profile.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 export default function EditReporter() {
     const path = useLocation();
@@ -75,7 +77,7 @@ export default function EditReporter() {
           );
           if (response.status === 200) {
             console.log("Success:", response.data);
-            alert("Reporter Updated Successfully");
+            toast.success("Reporter Updated Successfully");
             navigate("/Reporter");
             // Handle success or display a success message.
           }

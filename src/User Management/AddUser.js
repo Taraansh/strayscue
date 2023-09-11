@@ -6,6 +6,8 @@ import logo from "../assets/profile.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const AddUser = () => {
   const { user, logoutUser, websiteUrl, allNgos, getAllNgos, } = useContext(AuthContext);
@@ -62,13 +64,13 @@ const AddUser = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.message === "Email already exists") {
-            alert("Email already exists");
+            toast.info("Email already exists");
           }else if (data.message === "Contact already exists") {
-            alert("Contact already exists");
+            toast.info("Contact already exists");
           }else if (data.message === "username already exists") {
-            alert("Username already exists");
+            toast.info("Username already exists");
           }else {
-            alert("User Added")
+            toast.success("User Added")
             navigate("/UserManagement")
           }
         })

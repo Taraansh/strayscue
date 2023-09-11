@@ -6,6 +6,8 @@ import logo from "../assets/profile.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../components/Footer";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const AddNgo = () => {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
@@ -78,7 +80,7 @@ const AddNgo = () => {
       );
       if (response.status === 201) {
         console.log("Success:", response.data);
-        alert("NGO Added Successfully");
+        toast.success("NGO Added Successfully");
         navigate("/NGO");
         // Handle success or display a success message.
       } else {

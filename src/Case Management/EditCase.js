@@ -6,6 +6,9 @@ import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import '../index.css'
 import Footer from '../components/Footer';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+
 export default function EditCase() {
   const path = useLocation()
   const navigate = useNavigate()
@@ -469,7 +472,7 @@ export default function EditCase() {
       );
       if (response) {
         console.log("Success:", response.data);
-        alert("Reporter Updated Successfully");
+        toast.success("Reporter Updated Successfully");
         setActiveButton(1);
         // Handle success or display a success message.
       }
@@ -526,7 +529,7 @@ export default function EditCase() {
         );
         if (response) {
           console.log("Success:", response.data);
-          alert("Animal Details Updated Successfully");
+          toast.success("Animal Details Updated Successfully");
           setActiveButton(2);
           // Handle success or display a success message.
         }
@@ -535,7 +538,7 @@ export default function EditCase() {
         // Handle error or display an error message.
       }
     } else {
-      alert("Please fill Reporter Details First")
+      toast.info("Please fill Reporter Details First")
       setActiveButton(0)
     }
   };
@@ -578,7 +581,7 @@ export default function EditCase() {
         );
         if (response) {
           console.log("Success:", response.data);
-          alert("Medical Details Updated Successfully");
+          toast.success("Medical Details Updated Successfully");
           setActiveButton(3);
           // Handle success or display a success message.
         }
@@ -588,7 +591,7 @@ export default function EditCase() {
       }
     }
     else {
-      alert("Please fill Reporter Details First")
+      toast.info("Please fill Reporter Details First")
       setActiveButton(0)
     }
   };
@@ -634,7 +637,7 @@ export default function EditCase() {
         );
         if (response) {
           console.log("Success:", response.data);
-          alert("Operation Details Updated Successfully");
+          toast.success("Operation Details Updated Successfully");
           setActiveButton(4);
           // Handle success or display a success message.
         }
@@ -643,7 +646,7 @@ export default function EditCase() {
         // Handle error or display an error message.
       }
     } else {
-      alert("Please fill Reporter Details First")
+      toast.info("Please fill Reporter Details First")
       setActiveButton(0)
     }
   };
@@ -685,7 +688,7 @@ export default function EditCase() {
         );
         if (response) {
           console.log("Success:", response.data);
-          alert("Post Operation Details Updated Successfully");
+          toast.success("Post Operation Details Updated Successfully");
           navigate("/Dashboard");
           // Handle success or display a success message.
         }
@@ -694,7 +697,7 @@ export default function EditCase() {
         // Handle error or display an error message.
       }
     } else {
-      alert("Please fill Reporter Details First")
+      toast.info("Please fill Reporter Details First")
       setActiveButton(0)
     }
   };

@@ -6,6 +6,8 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import axios from "axios";
 import Footer from "./Footer";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const Settings = () => {
   const { user, logoutUser, websiteUrl} = useContext(AuthContext);
@@ -88,7 +90,7 @@ const Settings = () => {
       );
       if (response.status === 200) {
         console.log("Success", response.data);
-        alert("Updated Succesfully. Please login again to view changes.");
+        toast.success('Updated Succesfully. Please login again to view changes.')
       }
     } catch (error) {
       console.error("Error:", error);
@@ -121,14 +123,14 @@ const Settings = () => {
           const responseData = await response.json(); // Parse the response data as JSON
           console.log(responseData);
           logoutUser(e);
-          alert("Password Changed Successfully. Please Login Again");
+          toast.success('Password Changed Successfully. Please Login Again.')
         } else if (response.status === 401) {
-          alert("Enter Old Password Again");
+          toast.error('Enter Old Password Again.')
         } else {
-          alert("Something went wrong.");
+          toast.error('Something went wrong.')
         }
       } else {
-        alert("Enter New Password Again");
+        toast.error("Enter New Password Again");
       }
     } catch (error) {
       console.error("Error:", error);

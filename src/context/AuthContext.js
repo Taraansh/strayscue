@@ -1,6 +1,8 @@
 import { createContext, useState, useEffect, useCallback } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 const AuthContext = createContext();
 
@@ -44,8 +46,9 @@ export const AuthProvider = ({ children }) => {
     let data = await response.json();
 
     if (data.detail === "No active account found with the given credentials") {
-      alert("Enter Correct Credentials");
+      toast.error('Enter Correct Credentials.')
     } else {
+      toast.success('Logged in Successfully.')
       localStorage.setItem("authTokens", JSON.stringify(data));
       setAuthTokens(data);
       setUser(jwtDecode(data.access));
@@ -285,7 +288,7 @@ export const AuthProvider = ({ children }) => {
           console.log("Image deleted successfully")
         } else if (response.status === 404) {
           // Handle the Animal Picture when the image was already deleted
-          alert("Image is already Deleted")
+          toast.info("Image is already Deleted.")
         } else {
           // Handle the Animal Picture when the delete request fails
           console.log("Failed to delete Animal Picture:", id);
@@ -316,7 +319,7 @@ export const AuthProvider = ({ children }) => {
           console.log("Image deleted successfully")
         } else if (response.status === 404) {
           // Handle the Feeding Record Image when the image was already deleted
-          alert("Image is already Deleted")
+          toast.info("Image is already Deleted.")
         } else {
           // Handle the Feeding Record Image when the delete request fails
           console.log("Failed to delete Feeding Record Image:", id);
@@ -347,7 +350,7 @@ export const AuthProvider = ({ children }) => {
           console.log("Image deleted successfully")
         } else if (response.status === 404) {
           // Handle the Blood Report when the image was already deleted
-          alert("Image is already Deleted")
+          toast.info("Image is already Deleted.")
         } else {
           // Handle the Blood Report when the delete request fails
           console.log("Failed to delete Blood Report:", id);
@@ -378,7 +381,7 @@ export const AuthProvider = ({ children }) => {
           console.log("Image deleted successfully")
         } else if (response.status === 404) {
           // Handle the Medical Prescription Image when the image was already deleted
-          alert("Image is already Deleted")
+          toast.info("Image is already Deleted.")
         } else {
           // Handle the Medical Prescription Image when the delete request fails
           console.log("Failed to delete Medical Prescription Image:", id);
@@ -409,7 +412,7 @@ export const AuthProvider = ({ children }) => {
           console.log("Image deleted successfully")
         } else if (response.status === 404) {
           // Handle the Treatment Record when the when the image was already deleted
-          alert("Image is already Deleted")
+          toast.info("Image is already Deleted.")
         } else {
           // Handle the Treatment Record when the delete request fails
           console.log("Failed to delete Treatment Record:", id);
@@ -440,7 +443,7 @@ export const AuthProvider = ({ children }) => {
           console.log("Image deleted successfully")
         } else if (response.status === 404) {
           // Handle the Organ Image when the image was already deleted
-          alert("Image is already Deleted")
+          toast.info("Image is already Deleted.")
         } else {
           // Handle the Organ Image when the delete request fails
           console.log("Failed to delete Organ Image:", id);
@@ -471,7 +474,7 @@ export const AuthProvider = ({ children }) => {
           console.log("Image deleted successfully")
         } else if (response.status === 404) {
           // Handle the Post Operation Pictures when the image was already deleted
-          alert("Image is already Deleted")
+          toast.info("Image is already Deleted.")
         } else {
           // Handle the Post Operation Pictures when the delete request fails
           console.log("Failed to delete Post Operation Pictures:", id);
@@ -502,7 +505,7 @@ export const AuthProvider = ({ children }) => {
           console.log("Image deleted successfully")
         } else if (response.status === 404) {
           // Handle the Release Picture when the image was already deleted
-          alert("Image is already Deleted")
+          toast.info("Image is already Deleted.")
         } else {
           // Handle the Release Picture when the delete request fails
           console.log("Failed to delete Release Picture:", id);

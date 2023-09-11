@@ -3,6 +3,8 @@ import AuthContext from "../context/AuthContext";
 import logo from "../assets/logo.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import {
   Button,
   Container,
@@ -10,13 +12,11 @@ import {
   Form,
   Row,
   FloatingLabel,
-  Modal,
   InputGroup,
 } from "react-bootstrap";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [smShow, setSmShow] = useState(false);
 
   let { user, loginUser } = useContext(AuthContext);
 
@@ -141,7 +141,7 @@ const Login = () => {
               >
                 <Button
                   className="btn btn-light"
-                  onClick={() => setSmShow(true)}
+                  onClick={() => toast.info("Contact Your Admin.")}
                 >
                   Forgot Password?
                 </Button>
@@ -156,7 +156,7 @@ const Login = () => {
             </Card.Body>
           </Form>
         </Card>
-        <Modal
+        {/* <Modal
         style={{zIndex:"999999999999"}}
           className="bottom-modal"
           size="sm"
@@ -180,7 +180,7 @@ const Login = () => {
               </div>
             </Modal.Body>
           </Modal.Header>
-        </Modal>
+        </Modal> */}
       </Container>
     </div>
   );

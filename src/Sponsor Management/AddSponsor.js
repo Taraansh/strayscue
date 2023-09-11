@@ -6,6 +6,8 @@ import logo from "../assets/profile.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddSponsor = () => {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
@@ -64,7 +66,7 @@ const AddSponsor = () => {
       );
       if (response.status === 201) {
         console.log("Success:", response.data);
-        alert("Sponsor Added Successfully");
+        toast.success("Sponsor Added Successfully");
         navigate("/Sponsor");
         // Handle success or display a success message.
       } else {

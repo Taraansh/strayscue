@@ -6,6 +6,8 @@ import "../styles/Reporter.css";
 import logo from "../assets/profile.png";
 import axios from "axios";
 import Footer from "../components/Footer";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 export default function EditUser() {
   const { user, logoutUser, websiteUrl } = useContext(AuthContext);
@@ -48,7 +50,7 @@ export default function EditUser() {
       );
       if (response.status === 200) {
         console.log("Success", response.data);
-        alert("Updated Succesfully");
+        toast.success("Updated Succesfully");
         navigate("/UserManagement");
       }
     } catch (error) {

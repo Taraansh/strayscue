@@ -7,6 +7,8 @@ import logo from "../assets/profile.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
 export default function EditSponsor() {
   const path = useLocation();
@@ -79,7 +81,7 @@ export default function EditSponsor() {
       );
       if (response.status === 200) {
         console.log("Success:", response.data);
-        alert("Sponsor Updated Successfully");
+        toast.success("Sponsor Updated Successfully");
         navigate("/Sponsor");
         // Handle success or display a success message.
       }
