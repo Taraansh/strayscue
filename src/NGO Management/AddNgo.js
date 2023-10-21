@@ -26,6 +26,8 @@ const AddNgo = () => {
   const [twitter_page, setTwitterPage] = useState(null);
   const [ngo_email, setNgoEmail] = useState(null);
   const [ngo_website, setNgoWebsite] = useState(null);
+  const [ngo_address, setNgoAddress] = useState(null);
+  const [offline_cases, setOfflineCases] = useState(null);
   const [ngo_logo, setNgoLogo] = useState(null);
   const [ngoLogoPreview, setNgoLogoPreview] = useState(null);
 
@@ -66,6 +68,8 @@ const AddNgo = () => {
     formData.append("twitter_page", twitter_page);
     formData.append("ngo_email", ngo_email);
     formData.append("ngo_website", ngo_website);
+    formData.append("ngo_address", ngo_address);
+    formData.append("offline_cases", offline_cases);
     formData.append("ngo_logo", ngo_logo);
     formData.append("ngo_profile_creator", ngo_profile_creator);
 
@@ -331,6 +335,40 @@ const AddNgo = () => {
                       id="ngo_website"
                       name="ngo_website"
                       onChange={(e) => setNgoWebsite(e.target.value)}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <label
+                      htmlFor="ngo_address"
+                      style={{ fontWeight: "bold" }}
+                      className="form-label"
+                    >
+                      NGO Address:
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="NGO Address"
+                      id="ngo_address"
+                      name="ngo_address"
+                      onChange={(e) => setNgoAddress(e.target.value)}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <label
+                      htmlFor="offline_cases"
+                      style={{ fontWeight: "bold" }}
+                      className="form-label"
+                    >
+                      Total Cases Catered Offline:
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="Offline Cases"
+                      id="offline_cases"
+                      name="offline_cases"
+                      onChange={(e) => setOfflineCases(e.target.value)}
                     />
                   </div>
 
