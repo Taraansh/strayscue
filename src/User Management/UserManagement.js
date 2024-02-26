@@ -147,7 +147,7 @@ const UserManagement = () => {
                               <td>{data.email}</td>
                               <td>{data.user_contact}</td>
                               <td>{data.type_of_user_in_ngo}</td>
-                              <td>{data.is_active}</td>
+                              <td>{data.is_active ? 'Active' : 'Not Active'}</td>
                               <td>
                                 <button
                                   className="btn"

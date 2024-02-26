@@ -24,7 +24,7 @@ export default function EditUser() {
   const [email, setEmail] = useState(null);
   const [user_contact, setUser_contact] = useState(null);
   const [type_of_user_in_ngo, setType_of_user_in_ngo] = useState(null);
-  const [is_active, setIsActive] = useState(null);
+  const [is_active, setIsActive] = useState("");
   // const [ngo_linked_with_this_user, setNgo_linked_with_this_user] = useState(null);
 
   const handleUpdateUserLinkedWithNgo = async (e) => {
@@ -36,7 +36,12 @@ export default function EditUser() {
       type_of_user_in_ngo: type_of_user_in_ngo
         ? type_of_user_in_ngo
         : path.state.data.type_of_user_in_ngo,
-      is_active: is_active ? is_active : path.state.data.is_active,
+      is_active:
+        is_active === "true"
+          ? true
+          : is_active === "false"
+          ? false
+          : path.state.data.is_active,
     };
 
     try {
@@ -53,6 +58,8 @@ export default function EditUser() {
         toast.success("Updated Succesfully");
         navigate("/UserManagement");
       }
+      // console.log(update_data)
+      // console.log(path.state.data)
     } catch (error) {
       console.error("Error:", error);
     }
@@ -90,7 +97,6 @@ export default function EditUser() {
                   className="row g-3"
                   onSubmit={handleUpdateUserLinkedWithNgo}
                 >
-
                   <div className="col-md-6">
                     <label
                       htmlFor="username"
@@ -185,8 +191,8 @@ export default function EditUser() {
                       onChange={(e) => setIsActive(e.target.value)}
                     >
                       <option value="">Choose</option>
-                      <option value="Active">Active</option>
-                      <option value="Not Active">Not Active</option>
+                      <option value="true">Active</option>
+                      <option value="false">Not Active</option>
                     </select>
                   </div>
 
